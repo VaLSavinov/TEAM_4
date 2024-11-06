@@ -623,6 +623,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Loacation
       objectReference: {fileID: 0}
+    - target: {fileID: 5096850568629464087, guid: 41eb21a12379d8742b728d4bc3d94166,
+        type: 3}
+      propertyPath: _maxInRooms
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5096850568629464087, guid: 41eb21a12379d8742b728d4bc3d94166,
+        type: 3}
+      propertyPath: _maxCountRoom
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 6213476534091245150, guid: 41eb21a12379d8742b728d4bc3d94166,
         type: 3}
       propertyPath: m_LocalPosition.x

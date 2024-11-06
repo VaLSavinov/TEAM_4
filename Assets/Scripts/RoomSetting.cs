@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class RoomSetting: MonoBehaviour
 {
+
     [SerializeField] private List<SRoomSpawnPoint> _roomSpawnPoint;
-    [SerializeField] private List<GameObject> _animateObjects;
-    // Это из старого
-    //[SerializeField] private TriggerEvent _trigger;
-
     private LocationSetting _locationSetting;
+    /* [SerializeField] private List<GameObject> _animateObjects;
+     // Это из старого
+     //[SerializeField] private TriggerEvent _trigger;
 
-    private void Awake()
-    {
-        SelectActivationObject();
-    }  
+     private void Awake()
+     {
+         SelectActivationObject();
+     }  */
 
     /// <summary>
     /// Создание комнаты и ее настройка
@@ -25,7 +25,7 @@ public class RoomSetting: MonoBehaviour
     {
         SODataRoom roomSO = null;
         int size = 0;
-        // Примим, что еслм комната подходит, то метод CheckedRoom вернёт занчение -1
+        // Примим, что если комната подходит, то метод CheckedRoom вернёт занчение -1
         while (size >= 0) 
         {
             roomSO = _locationSetting.GetRandomRoomSO(size);
@@ -80,7 +80,7 @@ public class RoomSetting: MonoBehaviour
     /// <summary>
     /// Подпись случайно выбранного скримира на триггер
     /// </summary>
-    private void SelectActivationObject() 
+  /*  private void SelectActivationObject() 
     {
         if (_animateObjects.Count > 0)
         {
@@ -89,7 +89,7 @@ public class RoomSetting: MonoBehaviour
           //  if (_animateObjects[index].TryGetComponent<IActivationObjects>(out IActivationObjects animateObject))            
            //     animateObject.SetActivateTrigger(_trigger);
         }
-    }
+    }*/
 
     public void SetStartPorameters(LocationSetting location) 
     {

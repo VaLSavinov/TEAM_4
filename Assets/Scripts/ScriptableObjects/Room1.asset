@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Room1
   m_EditorClassIdentifier: 
   prefab: {fileID: 9176998062593300763, guid: 6e43e741193ab6649b03fcaa0cd323b0, type: 3}
-  checkedBox: {fileID: 430068103995777603, guid: 0acca562617fb574daa6485c73d559a1, type: 3}
+  checkedBox: {fileID: 430068103995777603, guid: 0acca562617fb574daa6485c73d559a1,
+    type: 3}
   roomSize: 2
-  countExitDoor: 2
+  isEndRoom: 0

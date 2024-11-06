@@ -64,6 +64,9 @@
     <Compile Include="Assets\Scripts\Structurs\SRoomSpawnPoint.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\SODataRoom.cs" />
     <Compile Include="Assets\Scripts\RoomSetting.cs" />
+    <Compile Include="Assets\Scripts\Loaclization\Inicializate.cs" />
+    <Compile Include="Assets\Scripts\Loaclization\LoaclizationText.cs" />
+    <Compile Include="Assets\Scripts\Loaclization\LocalizationManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
