@@ -66,6 +66,8 @@
     <Compile Include="Assets\Scripts\RoomSetting.cs" />
     <Compile Include="Assets\Scripts\Loaclization\Inicializate.cs" />
     <Compile Include="Assets\Scripts\Loaclization\LoaclizationText.cs" />
+    <Compile Include="Assets\Scripts\InputSystem\PlayerControl.cs" />
+    <Compile Include="Assets\Scripts\PlayerCharacter.cs" />
     <Compile Include="Assets\Scripts\Loaclization\LocalizationManager.cs" />
   </ItemGroup>
   <ItemGroup>

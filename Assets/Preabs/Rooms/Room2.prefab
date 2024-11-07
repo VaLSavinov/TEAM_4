@@ -561,7 +561,7 @@ GameObject:
   - component: {fileID: 6837745416141360484}
   m_Layer: 0
   m_Name: Room2
-  m_TagString: Untagged
+  m_TagString: Rooms
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -605,10 +605,6 @@ MonoBehaviour:
     IsAvail: 1
   - Transform: {fileID: 4468413550394132678}
     IsAvail: 1
-  _animateObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &5290504909990471540
 GameObject:
   m_ObjectHideFlags: 0
