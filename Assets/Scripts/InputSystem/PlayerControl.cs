@@ -64,7 +64,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Jamp"",
+                    ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""b979954a-6389-4ad5-a825-151e76d8da22"",
                     ""expectedControlType"": ""Button"",
@@ -189,7 +189,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Maus and Keybord"",
-                    ""action"": ""Jamp"",
+                    ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -260,7 +260,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
         m_Player_Sneak = m_Player.FindAction("Sneak", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
-        m_Player_Jamp = m_Player.FindAction("Jamp", throwIfNotFound: true);
+        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Take = m_Player.FindAction("Take", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -330,7 +330,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Run;
     private readonly InputAction m_Player_Sneak;
     private readonly InputAction m_Player_Look;
-    private readonly InputAction m_Player_Jamp;
+    private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Take;
     public struct PlayerActions
     {
@@ -340,7 +340,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         public InputAction @Run => m_Wrapper.m_Player_Run;
         public InputAction @Sneak => m_Wrapper.m_Player_Sneak;
         public InputAction @Look => m_Wrapper.m_Player_Look;
-        public InputAction @Jamp => m_Wrapper.m_Player_Jamp;
+        public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Take => m_Wrapper.m_Player_Take;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -363,9 +363,9 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
-            @Jamp.started += instance.OnJamp;
-            @Jamp.performed += instance.OnJamp;
-            @Jamp.canceled += instance.OnJamp;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
             @Take.started += instance.OnTake;
             @Take.performed += instance.OnTake;
             @Take.canceled += instance.OnTake;
@@ -385,9 +385,9 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
-            @Jamp.started -= instance.OnJamp;
-            @Jamp.performed -= instance.OnJamp;
-            @Jamp.canceled -= instance.OnJamp;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
             @Take.started -= instance.OnTake;
             @Take.performed -= instance.OnTake;
             @Take.canceled -= instance.OnTake;
@@ -469,7 +469,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         void OnRun(InputAction.CallbackContext context);
         void OnSneak(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
-        void OnJamp(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
         void OnTake(InputAction.CallbackContext context);
     }
     public interface IUIActions

@@ -42,7 +42,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Jamp",
+                    "name": "Jump",
                     "type": "Button",
                     "id": "b979954a-6389-4ad5-a825-151e76d8da22",
                     "expectedControlType": "Button",
@@ -167,7 +167,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Maus and Keybord",
-                    "action": "Jamp",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -7,8 +7,8 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] private float _speedRotate;
     [SerializeField] private float _speedRun;
     [SerializeField] private float _speedSneak;
-    [SerializeField] private float _forceJamp;
-    [SerializeField] private Transform _pointGraundCheker;
+    [SerializeField] private float _forceJump;
+    [SerializeField] private Transform _pointGroundCheker;
 
     private PlayerControl _control;
   //  private AudioManager _audioManager;
@@ -17,7 +17,7 @@ public class PlayerCharacter : MonoBehaviour
     private float _walkColliderHeight;
     private float _sneakColliderSize = 1f;
     private Vector3 _sneakColliderCenter = new Vector3(0, -0.5f, 0);
-    private Vector3 _camerPocitionSneak = new Vector3(0, 0, -0.5f);
+    private Vector3 _camerPositionSneak = new Vector3(0, 0, -0.5f);
     private Vector3 _camerPositionWalk = new Vector3(0,0.6f,-0.5f);
     private CapsuleCollider _collider;
     private bool _isSneaking;
@@ -31,7 +31,7 @@ public class PlayerCharacter : MonoBehaviour
         _currentSpeed = _speedWalk;
         _collider = GetComponent<CapsuleCollider>();
         _walkColliderHeight = _collider.height;
-        _control.Player.Jamp.started += context => Jamp();
+        _control.Player.Jump.started += context => Jump();
         // Подпись на кнопки бега и приседа
         _control.Player.Run.started += context => Run();
         _control.Player.Sneak.started += context => Sneak();
@@ -91,14 +91,14 @@ public class PlayerCharacter : MonoBehaviour
         _currentSpeed = _speedSneak;
         _collider.height = _sneakColliderSize;
         _collider.center = _sneakColliderCenter;
-        _cameraTransform.localPosition = _camerPocitionSneak;
+        _cameraTransform.localPosition = _camerPositionSneak;
         _isSneaking = true;
      //   _audioManager.StopAudio();
     }
 
     private bool IsOnTheGraund() 
     {
-        Collider[] colliders = Physics.OverlapSphere(_pointGraundCheker.position, 0.1f);
+        Collider[] colliders = Physics.OverlapSphere(_pointGroundCheker.position, 0.1f);
         foreach (Collider collider in colliders)
         {
             if (collider.tag != "Rooms" && collider.tag != "Player") return true;
@@ -106,14 +106,14 @@ public class PlayerCharacter : MonoBehaviour
         return false;
     }
 
-    private void Jamp() 
+    private void Jump() 
     {
         
         if (IsOnTheGraund())
         {
-            Vector3 jampForse = Vector3.zero;
-            jampForse.y = _forceJamp;
-            _rigidbody.AddForce(jampForse);
+            Vector3 jumpForse = Vector3.zero;
+            jumpForse.y = _forceJump;
+            _rigidbody.AddForce(jumpForse);
         }
         
     }
