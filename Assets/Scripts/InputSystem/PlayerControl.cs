@@ -71,6 +71,15 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Take"",
+                    ""type"": ""Button"",
+                    ""id"": ""4337f981-bef8-432e-8bea-092636564568"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -183,6 +192,17 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""action"": ""Jamp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""41503650-f66f-4366-b0c3-ab24845e76ec"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Take"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -241,6 +261,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         m_Player_Sneak = m_Player.FindAction("Sneak", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Jamp = m_Player.FindAction("Jamp", throwIfNotFound: true);
+        m_Player_Take = m_Player.FindAction("Take", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_PauseMenu = m_UI.FindAction("PauseMenu", throwIfNotFound: true);
@@ -310,6 +331,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Sneak;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Jamp;
+    private readonly InputAction m_Player_Take;
     public struct PlayerActions
     {
         private @PlayerControl m_Wrapper;
@@ -319,6 +341,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         public InputAction @Sneak => m_Wrapper.m_Player_Sneak;
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Jamp => m_Wrapper.m_Player_Jamp;
+        public InputAction @Take => m_Wrapper.m_Player_Take;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -343,6 +366,9 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @Jamp.started += instance.OnJamp;
             @Jamp.performed += instance.OnJamp;
             @Jamp.canceled += instance.OnJamp;
+            @Take.started += instance.OnTake;
+            @Take.performed += instance.OnTake;
+            @Take.canceled += instance.OnTake;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -362,6 +388,9 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @Jamp.started -= instance.OnJamp;
             @Jamp.performed -= instance.OnJamp;
             @Jamp.canceled -= instance.OnJamp;
+            @Take.started -= instance.OnTake;
+            @Take.performed -= instance.OnTake;
+            @Take.canceled -= instance.OnTake;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -441,6 +470,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         void OnSneak(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnJamp(InputAction.CallbackContext context);
+        void OnTake(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

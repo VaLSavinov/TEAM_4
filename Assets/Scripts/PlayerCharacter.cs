@@ -99,7 +99,6 @@ public class PlayerCharacter : MonoBehaviour
     private bool IsOnTheGraund() 
     {
         Collider[] colliders = Physics.OverlapSphere(_pointGraundCheker.position, 0.1f);
-        Debug.Log(colliders.Length);
         foreach (Collider collider in colliders)
         {
             if (collider.tag != "Rooms" && collider.tag != "Player") return true;
@@ -139,10 +138,7 @@ public class PlayerCharacter : MonoBehaviour
         rotation *= Quaternion.Euler(rotateX, 0, 0);
         if (rotation.x < 0.55 && rotation.x > -0.55)
             _cameraTransform.localRotation = rotation;
-        // Разрешаем поповрот только по мыши. Исключаем поворот при столкновении
-        _rigidbody.freezeRotation = false;
         transform.Rotate(0, mauseX, 0);
-        _rigidbody.freezeRotation = true;
     }
 
     public void SetCursorSetting() 

@@ -12,6 +12,7 @@ public static class LocalizationManager
 
     public static event Action OnChangeLanguage;
 
+    
     public static void SetCSV(TextAsset csvAsset) 
     {
         _csvAsset = csvAsset;
