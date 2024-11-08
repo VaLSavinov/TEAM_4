@@ -67,4 +67,9 @@ public class EnemyMove : MonoBehaviour
         }
        
     }
+
+    public void SetPatch(List<Transform> newPutch) 
+    {
+        _path = newPutch;
+    }
 }

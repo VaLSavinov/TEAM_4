@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public class LocationSetting : MonoBehaviour
@@ -13,11 +14,16 @@ public class LocationSetting : MonoBehaviour
     // Список колайдеров для исключения пересечений комнат
     private List<Collider> _roomColliders = new List<Collider>();
 
+    private NavMeshSurface _navMeshSurface;
+
     private void Start()
     {    
         _startRoom.SetStartPorameters(this);
         AddColliderInList(_startRoom.GetComponent<Collider>());
         _startRoom.CreationChildrenRooms(1, _maxInRooms);
+        _navMeshSurface = GetComponent<NavMeshSurface>();
+        _navMeshSurface.BuildNavMesh();
+
     }
 
     private SODataRoom SelectRoomBySize(int size)
