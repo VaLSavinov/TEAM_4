@@ -457,8 +457,8 @@ MonoBehaviour:
   _speedRotate: 20
   _speedRun: 6
   _speedSneak: 1.5
-  _forceJamp: 250
-  _pointGraundCheker: {fileID: 981086274}
+  _forceJump: 250
+  _pointGroundCheker: {fileID: 981086274}
 --- !u!54 &1175384822
 Rigidbody:
   m_ObjectHideFlags: 0
