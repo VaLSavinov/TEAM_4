@@ -155,5 +155,9 @@ public class PlayerCharacter : MonoBehaviour
     public void ActivateControl() 
     {
         _control.Enable();
-    }   
+    }
+    public Vector3 GetCameraPosition()
+    {
+        return _cameraTransform.position;
+    }
 }
