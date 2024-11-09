@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\Structurs\SRoomSpawnPoint.cs" />
     <Compile Include="Assets\Scripts\EnemyDetected.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\SODataRoom.cs" />
+    <Compile Include="Assets\Scripts\EnemyAI.cs" />
     <Compile Include="Assets\Scripts\RoomSetting.cs" />
     <Compile Include="Assets\Scripts\Loaclization\Inicializate.cs" />
     <Compile Include="Assets\Scripts\EnemyManager.cs" />
@@ -1070,8 +1071,8 @@
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.HighDefinition.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.VSCode.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
+    <Reference Include="Unity.AI.Navigation.Editor.ConversionSystem">
+      <HintPath>Library\ScriptAssemblies\Unity.AI.Navigation.Editor.ConversionSystem.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.RenderPipelines.HighDefinition.Editor">
