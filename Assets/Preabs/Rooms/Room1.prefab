@@ -963,6 +963,7 @@ MonoBehaviour:
     IsAvail: 1
   - Transform: {fileID: 7952951445712383953}
     IsAvail: 1
+  _enemyTargetPoints: []
 --- !u!1 &9176998063071931588
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ public class RoomSetting: MonoBehaviour
 {
 
     [SerializeField] private List<SRoomSpawnPoint> _roomSpawnPoint;
+    [SerializeField] private List<Transform> _enemyTargetPoints;
     private LocationSetting _locationSetting;
     /* [SerializeField] private List<GameObject> _animateObjects;
      // Это из старого
@@ -132,7 +133,10 @@ public class RoomSetting: MonoBehaviour
         }
     }
 
-    
+    public List<Transform> GetEnemyTargetPoints() 
+    { 
+        return _enemyTargetPoints;
+    }
 
     
 }

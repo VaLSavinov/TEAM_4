@@ -1169,6 +1169,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6213476533748061204}
   - component: {fileID: 5096850570444316253}
+  - component: {fileID: 6213476533748061206}
+  - component: {fileID: 6213476533748061205}
   m_Layer: 0
   m_Name: Loacation
   m_TagString: Untagged
@@ -1487,6 +1489,7 @@ MonoBehaviour:
   _roomSpawnPoint:
   - Transform: {fileID: 7176341685832638543}
     IsAvail: 1
+  _enemyTargetPoints: []
 --- !u!54 &3631943011222118964
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1631,8 +1634,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startRoom: {fileID: 3596461449094829492}
-  _maxCountRoom: 100
-  _maxInRooms: 50
+  _maxCountRoom: 20
+  _maxInRooms: 10
   _roomsSO:
   - {fileID: 11400000, guid: 3f152060447710246b5503a086a6c130, type: 2}
   - {fileID: 11400000, guid: b50f7c399d4f708458b6bba306fb7045, type: 2}
@@ -1752,6 +1755,52 @@ Transform:
   - {fileID: 382471509164941743}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6213476533748061205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594912823795989787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 247
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.06666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0
+--- !u!114 &6213476533748061206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594912823795989787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e311efcc3a45cbd458f0865b6fbd4e20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _countEnemy: 3
+  _enemyPref: {fileID: 4173143534242754341, guid: 5fa72638fbebd2945bf3ef3f2b463057,
+    type: 3}
 --- !u!54 &6963046666623011315
 Rigidbody:
   m_ObjectHideFlags: 0
