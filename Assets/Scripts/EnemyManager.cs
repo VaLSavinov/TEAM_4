@@ -19,8 +19,8 @@ public class EnemyManager : MonoBehaviour
     {
         for (int i = 0; i < _countEnemy; i++) 
         {
-            int indexRoom = UnityEngine.Random.Range(0, _itinerarys.Count);
-            int indexPatch = UnityEngine.Random.Range(0, _itinerarys[indexRoom].Count);
+            int indexRoom = UnityEngine.Random.Range(0, _itinerarys.Count-1);
+            int indexPatch = UnityEngine.Random.Range(0, _itinerarys[indexRoom].Count-1);
             GameObject newEnmy = Instantiate(_enemyPref, _itinerarys[indexRoom][indexPatch]);
             EnemyMove enemyMove = newEnmy.GetComponent<EnemyMove>();
             enemyMove.SetPatch(_itinerarys[indexRoom]);

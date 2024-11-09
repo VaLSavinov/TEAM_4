@@ -457,8 +457,8 @@ MonoBehaviour:
   _speedRotate: 20
   _speedRun: 6
   _speedSneak: 1.5
-  _forceJump: 0
-  _pointGroundCheker: {fileID: 0}
+  _forceJump: 250
+  _pointGroundCheker: {fileID: 981086274}
 --- !u!54 &1175384822
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1169,6 +1169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6213476533748061204}
   - component: {fileID: 5096850570444316253}
+  - component: {fileID: 6213476533748061206}
   - component: {fileID: 6213476533748061205}
   m_Layer: 0
   m_Name: Loacation
@@ -1633,8 +1634,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startRoom: {fileID: 3596461449094829492}
-  _maxCountRoom: 100
-  _maxInRooms: 50
+  _maxCountRoom: 20
+  _maxInRooms: 10
   _roomsSO:
   - {fileID: 11400000, guid: 3f152060447710246b5503a086a6c130, type: 2}
   - {fileID: 11400000, guid: b50f7c399d4f708458b6bba306fb7045, type: 2}
@@ -1785,6 +1786,21 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &6213476533748061206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594912823795989787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e311efcc3a45cbd458f0865b6fbd4e20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _countEnemy: 3
+  _enemyPref: {fileID: 4173143534242754341, guid: 5fa72638fbebd2945bf3ef3f2b463057,
+    type: 3}
 --- !u!54 &6963046666623011315
 Rigidbody:
   m_ObjectHideFlags: 0

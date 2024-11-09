@@ -14,6 +14,7 @@ public class LocationSetting : MonoBehaviour
     // Список колайдеров для исключения пересечений комнат
     private List<Collider> _roomColliders = new List<Collider>();
 
+    private EnemyManager _enemyManager;
     private NavMeshSurface _navMeshSurface;
 
     private void Start()
@@ -23,7 +24,9 @@ public class LocationSetting : MonoBehaviour
         _startRoom.CreationChildrenRooms(1, _maxInRooms);
         _navMeshSurface = GetComponent<NavMeshSurface>();
         _navMeshSurface.BuildNavMesh();
-
+        _enemyManager = GetComponent<EnemyManager>();
+        AssigningEnemiesPoint();
+        _enemyManager.CreateEnemy();
     }
 
     private SODataRoom SelectRoomBySize(int size)
@@ -39,6 +42,14 @@ public class LocationSetting : MonoBehaviour
             return _roomsSO[i];
         }
         else  return null;
+    }
+
+    private void AssigningEnemiesPoint() 
+    {
+        foreach (RoomSetting room in _rooms) 
+        {
+            _enemyManager.AddItinerary(room.GetEnemyTargetPoints());
+        }
     }
 
     public void AddRoomInList(RoomSetting room) 

@@ -24,6 +24,7 @@ public class EnemyMove : MonoBehaviour
         _agentAI = GetComponent<NavMeshAgent>();
         SetNewTarget();
         _agentAI.speed = _speedWalk;
+        _path = new List<Transform>();
     }
 
     private void Update()
@@ -47,10 +48,13 @@ public class EnemyMove : MonoBehaviour
 
     private void SetNewTarget()
     {
-         _indexPointPath++;
-        if (_indexPointPath == _path.Count) _indexPointPath = 0;
-        _agentAI.destination = _path[_indexPointPath].position;
-        _timeOut = UnityEngine.Random.Range(_rangeTimeOut.x,_rangeTimeOut.y);
+        if (_path != null)
+        {
+            _indexPointPath++;
+            if (_indexPointPath == _path.Count) _indexPointPath = 0;
+            _agentAI.destination = _path[_indexPointPath].position;
+            _timeOut = UnityEngine.Random.Range(_rangeTimeOut.x, _rangeTimeOut.y);
+        }
     }
 
     public void StartPursuit(PlayerCharacter player) 
