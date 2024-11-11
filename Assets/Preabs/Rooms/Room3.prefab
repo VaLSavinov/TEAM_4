@@ -1186,7 +1186,6 @@ MonoBehaviour:
   _roomSpawnPoint: []
   _enemyTargetPoints:
   - {fileID: 2682135770069938027}
-  - {fileID: 0}
   - {fileID: 376927902299403079}
 --- !u!1 &4952796746296422784
 GameObject:

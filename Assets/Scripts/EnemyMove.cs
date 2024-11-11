@@ -14,7 +14,7 @@ public class EnemyMove : MonoBehaviour
     private bool _isPursuit = false;
     private bool _isWait = false;
     private NavMeshAgent _agentAI;
-    private int _indexPointPath = 0;
+    private int _indexPointPath = -1;
     private float _currentTime;
     private float _timeOut;
 
@@ -47,8 +47,8 @@ public class EnemyMove : MonoBehaviour
     }
 
     private void SetNewTarget()
-    {
-        if (_path != null)
+    {        
+        if (_path.Count>0)
         {
             _indexPointPath++;
             if (_indexPointPath == _path.Count) _indexPointPath = 0;

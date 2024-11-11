@@ -5,31 +5,46 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     [SerializeField] private int _countEnemy;
-    [SerializeField] private GameObject _enemyPref;
-    private List<List<Transform>> _itinerarys;
-    private List<EnemyMove> _enemys;
+    [SerializeField] private GameObject _enemyPref; // Префаб с ботами
+    private List<List<Transform>> _itinerarys; // Список маршрутов
+    private List<EnemyAI> _enemys;
+    private PlayerCharacter _player;  // Ссылка на монстра игрока
+
 
     private void Awake()
     {
         _itinerarys = new List<List<Transform>>();
-        _enemys = new List<EnemyMove>();
+        _enemys = new List<EnemyAI>();
+        // Находим главного героя через тег
+        _player = GameObject.FindWithTag("Player").GetComponent<PlayerCharacter>();
     }
 
+
+    /// <summary>
+    /// Создаем ботов и назначаем им маршруты
+    /// </summary>
     public void CreateEnemy() 
     {
         for (int i = 0; i < _countEnemy; i++) 
         {
-            int indexRoom = UnityEngine.Random.Range(0, _itinerarys.Count-1);
-            int indexPatch = UnityEngine.Random.Range(0, _itinerarys[indexRoom].Count-1);
+            int indexRoom = UnityEngine.Random.Range(0, _itinerarys.Count);
+            int indexPatch = UnityEngine.Random.Range(0, _itinerarys[indexRoom].Count);
             GameObject newEnmy = Instantiate(_enemyPref, _itinerarys[indexRoom][indexPatch]);
-            EnemyMove enemyMove = newEnmy.GetComponent<EnemyMove>();
-            enemyMove.SetPatch(_itinerarys[indexRoom]);
-            _enemys.Add(enemyMove);
+            EnemyAI enemyAi = newEnmy.GetComponent<EnemyAI>();
+            enemyAi.SetPatch(_itinerarys[indexRoom]);
+            //Надо добавить метод, который вернет ботам ссылку на EnemyManager
+            _enemys.Add(enemyAi);
         }
     }
 
     public void AddItinerary(List<Transform> patch) 
     {
-        if (patch != null) _itinerarys.Add(patch);
+        if (patch.Count>0) _itinerarys.Add(patch);
     }
+
+    /// <summary>
+    /// Будем возвращать ссылку на героя по запросу от ботов
+    /// </summary>
+    /// <returns></returns>
+    public PlayerCharacter GetPlayerCharacter() { return _player; }
 }
