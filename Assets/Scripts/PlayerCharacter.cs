@@ -17,8 +17,8 @@ public class PlayerCharacter : MonoBehaviour
     private float _walkColliderHeight;
     private float _sneakColliderSize = 1f;
     private Vector3 _sneakColliderCenter = new Vector3(0, -0.5f, 0);
-    private Vector3 _camerPositionSneak = new Vector3(0, 0, -0.5f);
-    private Vector3 _camerPositionWalk = new Vector3(0,0.6f,-0.5f);
+    private Vector3 _camerPositionSneak = new Vector3(0, -0.2f, -0.3f);
+    private Vector3 _camerPositionWalk = new Vector3(0,0.6f,-0.3f);
     private CapsuleCollider _collider;
     private bool _isSneaking;
 

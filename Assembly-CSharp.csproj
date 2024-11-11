@@ -67,12 +67,15 @@
     <Compile Include="Assets\Scripts\EnemyAI.cs" />
     <Compile Include="Assets\Scripts\RoomSetting.cs" />
     <Compile Include="Assets\Scripts\Loaclization\Inicializate.cs" />
+    <Compile Include="Assets\Scripts\Enum\EEnemyState.cs" />
     <Compile Include="Assets\Scripts\EnemyManager.cs" />
+    <Compile Include="Assets\Scripts\AudioTrigger.cs" />
     <Compile Include="Assets\Scripts\Loaclization\LoaclizationText.cs" />
     <Compile Include="Assets\Scripts\InputSystem\PlayerControl.cs" />
     <Compile Include="Assets\Scripts\PlayerCharacter.cs" />
     <Compile Include="Assets\Scripts\EnemyMove.cs" />
     <Compile Include="Assets\Scripts\Loaclization\LocalizationManager.cs" />
+    <Compile Include="Assets\Scripts\ActivateSoundObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -1071,8 +1074,8 @@
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.HighDefinition.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.AI.Navigation.Editor.ConversionSystem">
-      <HintPath>Library\ScriptAssemblies\Unity.AI.Navigation.Editor.ConversionSystem.dll</HintPath>
+    <Reference Include="Unity.VSCode.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.RenderPipelines.HighDefinition.Editor">

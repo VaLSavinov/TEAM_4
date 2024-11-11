@@ -1799,7 +1799,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _countEnemy: 3
-  _enemyPref: {fileID: 4173143534242754341, guid: 5fa72638fbebd2945bf3ef3f2b463057,
+  _enemyPref: {fileID: 3951362065859572769, guid: 5fa72638fbebd2945bf3ef3f2b463057,
     type: 3}
 --- !u!54 &6963046666623011315
 Rigidbody:
