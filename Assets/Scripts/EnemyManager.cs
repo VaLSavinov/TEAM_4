@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    [SerializeField] private int _countEnemy;
-    [SerializeField] private GameObject _enemyPref; // Префаб с ботами
+    [SerializeField, Tooltip("Количество врагов.")] private int _countEnemy;
+    [SerializeField] private GameObject _enemyPref;
     private List<List<Transform>> _itinerarys; // Список маршрутов
     private List<EnemyAI> _enemys;
     private PlayerCharacter _player;  // Ссылка на монстра игрока
