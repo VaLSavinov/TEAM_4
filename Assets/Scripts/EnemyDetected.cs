@@ -34,7 +34,7 @@ public class EnemyDetected : MonoBehaviour
             else
             if (_isDetected)
             {
-               _isInVievZone = false; //Без этого, кажется лучше
+               // _isInVievZone = false; //Без этого, кажется лучше
                 _isDetected =false;
                 _enemyAI.StartSearchingPlayer();
             }

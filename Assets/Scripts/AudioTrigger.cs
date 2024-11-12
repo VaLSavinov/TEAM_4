@@ -6,11 +6,9 @@ public class AudioTrigger : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.name);
         if (other.tag == "Enemy") 
         {
-            Debug.Log("Враг найден");
-            other.GetComponent<EnemyAI>().StartAlerted();
+            other.GetComponent<EnemyAI>().StartAlerted(transform.position);
         }
     }
 

@@ -215,9 +215,11 @@ MonoBehaviour:
   - {fileID: 0}
   waitTime: 2
   returnWaitTime: 2
+  _alertTime: 2
   _searchTime: 5
-  _speedWalk: 2
-  _speedRun: 4
+  _speedPatrol: 3
+  _speedChase: 4
+  _speedAlertOrSearching: 2
   materialPatrool: {fileID: 2100000, guid: c761f2bb109f0f54481c9d08e05e4144, type: 2}
   materialAlerted: {fileID: 2100000, guid: 2e0bdb90c5ad27c44831fdb5d9a9dbd2, type: 2}
   materialChasing: {fileID: 2100000, guid: 03f38283d36994a44a9b161e78ce8e5e, type: 2}

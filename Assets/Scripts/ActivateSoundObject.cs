@@ -18,8 +18,7 @@ public class ActivateSoundObject : MonoBehaviour
            Collider [] overlaping = Physics.OverlapSphere(transform.position, GetSizeAudioZone());
             foreach (Collider c in overlaping) 
             {
-                if (c.tag == "Enemy") c.GetComponent<EnemyAI>().StartAlerted();
-                Debug.Log(c.gameObject.name);
+                if (c.tag == "Enemy") c.GetComponent<EnemyAI>().StartAlerted(transform.position);
             }
         }
     }

@@ -365,7 +365,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.06666667
+  m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: d6386bdf58e937c4980135c45a69f99b, type: 2}
   m_BuildHeightMesh: 0
@@ -1745,7 +1745,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1767127355}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: c902031908c9a6946bb8b5e33dc6d982, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1820,7 +1820,7 @@ Transform:
   m_GameObject: {fileID: 1767127355}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.85, y: 0.922, z: -8.04}
+  m_LocalPosition: {x: -2.46, y: 0.922, z: -7.53}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1903,7 +1903,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 8
+  MaxDistance: 12
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -2108,6 +2108,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 61469285407784876, guid: 5fa72638fbebd2945bf3ef3f2b463057,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3551288631960514551, guid: 5fa72638fbebd2945bf3ef3f2b463057,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2165,9 +2170,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6941220044234651648, guid: 5fa72638fbebd2945bf3ef3f2b463057,
         type: 3}
+      propertyPath: _alertTime
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6941220044234651648, guid: 5fa72638fbebd2945bf3ef3f2b463057,
+        type: 3}
       propertyPath: _character
       value: 
       objectReference: {fileID: 1767127356}
+    - target: {fileID: 6941220044234651648, guid: 5fa72638fbebd2945bf3ef3f2b463057,
+        type: 3}
+      propertyPath: _speedChase
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6941220044234651648, guid: 5fa72638fbebd2945bf3ef3f2b463057,
+        type: 3}
+      propertyPath: _speedPatrol
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6941220044234651648, guid: 5fa72638fbebd2945bf3ef3f2b463057,
+        type: 3}
+      propertyPath: _speedAlertOrSearching
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6941220044234651648, guid: 5fa72638fbebd2945bf3ef3f2b463057,
         type: 3}
       propertyPath: waypoints.Array.data[0]
