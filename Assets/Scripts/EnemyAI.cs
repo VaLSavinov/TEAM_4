@@ -8,15 +8,14 @@ public class EnemyAI : MonoBehaviour
 {
     /// Для тестирования
     [SerializeField] private PlayerCharacter _character; // Используем прямую ссылку на персонажа игрока (пока назначем в редакторе, за тем - берем из Enemymanager)
-    [SerializeField] private Transform[] waypoints; // Массив точек для перемещения
-    [SerializeField] private float waitTime = 2f; // Время ожидания на каждой точке
-    [SerializeField] private float returnWaitTime = 2f; // Время ожидания перед возвращением к патрулированию
-    [SerializeField] private float _alertTime = 2f;
-    [SerializeField] private float _searchTime = 5f; // Время поиска
-    // Скорость передвижени и преследования
-    [SerializeField] private float _speedPatrol;
-    [SerializeField] private float _speedChase;
-    [SerializeField] private float _speedAlertOrSearching;
+    [SerializeField, Tooltip("Точки перемещения врага.")] private Transform[] _waypoints;
+    [SerializeField, Tooltip("Время ожидания на точках.")] private float _waitTime = 2f;
+    [SerializeField, Tooltip("Время состояния тревоги.")] private float _alertTime = 2f;
+    [SerializeField, Tooltip("Время поиска.")] private float _searchTime = 5f;
+
+    [SerializeField, Tooltip("Скорость во время патруля.")] private float _speedPatrol;
+    [SerializeField, Tooltip("Скорость во время погони.")] private float _speedChase;
+    [SerializeField, Tooltip("Скорость во время тревоги или поиска.")] private float _speedAlertOrSearching;
     /// Для тестирования
     [SerializeField] private Material materialPatrool;
     [SerializeField] private Material materialAlerted;
@@ -47,7 +46,7 @@ public class EnemyAI : MonoBehaviour
     
     private IEnumerator WaitAtWaypoint()
     {
-        yield return new WaitForSeconds(waitTime);
+        yield return new WaitForSeconds(_waitTime);
         if(_state == EEnemyState.Patrolling) GoToNextWaypoint();
     }
 
@@ -99,15 +98,15 @@ public class EnemyAI : MonoBehaviour
 
     private void GoToNextWaypoint()
     {
-        if (waypoints.Length == 0) return;        
+        if (_waypoints.Length == 0) return;        
         // Выбор следующей точки (рандомно или последовательно)
         int oldIndexPatch = _currentWaypointIndex;
         while (oldIndexPatch == _currentWaypointIndex)
         {
-            _currentWaypointIndex = Random.Range(0, waypoints.Length); // Рандомный выбор точки           
+            _currentWaypointIndex = Random.Range(0, _waypoints.Length); // Рандомный выбор точки           
         }
         _isWalk = true;
-        _agent.SetDestination(waypoints[_currentWaypointIndex].position);        
+        _agent.SetDestination(_waypoints[_currentWaypointIndex].position);        
     }
 
 
@@ -181,7 +180,7 @@ public class EnemyAI : MonoBehaviour
     // ДОРАБОТАТЬ
     public void SetPatch(List<Transform> newPutch)
     {
-        waypoints = newPutch.ToArray();
+        _waypoints = newPutch.ToArray();
     }
 
     public void SetPlayer(PlayerCharacter player)
