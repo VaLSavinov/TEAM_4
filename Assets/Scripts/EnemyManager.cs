@@ -32,6 +32,7 @@ public class EnemyManager : MonoBehaviour
             GameObject newEnmy = Instantiate(_enemyPref, _itinerarys[indexRoom][indexPatch]);
             EnemyAI enemyAi = newEnmy.GetComponent<EnemyAI>();
             enemyAi.SetPatch(_itinerarys[indexRoom]);
+            enemyAi.SetPlayer(_player);
             //Надо добавить метод, который вернет ботам ссылку на EnemyManager
             _enemys.Add(enemyAi);
         }
