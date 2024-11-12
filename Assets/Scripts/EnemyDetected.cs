@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyDetected : MonoBehaviour
 {
-    [SerializeField] private Transform _viewPoint;
+    [SerializeField, Tooltip("Точка обзора.")] private Transform _viewPoint;
     [SerializeField] private EnemyAI _enemyAI;
    
     private bool _isDetected = false;
