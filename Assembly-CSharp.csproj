@@ -63,7 +63,9 @@
     <Compile Include="Assets\Scripts\LocationSetting.cs" />
     <Compile Include="Assets\Scripts\Structurs\SRoomSpawnPoint.cs" />
     <Compile Include="Assets\Scripts\EnemyDetected.cs" />
+    <Compile Include="Assets\Scripts\Procedural\Doorway.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\SODataRoom.cs" />
+    <Compile Include="Assets\Scripts\Procedural\Pathfinding.cs" />
     <Compile Include="Assets\Scripts\EnemyAI.cs" />
     <Compile Include="Assets\Scripts\RoomSetting.cs" />
     <Compile Include="Assets\Scripts\Loaclization\Inicializate.cs" />
@@ -72,9 +74,12 @@
     <Compile Include="Assets\Scripts\AudioTrigger.cs" />
     <Compile Include="Assets\Scripts\Loaclization\LoaclizationText.cs" />
     <Compile Include="Assets\Scripts\InputSystem\PlayerControl.cs" />
+    <Compile Include="Assets\Scripts\Procedural\GridCell.cs" />
+    <Compile Include="Assets\Scripts\Procedural\CorridorPiece.cs" />
     <Compile Include="Assets\Scripts\PlayerCharacter.cs" />
     <Compile Include="Assets\Scripts\Loaclization\LocalizationManager.cs" />
     <Compile Include="Assets\Scripts\ActivateSoundObject.cs" />
+    <Compile Include="Assets\Scripts\Procedural\GridManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
