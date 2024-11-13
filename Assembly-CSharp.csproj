@@ -66,15 +66,18 @@
     <Compile Include="Assets\Scripts\ScriptableObjects\SODataRoom.cs" />
     <Compile Include="Assets\Scripts\EnemyAI.cs" />
     <Compile Include="Assets\Scripts\RoomSetting.cs" />
-    <Compile Include="Assets\Scripts\Loaclization\Inicializate.cs" />
     <Compile Include="Assets\Scripts\Enum\EEnemyState.cs" />
     <Compile Include="Assets\Scripts\EnemyManager.cs" />
     <Compile Include="Assets\Scripts\AudioTrigger.cs" />
     <Compile Include="Assets\Scripts\Loaclization\LoaclizationText.cs" />
     <Compile Include="Assets\Scripts\InputSystem\PlayerControl.cs" />
     <Compile Include="Assets\Scripts\PlayerCharacter.cs" />
+    <Compile Include="Assets\Scripts\Loaclization\MainMenu.cs" />
     <Compile Include="Assets\Scripts\Loaclization\LocalizationManager.cs" />
     <Compile Include="Assets\Scripts\ActivateSoundObject.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Resources\Dictonary_2.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
