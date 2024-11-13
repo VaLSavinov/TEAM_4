@@ -17,8 +17,8 @@ public class PlayerCharacter : MonoBehaviour
     private float _walkColliderHeight;
     private float _sneakColliderSize = 1f;
     private Vector3 _sneakColliderCenter = new Vector3(0, -0.5f, 0);
-    private Vector3 _camerPositionSneak = new Vector3(0, -0.2f, -0.3f);
-    private Vector3 _camerPositionWalk = new Vector3(0,0.6f,-0.3f);
+    private Vector3 _camerPositionSneak  = new Vector3(0, -0.2f, -0.54f);
+    private Vector3 _camerPositionWalk   = new Vector3(0,  0.6f, -0.54f);
     private CapsuleCollider _collider;
     private bool _isSneaking;
 
@@ -45,7 +45,7 @@ public class PlayerCharacter : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        Rotate(_control.Player.Look.ReadValue<Vector2>());        
+        Rotate(_control.Player.Look.ReadValue<Vector2>());      
     }
 
     /// <summary>
@@ -136,9 +136,10 @@ public class PlayerCharacter : MonoBehaviour
 
         Quaternion rotation = _cameraTransform.localRotation;       
         rotation *= Quaternion.Euler(rotateX, 0, 0);
+        transform.Rotate(0, mauseX, 0);
         if (rotation.x < 0.55 && rotation.x > -0.55)
             _cameraTransform.localRotation = rotation;
-        transform.Rotate(0, mauseX, 0);
+        
     }
 
     public void SetCursorSetting() 
