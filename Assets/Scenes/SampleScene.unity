@@ -180,57 +180,53 @@ MonoBehaviour:
   cellSize: 1
   borderOffset: 2
   roomTypes:
-  - typeName: 3x3 1
+  - typeName: 3x3 Gen
     prefabs:
     - {fileID: 4193917468734626167, guid: 02000a6878e7ded40816ce5d2bf38e42, type: 3}
     roomSize: 3
-  - typeName: 3x3 2
+  - typeName: 3x3 Power
+    prefabs:
+    - {fileID: 4193917468734626167, guid: db08a8c922cf6f84f9b1b2824c3a141f, type: 3}
+    roomSize: 3
+  - typeName: 3x3 Sec
     prefabs:
     - {fileID: 4193917468734626167, guid: e0392ddbbb6fbbf4fa428d4573c1a747, type: 3}
     roomSize: 3
-  - typeName: 3x3 3
-    prefabs:
-    - {fileID: 4193917468734626167, guid: 824e2683f6efab944a7a0fac8e8da7de, type: 3}
-    roomSize: 3
-  - typeName: 3x3 4
-    prefabs:
-    - {fileID: 4193917468734626167, guid: 38d4cebc16034c94cb2b0bb5eedf0d46, type: 3}
-    roomSize: 3
-  - typeName: 5x5 1
-    prefabs:
-    - {fileID: 8235504648513398738, guid: 3f01d0802820dde41a5cf8f4b6091f74, type: 3}
-    - {fileID: 5629654182576397510, guid: 20659ddb1d038134bba82c4245b579da, type: 3}
-    - {fileID: 7895898808978929535, guid: f057a1fde5c379d4da06ca1f48c0b76f, type: 3}
-    roomSize: 5
-  - typeName: 5x5 2
+  - typeName: 5x5 Lab
     prefabs:
     - {fileID: 8235504648513398738, guid: 686f859569f7d8941acb89778040f7f4, type: 3}
     - {fileID: 5629654182576397510, guid: 68a3cd6ebfaf6dd458052b71c949d530, type: 3}
-    - {fileID: 7895898808978929535, guid: 1725c8d030f7fad4ab40b6b7f4c4e164, type: 3}
+    - {fileID: 5629654182576397510, guid: 68a3cd6ebfaf6dd458052b71c949d530, type: 3}
     roomSize: 5
-  - typeName: 5x5 3
+  - typeName: 5x5 Med
+    prefabs:
+    - {fileID: 8235504648513398738, guid: 89b9071914cfabe479dbc9606c740d39, type: 3}
+    - {fileID: 5629654182576397510, guid: e36073cd7ed4a5348b042a8299adaee5, type: 3}
+    - {fileID: 7895898808978929535, guid: ed2e5f299a44d194c966860bd77f8357, type: 3}
+    roomSize: 5
+  - typeName: 5x5 Rest
     prefabs:
     - {fileID: 8235504648513398738, guid: a5e976d31f1976f48a355cea10aa8aa9, type: 3}
     - {fileID: 5629654182576397510, guid: 6df5e528f04cdee4397faa02ab877828, type: 3}
     - {fileID: 7895898808978929535, guid: 77353b230da65f34483a82894480c603, type: 3}
     roomSize: 5
-  - typeName: 5x5 4
+  - typeName: 5x5 Serv
     prefabs:
     - {fileID: 8235504648513398738, guid: 32e73843e94d03d4184816f1279bda28, type: 3}
     - {fileID: 5629654182576397510, guid: 4dfacc5fcc63ece459bff8e20a65bfc5, type: 3}
     - {fileID: 7895898808978929535, guid: 3f5a3a91d86fac9478b2c52503cc159a, type: 3}
     roomSize: 5
-  - typeName: 7x7 1
+  - typeName: 7x7 Can
     prefabs:
     - {fileID: 6855379865884446789, guid: f7443bcf89756854187298128a6485d7, type: 3}
     - {fileID: 4549821485825259396, guid: fb1eb3c387e3c6f45a81cc5720a54b7d, type: 3}
     roomSize: 7
-  - typeName: 7x7 2
+  - typeName: 7x7 Ware
     prefabs:
     - {fileID: 6855379865884446789, guid: 82462eab8ba98cb4cbbb51d425903f11, type: 3}
     - {fileID: 4549821485825259396, guid: 6abb0a88fcbd30845bc9e66c64ad9584, type: 3}
     roomSize: 7
-  startRoomPrefab: {fileID: 4193917468734626167, guid: 4c5a52b22f2700b4fb4fb651574c372f,
+  startRoomPrefab: {fileID: 4193917468734626167, guid: 1ace43c14c011584c840168f9719e854,
     type: 3}
   finishRoomPrefab: {fileID: 4193917468734626167, guid: 8945c209f35b0194eae9ab659b7531ef,
     type: 3}
