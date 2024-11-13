@@ -60,11 +60,12 @@
     <Analyzer Include="C:\Users\Alina\UnityProject\2022.3.30f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Enemy\EnemyAI.cs" />
-    <Compile Include="Assets\Scripts\Procedural\Doorway.cs" />
-    <Compile Include="Assets\Scripts\Enemy\EnemyManager.cs" />
-    <Compile Include="Assets\Scripts\Procedural\Pathfinding.cs" />
-    <Compile Include="Assets\Scripts\Loaclization\Inicializate.cs" />
+    <Compile Include="Assets\Scripts\LocationSetting.cs" />
+    <Compile Include="Assets\Scripts\Structurs\SRoomSpawnPoint.cs" />
+    <Compile Include="Assets\Scripts\EnemyDetected.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObjects\SODataRoom.cs" />
+    <Compile Include="Assets\Scripts\EnemyAI.cs" />
+    <Compile Include="Assets\Scripts\RoomSetting.cs" />
     <Compile Include="Assets\Scripts\Enum\EEnemyState.cs" />
     <Compile Include="Assets\Scripts\AudioTrigger.cs" />
     <Compile Include="Assets\Scripts\OldGeneration\Structurs\SRoomSpawnPoint.cs" />
@@ -76,10 +77,13 @@
     <Compile Include="Assets\Scripts\Procedural\GridCell.cs" />
     <Compile Include="Assets\Scripts\Procedural\CorridorPiece.cs" />
     <Compile Include="Assets\Scripts\PlayerCharacter.cs" />
-    <Compile Include="Assets\Scripts\OldGeneration\ScriptableObjects\SODataRoom.cs" />
+    <Compile Include="Assets\Scripts\Loaclization\MainMenu.cs" />
     <Compile Include="Assets\Scripts\Loaclization\LocalizationManager.cs" />
     <Compile Include="Assets\Scripts\ActivateSoundObject.cs" />
     <Compile Include="Assets\Scripts\Procedural\GridManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Resources\Dictonary_2.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

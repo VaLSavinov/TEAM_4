@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Localization.Editor;
 using UnityEngine;
 
 public static class LocalizationManager
