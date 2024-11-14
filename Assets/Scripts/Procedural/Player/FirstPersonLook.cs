@@ -4,38 +4,43 @@ using UnityEngine.UI;
 public class FirstPersonLook : MonoBehaviour
 {
     // Чувствительность мыши.
-    public float mouseSensitivity = 100f;
+    [SerializeField] private float _mouseSensitivity = 100f;
     // Ссылка на тело игрока для вращения.
-    public Transform playerBody;
+    [SerializeField] private Transform _playerBody;
+    [SerializeField] private bool _canRotate = true;
     // Текущее вращение по оси X.
-    private float xRotation = 0f;
-    public bool canRotate = true;
-    void Start()
+    private float _xRotation = 0f;
+    void Start() 
     {
-        // Закрепляем курсор в центре экрана и делаем его невидимым при старте.
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        // Инициализируем слайдер текущим значением чувствительности мыши
     }
 
+    // Раcкоменнировать это, если по варианту Никиты
     void Update()
+    // Закоменнировать это, если по варианту Никиты
+    //public void Rotate(Vector2 rotate)
     {
-        if (canRotate)
+        if (_canRotate)
         {
-            float mouseX = InputManager.Instance.MouseX * mouseSensitivity * Time.deltaTime;
-            float mouseY = InputManager.Instance.MouseY * mouseSensitivity * Time.deltaTime;
-
+            // Закоменнировать это, если по варианту Никиты
+            /*
+            float mouseX = rotate.x * _mouseSensitivity * Time.deltaTime;
+            float mouseY = rotate.y * _mouseSensitivity * Time.deltaTime;*/
+            // Разкоменнировать это, если по варианту Никиты
+            float mouseX = InputManager.Instance.MouseX * _mouseSensitivity * Time.deltaTime;
+            float mouseY = InputManager.Instance.MouseY * _mouseSensitivity * Time.deltaTime;
             {
                 // Обычное управление поворотом через мышь
-                xRotation -= mouseY;
-                xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+                _xRotation -= mouseY;
+                _xRotation = Mathf.Clamp(_xRotation, -90f, 90f);
 
-                transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-                playerBody.Rotate(Vector3.up * mouseX);
+                transform.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
+                _playerBody.Rotate(Vector3.up * mouseX);
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        /*if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (Cursor.visible)
             {
@@ -47,6 +52,6 @@ public class FirstPersonLook : MonoBehaviour
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
             }
-        }
+        }*/
     }
 }

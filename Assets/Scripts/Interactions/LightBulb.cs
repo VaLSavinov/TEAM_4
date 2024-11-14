@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class LightBulb : MonoBehaviour, IInteractable
 {
-    private Light _light;
+    [SerializeField] private List<Light> _lights;
 
     private void Start()
     {
-        _light = GetComponent<Light>();
-    }
+        
+    }    
 
     public void Interact()
     {
-        if (_light != null)
+        if (_lights.Count>0)
         {
-            _light.enabled = !_light.enabled;
-            Debug.Log("Лампочка " + (_light.enabled ? "включена" : "выключена"));
+            for(int i = 0; i< _lights.Count; i++)
+                _lights[i].enabled = !_lights[i].enabled;
         }
     }
+       
+
+    public void StopInteract() { }
 }
