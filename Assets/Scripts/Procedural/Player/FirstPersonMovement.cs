@@ -9,8 +9,8 @@ public class FirstPersonMovement : MonoBehaviour
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
 
-    private const float GRAVITY = -50f;
-    private const float GROUNDED_VELOCITY = -2f;
+    private const float GRAVITY = -10f;
+    private const float GROUNDED_VELOCITY = -1f;
     private bool isGrounded;
     private Vector3 velocity;
 

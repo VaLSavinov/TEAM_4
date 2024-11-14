@@ -18,13 +18,13 @@ public class SoundSource : MonoBehaviour, IInteractable
             if (_audioSource.isPlaying)
             {
                 _audioSource.Stop();
-                Debug.Log("Звук выключен");
             }
             else
             {
                 _audioSource.Play();
-                Debug.Log("Звук включен");
             }
         }
-    }
+    }   
+
+    public void StopInteract() { }
 }
