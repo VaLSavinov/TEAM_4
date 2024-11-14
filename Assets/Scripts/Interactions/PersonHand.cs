@@ -6,15 +6,21 @@ public class PersonHand : MonoBehaviour
 {
     [SerializeField] private GameObject _uiMessage;
     [SerializeField] private Transform _handPoint;
+    [SerializeField] private Transform _cameraTransform;
+    [SerializeField] private float _pickUpDistance;
+    [SerializeField] private float _throwForce;
+    [SerializeField] private LayerMask _layerMask;
 
     private PlayerControl _control;
     private IInteractable _interactObject;
-    //private bool _isTake = false;
+    private GameObject _takeObject;
+    private float _throwVerticalForce = 0.2f;
 
     private void Awake()
     {
         _control = new PlayerControl();
         _control.Player.Take.started += context => Interaction();
+        _control.Player.Throw.started += context => ThrowObject();
     }
 
     private void OnEnable()
@@ -27,33 +33,59 @@ public class PersonHand : MonoBehaviour
         _control.Disable();
     }
 
-    public void SetInteractObject(IInteractable newInteractObject) 
+    private void TakeObject(GameObject litleObject) 
     {
-        if (_interactObject==null)
+        litleObject.GetComponent<Rigidbody>().isKinematic = true;
+        litleObject.transform.position = _handPoint.position;
+        litleObject.transform.SetParent(_handPoint.transform);
+        _takeObject = litleObject;
+    }
+
+    private void Interaction() 
+    {
+        if (_interactObject != null)
+        {
+            _interactObject.Interact();
+            return;
+        }
+        if (_takeObject != null) DropObject();
+        else
+        {
+            // Можно использовать, вместо триггера и для интерактивных объектов
+            RaycastHit hit;
+            Ray ray = new Ray(_cameraTransform.position, _cameraTransform.forward);
+            if (Physics.Raycast(ray, out hit, _pickUpDistance, _layerMask))
+            {
+                TakeObject(hit.collider.gameObject);
+            }
+        }
+        
+
+    }
+
+    public void SetInteractObject(IInteractable newInteractObject)
+    {
+        if (_interactObject == null)
             _interactObject = newInteractObject;
         _uiMessage.SetActive(true);
     }
-
-    public void Interaction() 
-    {
-        if (_interactObject == null) return;
-
-        _interactObject.Interact();
-
-    }   
-
+        
     public void DropObject() 
-    { 
-        if(_interactObject==null) return;
-        // Для подбираемых объектов - бросаем
-        _interactObject.StopInteract();
-        _interactObject = null;        
-
+    {
+        if (_takeObject == null) return;
+        _takeObject.transform.SetParent(null);
+        _takeObject.GetComponent<Rigidbody>().isKinematic = false;
+        _takeObject = null;
     }
 
     public void ThrowObject() 
     { 
-
+        if ( _takeObject == null) return;
+        _takeObject.transform.SetParent(null);
+        Rigidbody rigidbody = _takeObject.GetComponent<Rigidbody>();
+        rigidbody.isKinematic = false;
+        rigidbody.AddForce((_cameraTransform.forward + Vector3.up * _throwVerticalForce) * _throwForce);
+        _takeObject = null;
     }
 
     public void SetNullInteract() 
