@@ -1,22 +1,17 @@
 using UnityEngine;
 
-public class PickableItem : MonoBehaviour
-{
-    public enum ItemType
-    {
-        AccessCard,
-        PortableBattery
-    }
-
-    public enum AccessCardColor
-    {
-        None, // »спользуетс€ дл€ объектов, не €вл€ющихс€ картой доступа
-        Red,
-        Green,
-        Blue
-    }
-
+public class PickableItem : MonoBehaviour, IInteractable
+{  
     [Header("Item Settings")]
-    public ItemType itemType;
-    public AccessCardColor cardColor = AccessCardColor.None;
+    [SerializeField] private AccessCardColor _cardColor;
+    [SerializeField] private ItemType _itemType;
+
+    public ItemType GetItemType() { return _itemType; }
+
+    public AccessCardColor GetCardColor() { return _cardColor; }
+
+    public void Interact()
+    {
+        Destroy(gameObject);
+    }
 }

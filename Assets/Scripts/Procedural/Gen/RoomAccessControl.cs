@@ -1,26 +1,16 @@
 using UnityEngine;
 
 public class RoomAccessControl : MonoBehaviour
-{
-    // Перечисление для карты доступа
-    public enum AccessLevel
+{    
+    [SerializeField] private AccessCardColor requiredAccessLevel;
+    [SerializeField] private bool hasPower = true; // По умолчанию комнаты имеют питание
+
+    private void Awake()
     {
-        None,
-        Red,
-        Green,
-        Blue
+        GameMode.OnInteractGenerator += ActivatePower;
     }
 
-    // Поле для выбора карты доступа
-    [SerializeField]
-    private AccessLevel requiredAccessLevel = AccessLevel.None;
-
-    // Поле для статуса питания
-    [SerializeField]
-    private bool hasPower = true; // По умолчанию комнаты имеют питание
-
-    // Свойства для доступа к полям
-    public AccessLevel RequiredAccessLevel
+    public AccessCardColor RequiredAccessLevel
     {
         get => requiredAccessLevel;
         set => requiredAccessLevel = value;
@@ -32,10 +22,13 @@ public class RoomAccessControl : MonoBehaviour
         set => hasPower = value;
     }
 
-    // Метод для проверки доступа
-    public bool CanAccess(AccessLevel playerAccessLevel)
+    public AccessCardColor GetCardColor() 
     {
-        // Проверка наличия питания и карты доступа
-        return hasPower && playerAccessLevel >= requiredAccessLevel;
+        return requiredAccessLevel;
+    }
+
+    private void ActivatePower() 
+    { 
+        if (!HasPower) hasPower = true;
     }
 }

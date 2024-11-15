@@ -11,6 +11,9 @@ public class RoomType
 
 public class GridManager : MonoBehaviour
 {
+    /// Временно, дял тестов локализации
+    [SerializeField] private TextAsset _textAsset;
+
     [Header("Tertiary Paths Settings")]
     public int minTertiaryPaths = 1; // Минимальное количество третичных путей
     public int maxTertiaryPaths = 3; // Максимальное количество третичных путей
@@ -74,6 +77,9 @@ public class GridManager : MonoBehaviour
 
     void Start()
     {
+        // Временно, для тестов
+        LocalizationManager.SetCSV(_textAsset);
+
         GenerateGrid();
         PlaceRooms();
         ComputeDistanceToRooms();
@@ -712,7 +718,7 @@ public class GridManager : MonoBehaviour
         RoomAccessControl accessControl = corridorsParent.AddComponent<RoomAccessControl>();
 
         // Устанавливаем параметры доступа и питания для коридора
-        accessControl.RequiredAccessLevel = RoomAccessControl.AccessLevel.None;
+        accessControl.RequiredAccessLevel = AccessCardColor.None;
         accessControl.HasPower = true;
 
         DetermineCellPassages();
@@ -996,15 +1002,15 @@ public class GridManager : MonoBehaviour
         ShuffleList(roomList);
 
         // Assign access levels
-        RoomAccessControl.AccessLevel[] accessLevels = new RoomAccessControl.AccessLevel[]
+        AccessCardColor[] accessLevels = new AccessCardColor[]
         {
-            RoomAccessControl.AccessLevel.Red,
-            RoomAccessControl.AccessLevel.Green,
-            RoomAccessControl.AccessLevel.Blue
+            AccessCardColor.Red,
+            AccessCardColor.Green,
+            AccessCardColor.Blue
         };
 
         // Ensure that the finish room is assigned the highest access level
-        RoomAccessControl.AccessLevel finishRoomAccessLevel = accessLevels[accessLevels.Length - 1];
+        AccessCardColor finishRoomAccessLevel = accessLevels[accessLevels.Length - 1];
         RoomAccessControl finishRoomAccessControl = finishRoomInstance.GetComponent<RoomAccessControl>();
         if (finishRoomAccessControl != null)
         {
@@ -1064,7 +1070,7 @@ public class GridManager : MonoBehaviour
         foreach (GameObject room in allRooms)
         {
             RoomAccessControl accessControl = room.GetComponent<RoomAccessControl>();
-            if (accessControl != null && accessControl.RequiredAccessLevel == RoomAccessControl.AccessLevel.None)
+            if (accessControl != null && accessControl.RequiredAccessLevel == AccessCardColor.None)
             {
                 roomsWithoutAccessLevels.Add(room);
             }
@@ -1194,7 +1200,7 @@ public class GridManager : MonoBehaviour
                         disabledPowerRooms.Add(room.name);
                     }
 
-                    if (accessControl.RequiredAccessLevel != RoomAccessControl.AccessLevel.None)
+                    if (accessControl.RequiredAccessLevel != AccessCardColor.None)
                     {
                         lockedRoomsDescriptions.Add($"{room.name} закрыта на {accessControl.RequiredAccessLevel} ключ");
                     }

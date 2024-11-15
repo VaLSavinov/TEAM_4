@@ -26,4 +26,8 @@ public class LoaclizationText : MonoBehaviour
         _text.text = LocalizationManager.GetTextForTag(_tag);
     }
 
+    public void SetTag(string newTag)
+    {
+        _tag = newTag;
+    }
 }
