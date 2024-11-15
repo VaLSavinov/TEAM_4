@@ -63,5 +63,6 @@ public static class LocalizationManager
         if (_currentLenguage== _languages.Length) {_currentLenguage = 0;}        
         OnChangeLanguage?.Invoke();
     }
+    
 }
 

@@ -13,6 +13,7 @@ public class LightBulb : MonoBehaviour, IInteractable
 
     public void Interact()
     {
+        Debug.Log("ֲûחמג לועמהא");
         if (_lights.Count>0)
         {
             for(int i = 0; i< _lights.Count; i++)

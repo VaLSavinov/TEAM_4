@@ -4,9 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Rooms
   - Enemy
-  - LitleObject
+  - Grab
+  - Placed
+  - Take
+  - Interact
+  - Place
   layers:
   - Default
   - TransparentFX
@@ -16,7 +19,7 @@ TagManager:
   - UI
   - Graund
   - Player
-  - LitleObject
+  - Interaction
   - 
   - 
   - 
