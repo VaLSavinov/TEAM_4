@@ -11153,6 +11153,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8954635569749236808}
   - component: {fileID: 8638017447750850279}
+  - component: {fileID: -7616796059827733529}
   m_Layer: 0
   m_Name: Room 7x7 Can (1)
   m_TagString: Untagged
@@ -11383,6 +11384,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   requiredAccessLevel: 0
   hasPower: 1
+--- !u!114 &-7616796059827733529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6855379865884446789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e957f688824a7e148be8b6185acc880d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _wayPoints: []
 --- !u!1 &6867587967181035913
 GameObject:
   m_ObjectHideFlags: 0

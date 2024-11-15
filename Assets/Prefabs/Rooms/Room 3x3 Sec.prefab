@@ -1480,6 +1480,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4751115677378717686}
   - component: {fileID: -7358045430555227552}
+  - component: {fileID: -5948318464072763231}
   m_Layer: 0
   m_Name: Room 3x3 Sec
   m_TagString: Untagged
@@ -1553,6 +1554,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   requiredAccessLevel: 0
   hasPower: 1
+--- !u!114 &-5948318464072763231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4193917468734626167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e957f688824a7e148be8b6185acc880d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _wayPoints: []
 --- !u!1 &4920594068842418264
 GameObject:
   m_ObjectHideFlags: 0

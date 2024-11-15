@@ -6638,6 +6638,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4139599317934330521}
   - component: {fileID: -3181694860851796494}
+  - component: {fileID: 9120057686901748752}
   m_Layer: 0
   m_Name: Room 5x5 Med (1)
   m_TagString: Untagged
@@ -6763,6 +6764,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   requiredAccessLevel: 0
   hasPower: 1
+--- !u!114 &9120057686901748752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8235504648513398738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e957f688824a7e148be8b6185acc880d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _wayPoints: []
 --- !u!1 &8508907646239008013
 GameObject:
   m_ObjectHideFlags: 0

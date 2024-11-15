@@ -4433,6 +4433,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3789461845953351014}
   - component: {fileID: -7623923761587422339}
+  - component: {fileID: -5584146687159659618}
   m_Layer: 0
   m_Name: Room 5x5 Rest (2)
   m_TagString: Untagged
@@ -4559,6 +4560,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   requiredAccessLevel: 0
   hasPower: 1
+--- !u!114 &-5584146687159659618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5629654182576397510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e957f688824a7e148be8b6185acc880d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _wayPoints: []
 --- !u!1 &5788391002397749229
 GameObject:
   m_ObjectHideFlags: 0

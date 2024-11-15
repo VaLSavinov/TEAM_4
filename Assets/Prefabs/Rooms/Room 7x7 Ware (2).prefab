@@ -7911,6 +7911,7 @@ GameObject:
   m_Component:
   - component: {fileID: 748274788026810024}
   - component: {fileID: 5943689164014433578}
+  - component: {fileID: 3705942594282847037}
   m_Layer: 0
   m_Name: Room 7x7 Ware (2)
   m_TagString: Untagged
@@ -8141,6 +8142,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   requiredAccessLevel: 0
   hasPower: 1
+--- !u!114 &3705942594282847037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4549821485825259396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e957f688824a7e148be8b6185acc880d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _wayPoints: []
 --- !u!1 &4675685923613483156
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,7 +24,9 @@ public class EnemyAI : MonoBehaviour
 
 
     private NavMeshAgent _agent;
+    private RoomAccessControl _room;
     private int _currentWaypointIndex = 0;
+    private EnemyManager _enemyManager;
    
     private EEnemyState _state = EEnemyState.Patrolling; // Для хранение текущего состояния бота - по умолчанию - патруль
     private bool _isWalk = true;
@@ -181,16 +183,17 @@ public class EnemyAI : MonoBehaviour
     public void SetPatch(List<Transform> newPutch)
     {
         _waypoints = newPutch.ToArray();
-    }
-
-    public void SetPlayer(PlayerCharacter player)
-    {
-        _character = player;
-    }
+    }      
 
     public Vector3 GetCharaterCameraPosition()
     {
         return _character.GetCameraPosition();
     }
 
+    public void SetStartParameters(RoomAccessControl room, int waypointIndex, EnemyManager enemyManager) 
+    {
+        _room = room;
+        _currentWaypointIndex = waypointIndex;
+        _enemyManager = enemyManager;
+    }
 }
