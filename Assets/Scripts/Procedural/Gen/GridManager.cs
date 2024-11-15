@@ -20,12 +20,12 @@ public class GridManager : MonoBehaviour
     public float tertiaryPathTurnChance = 0.5f; // Шанс поворота на каждом шаге
 
     public GameObject cellPrefab;
-    public int gridWidth = 20; 
+    public int gridWidth = 20;
     public int gridHeight = 20;
     public Material blackMaterial;
     public Material whiteMaterial;
     public float cellSize = 1f;
-    public int borderOffset = 2; 
+    public int borderOffset = 2;
 
     // Список типов комнат с префабами для каждого типа
     public List<RoomType> roomTypes = new List<RoomType>();
@@ -52,7 +52,25 @@ public class GridManager : MonoBehaviour
 
     public int minDistanceToRoom = 1;
     public int maxDistanceToRoom = 2;
-    public int maxPlacementAttempts = 20; 
+    public int maxPlacementAttempts = 20;
+
+    [Header("Interactive Items")]
+    public GameObject redCardPrefab;
+    public GameObject greenCardPrefab;
+    public GameObject blueCardPrefab;
+    public GameObject portableBatteryPrefab;
+
+    // Глобальные списки для имен предметов и комнат, где они размещены
+    private List<string> itemNames = new List<string>
+    {
+        "Красный ключ",
+        "Зелёный ключ",
+        "Синий ключ",
+        "Переносной аккумулятор"
+    };
+
+    private List<GameObject> itemsPlacedRooms = new List<GameObject>();
+    private List<string> itemsPlaced = new List<string>();
 
     void Start()
     {
@@ -61,8 +79,12 @@ public class GridManager : MonoBehaviour
         ComputeDistanceToRooms();
         FindAndMarkPath();
         BuildSecondaryPaths();
-        BuildTertiaryPaths(); 
-        PlaceCorridors(); 
+        BuildTertiaryPaths();
+        PlaceCorridors();
+        List<GameObject> itemRooms = PlaceInteractiveItems();
+        AssignAccessLevelsToRooms(itemRooms);
+        DisablePowerInRooms(itemRooms);
+        GeneratePathReport();
     }
 
     void GenerateGrid()
@@ -270,6 +292,9 @@ public class GridManager : MonoBehaviour
 
     void MarkCellsAsOccupied(int startX, int startY, int roomSize, GameObject room)
     {
+        // Получаем RoomAccessControl из комнаты
+        RoomAccessControl roomAccess = room.GetComponent<RoomAccessControl>();
+
         // Отмечаем клетки как занятые
         for (int x = startX; x < startX + roomSize; x++)
         {
@@ -280,6 +305,7 @@ public class GridManager : MonoBehaviour
                     cells[x, y].isOccupied = true;
                     cells[x, y].occupyingRoom = room;
                     cells[x, y].occupancyType = OccupancyType.Room;
+                    cells[x, y].roomAccessControl = roomAccess; // Сохраняем ссылку на RoomAccessControl
                 }
             }
         }
@@ -681,6 +707,14 @@ public class GridManager : MonoBehaviour
 
     void PlaceCorridors()
     {
+        // Создаем объект "Corridors" и добавляем компонент RoomAccessControl
+        GameObject corridorsParent = new GameObject("Corridors");
+        RoomAccessControl accessControl = corridorsParent.AddComponent<RoomAccessControl>();
+
+        // Устанавливаем параметры доступа и питания для коридора
+        accessControl.RequiredAccessLevel = RoomAccessControl.AccessLevel.None;
+        accessControl.HasPower = true;
+
         DetermineCellPassages();
 
         foreach (var kvp in cellPassages)
@@ -737,7 +771,8 @@ public class GridManager : MonoBehaviour
             {
                 Vector3 position = new Vector3(cell.gridX, 0, cell.gridY);
                 Quaternion rot = Quaternion.Euler(0, rotation, 0);
-                Instantiate(prefabToInstantiate, position, rot);
+                GameObject passage = Instantiate(prefabToInstantiate, position, rot);
+                passage.transform.parent = corridorsParent.transform;
             }
             else
             {
@@ -923,6 +958,284 @@ public class GridManager : MonoBehaviour
             T temp = list[r];
             list[r] = list[i];
             list[i] = temp;
+        }
+    }
+
+    void AssignAccessLevelsToRooms(List<GameObject> excludeRooms)
+    {
+        // Get all rooms except the start room and excluded rooms
+        HashSet<GameObject> allRooms = new HashSet<GameObject>();
+        foreach (GridCell cell in cells)
+        {
+            if (cell != null && cell.occupyingRoom != null && cell.occupancyType == OccupancyType.Room)
+            {
+                if (cell.occupyingRoom != startRoomInstance && !excludeRooms.Contains(cell.occupyingRoom))
+                {
+                    allRooms.Add(cell.occupyingRoom);
+                }
+            }
+        }
+
+        // Include the finish room
+        if (!allRooms.Contains(finishRoomInstance))
+        {
+            allRooms.Add(finishRoomInstance);
+        }
+
+        // Check that we have enough rooms
+        if (allRooms.Count < 3)
+        {
+            Debug.LogError("Недостаточно комнат для назначения карт доступа.");
+            return;
+        }
+
+        // Convert to list for easier handling
+        List<GameObject> roomList = new List<GameObject>(allRooms);
+
+        // Shuffle the list
+        ShuffleList(roomList);
+
+        // Assign access levels
+        RoomAccessControl.AccessLevel[] accessLevels = new RoomAccessControl.AccessLevel[]
+        {
+            RoomAccessControl.AccessLevel.Red,
+            RoomAccessControl.AccessLevel.Green,
+            RoomAccessControl.AccessLevel.Blue
+        };
+
+        // Ensure that the finish room is assigned the highest access level
+        RoomAccessControl.AccessLevel finishRoomAccessLevel = accessLevels[accessLevels.Length - 1];
+        RoomAccessControl finishRoomAccessControl = finishRoomInstance.GetComponent<RoomAccessControl>();
+        if (finishRoomAccessControl != null)
+        {
+            finishRoomAccessControl.RequiredAccessLevel = finishRoomAccessLevel;
+            Debug.Log($"Комната {finishRoomInstance.name} закрыта на {finishRoomAccessControl.RequiredAccessLevel} ключ.");
+        }
+        else
+        {
+            Debug.LogWarning($"Финишная комната {finishRoomInstance.name} не имеет RoomAccessControl.");
+        }
+
+        int assignedAccessLevels = 1; // We have already assigned one access level to the finish room
+
+        for (int i = 0; assignedAccessLevels < accessLevels.Length && i < roomList.Count; i++)
+        {
+            GameObject room = roomList[i];
+
+            // Skip the finish room
+            if (room == finishRoomInstance)
+                continue;
+
+            RoomAccessControl accessControl = room.GetComponent<RoomAccessControl>();
+            if (accessControl != null)
+            {
+                accessControl.RequiredAccessLevel = accessLevels[assignedAccessLevels - 1];
+                Debug.Log($"Комната {room.name} закрыта на {accessControl.RequiredAccessLevel} ключ.");
+                assignedAccessLevels++;
+            }
+            else
+            {
+                Debug.LogWarning($"Комната {room.name} не имеет RoomAccessControl.");
+            }
+        }
+    }
+
+
+    void DisablePowerInRooms(List<GameObject> excludeRooms)
+    {
+        HashSet<GameObject> allRooms = new HashSet<GameObject>();
+        foreach (GridCell cell in cells)
+        {
+            if (cell != null && cell.occupyingRoom != null && cell.occupancyType == OccupancyType.Room)
+            {
+                if (cell.occupyingRoom != startRoomInstance && !excludeRooms.Contains(cell.occupyingRoom))
+                {
+                    allRooms.Add(cell.occupyingRoom);
+                }
+            }
+        }
+
+        if (!allRooms.Contains(finishRoomInstance))
+        {
+            allRooms.Add(finishRoomInstance);
+        }
+
+        List<GameObject> roomsWithoutAccessLevels = new List<GameObject>();
+        foreach (GameObject room in allRooms)
+        {
+            RoomAccessControl accessControl = room.GetComponent<RoomAccessControl>();
+            if (accessControl != null && accessControl.RequiredAccessLevel == RoomAccessControl.AccessLevel.None)
+            {
+                roomsWithoutAccessLevels.Add(room);
+            }
+        }
+
+        if (roomsWithoutAccessLevels.Count < 3)
+        {
+            Debug.LogError("Недостаточно комнат для отключения питания.");
+            return;
+        }
+
+        ShuffleList(roomsWithoutAccessLevels);
+
+        int roomsToDisablePower = 3;
+
+        RoomAccessControl finishRoomAccessControl = finishRoomInstance.GetComponent<RoomAccessControl>();
+        if (finishRoomAccessControl != null && finishRoomAccessControl.HasPower)
+        {
+            finishRoomAccessControl.HasPower = false;
+            Debug.Log($"Питание отключено в комнате {finishRoomInstance.name}.");
+            roomsToDisablePower--;
+        }
+
+        for (int i = 0; roomsToDisablePower > 0 && i < roomsWithoutAccessLevels.Count; i++)
+        {
+            GameObject room = roomsWithoutAccessLevels[i];
+
+            // Пропускаем комнату Generator
+            if (room == finishRoomInstance || room.name.Contains("Gen"))
+                continue;
+
+            RoomAccessControl accessControl = room.GetComponent<RoomAccessControl>();
+            if (accessControl != null)
+            {
+                accessControl.HasPower = false;
+                Debug.Log($"Питание отключено в комнате {room.name}.");
+                roomsToDisablePower--;
+            }
+            else
+            {
+                Debug.LogWarning($"Комната {room.name} не имеет RoomAccessControl.");
+            }
+        }
+    }
+
+    List<GameObject> PlaceInteractiveItems()
+    {
+        List<GameObject> placedItemRooms = new List<GameObject>();
+
+        // Get all rooms except the start and finish rooms
+        HashSet<GameObject> uniqueRooms = new HashSet<GameObject>();
+        foreach (GridCell cell in cells)
+        {
+            if (cell != null && cell.occupancyType == OccupancyType.Room && cell.occupyingRoom != null)
+            {
+                if (cell.occupyingRoom != startRoomInstance && cell.occupyingRoom != finishRoomInstance)
+                {
+                    uniqueRooms.Add(cell.occupyingRoom);
+                }
+            }
+        }
+
+        List<GameObject> rooms = new List<GameObject>(uniqueRooms);
+
+        // Check if we have enough rooms
+        if (rooms.Count < 4)
+        {
+            Debug.LogError("Недостаточно комнат для размещения предметов.");
+            return placedItemRooms;
+        }
+
+        // Shuffle rooms
+        ShuffleList(rooms);
+
+        // List of items to place
+        List<GameObject> itemsToPlace = new List<GameObject>
+        {
+            redCardPrefab,
+            greenCardPrefab,
+            blueCardPrefab,
+            portableBatteryPrefab
+        };
+
+        // Place items
+        for (int i = 0; i < itemsToPlace.Count; i++)
+        {
+            GameObject item = itemsToPlace[i];
+            GameObject room = rooms[i];
+
+            // Find ObjectSpawnPoint in the room
+            Transform spawnPoint = room.transform.Find("ObjectSpawnPoint");
+            if (spawnPoint != null)
+            {
+                Instantiate(item, spawnPoint.position, Quaternion.identity);
+                placedItemRooms.Add(room);
+                itemsPlacedRooms.Add(room);
+                itemsPlaced.Add(itemNames[i]);
+                Debug.Log($"{itemNames[i]} размещён в комнате {room.name}.");
+            }
+            else
+            {
+                Debug.LogWarning($"В комнате {room.name} не найден ObjectSpawnPoint.");
+            }
+        }
+
+        return placedItemRooms;
+    }
+
+    void GeneratePathReport()
+    {
+        // Collect information about rooms
+        List<string> disabledPowerRooms = new List<string>();
+        List<string> lockedRoomsDescriptions = new List<string>();
+        HashSet<GameObject> processedRooms = new HashSet<GameObject>();
+
+        foreach (GridCell cell in cells)
+        {
+            if (cell != null && cell.occupancyType == OccupancyType.Room)
+            {
+                RoomAccessControl accessControl = cell.roomAccessControl;
+                GameObject room = cell.occupyingRoom;
+
+                if (accessControl != null && !processedRooms.Contains(room))
+                {
+                    if (!accessControl.HasPower)
+                    {
+                        disabledPowerRooms.Add(room.name);
+                    }
+
+                    if (accessControl.RequiredAccessLevel != RoomAccessControl.AccessLevel.None)
+                    {
+                        lockedRoomsDescriptions.Add($"{room.name} закрыта на {accessControl.RequiredAccessLevel} ключ");
+                    }
+
+                    processedRooms.Add(room);
+                }
+            }
+        }
+
+        // Log the information
+        Debug.Log($"Игрок появился в комнате {startRoomInstance.name}.");
+
+        if (disabledPowerRooms.Count > 0)
+        {
+            Debug.Log($"Комнаты с отключенным питанием: {string.Join(", ", disabledPowerRooms)}.");
+        }
+
+        if (lockedRoomsDescriptions.Count > 0)
+        {
+            Debug.Log($"Комнаты, закрытые на ключ: {string.Join(", ", lockedRoomsDescriptions)}.");
+        }
+
+        if (itemsPlaced.Count > 0)
+        {
+            // List of items and their rooms
+            List<string> itemPaths = new List<string>();
+            for (int i = 0; i < itemsPlaced.Count; i++)
+            {
+                string itemName = itemsPlaced[i];
+                string roomName = itemsPlacedRooms[i].name;
+                itemPaths.Add($"{itemName} появился в комнате {roomName}");
+            }
+
+            Debug.Log(string.Join(", ", itemPaths) + ".");
+
+            // Construct a possible player path
+            Debug.Log($"Путь игрока: от {startRoomInstance.name} к {itemsPlacedRooms[0].name} за {itemsPlaced[0]}, затем к {itemsPlacedRooms[1].name} за {itemsPlaced[1]}, и т.д., чтобы открыть комнату {finishRoomInstance.name}.");
+        }
+        else
+        {
+            Debug.Log("Предметы не были размещены.");
         }
     }
 }

@@ -173,8 +173,8 @@ MonoBehaviour:
   tertiaryPathTurnChance: 0.33
   cellPrefab: {fileID: 4419418801268642881, guid: e46f5335820d03e4383c2f61f5d73b23,
     type: 3}
-  gridWidth: 32
-  gridHeight: 32
+  gridWidth: 34
+  gridHeight: 34
   blackMaterial: {fileID: 2100000, guid: e6dcd05c26c696a498fe144cb362f523, type: 2}
   whiteMaterial: {fileID: 2100000, guid: f27b63bea8d84494e8c03b165f20ad7d, type: 2}
   cellSize: 1
@@ -244,6 +244,14 @@ MonoBehaviour:
   minDistanceToRoom: 1
   maxDistanceToRoom: 2
   maxPlacementAttempts: 100
+  redCardPrefab: {fileID: 5261761750970419365, guid: 76a09b2206c7182449e707e9f383be7b,
+    type: 3}
+  greenCardPrefab: {fileID: 7036438911169027333, guid: 9d90ccb7ef5d99848a1cd2ae0339d7b6,
+    type: 3}
+  blueCardPrefab: {fileID: 8182488735389093818, guid: 3f317804cc73cd74fbbf4f18950df10c,
+    type: 3}
+  portableBatteryPrefab: {fileID: 8873655814863264887, guid: 21641286e83a40e44b44c30151648c6f,
+    type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,7 +269,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &705507994
 Light:
   m_ObjectHideFlags: 0
@@ -315,7 +323,7 @@ Light:
   m_RenderingLayerMask: 1
   m_Lightmapping: 1
   m_LightShadowCasterMode: 2
-  m_AreaSize: {x: 1, y: 1}
+  m_AreaSize: {x: 0.5, y: 0.5}
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 1
