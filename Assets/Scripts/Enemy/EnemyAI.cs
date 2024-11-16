@@ -98,15 +98,8 @@ public class EnemyAI : MonoBehaviour
 
     private void GoToNextWaypoint()
     {
-       /* if (_waypoints.Length == 0) return;        
-        // ¬ыбор следующей точки (рандомно или последовательно)
-        int oldIndexPatch = _currentWaypointIndex;
-        while (oldIndexPatch == _currentWaypointIndex)
-        {
-            _currentWaypointIndex = Random.Range(0, _waypoints.Length); // –андомный выбор точки           
-        }
-        _isWalk = true;*/
-        _agent.SetDestination(_enemyManager.GetNewPoint(_room, _currentWaypointIndex,out _room, out _currentWaypointIndex));        
+        _isWalk = true;
+        _agent.SetDestination(_enemyManager.GetNewPoint(_room, _currentWaypointIndex,out _room, out _currentWaypointIndex).position);
     }
 
 

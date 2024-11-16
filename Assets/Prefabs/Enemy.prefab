@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1510005799677378027}
   - component: {fileID: 5359686126457350408}
   - component: {fileID: 3108278150982156776}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: Detection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,6 +68,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _viewPoint: {fileID: 5212978510541314487}
   _enemyAI: {fileID: 6941220044234651648}
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 735
 --- !u!1 &3951362065859572769
 GameObject:
   m_ObjectHideFlags: 0
@@ -82,7 +85,8 @@ GameObject:
   - component: {fileID: 4409726691663297395}
   - component: {fileID: 6941220044234651648}
   - component: {fileID: 61469285407784876}
-  m_Layer: 2
+  - component: {fileID: 5383518984935109373}
+  m_Layer: 10
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -170,7 +174,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 0.2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -190,7 +194,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84770f8fc40f3524f8a2fdf74a5741f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _character: {fileID: 0}
   _waypoints: []
   _waitTime: 2
   _alertTime: 2
@@ -225,6 +228,33 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &5383518984935109373
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3951362065859572769}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &5563984278994506431
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,7 +264,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5212978510541314487}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: ViewPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

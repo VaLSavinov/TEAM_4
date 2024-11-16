@@ -7,13 +7,18 @@ public class DoorTrigger : MonoBehaviour
     [SerializeField] private Animation _animate;
     [SerializeField] private RoomAccessControl _roomAccessControl;
 
+    // —писок всех, кто взаимодействует с дверью
+    private List<GameObject> _interactors = new List<GameObject>();
+
     private void OnTriggerEnter(Collider other)
     {
-        if (_roomAccessControl != null) Debug.Log(_roomAccessControl.HasPower.ToString() + ' ' + _roomAccessControl.GetCardColor());
         if (_roomAccessControl == null || _roomAccessControl.HasPower)
             if (other.gameObject.tag == "Player" && CheackCard() || other.gameObject.tag == "Enemy")
             {
-                PlayClip("OpenDoor");
+                
+                if (_interactors.Count==0) PlayClip("OpenDoor");
+                _interactors.Add(other.gameObject);
+
             }
             else return;
         else if (_roomAccessControl != null &&!_roomAccessControl.HasPower)
@@ -27,7 +32,9 @@ public class DoorTrigger : MonoBehaviour
         if (_roomAccessControl == null || _roomAccessControl.HasPower)
             if (other.gameObject.tag == "Player" && CheackCard() || other.gameObject.tag == "Enemy")
             {
-                PlayClip("CloseDoor");
+                // «акрываем дверь, только если все, кто может через нее прошли
+                _interactors.Remove(other.gameObject);
+                if (_interactors.Count==0) PlayClip("CloseDoor");
             }
         GameMode.PlayerUI.DeactivatePanel();
     }
