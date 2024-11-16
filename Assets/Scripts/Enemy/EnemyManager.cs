@@ -29,48 +29,35 @@ public class EnemyManager : MonoBehaviour
     }
 
 
+    private RoomAccessControl GetNewRoom(RoomAccessControl currentRoom) 
+    {
+        foreach (KeyValuePair<RoomAccessControl, List<SEnemyWayPoint>> room in _waypoints)
+        {
+            // ѕроверка на возможность спавна и на соответсвие выбранной комнаты текущей
+            if (currentRoom==room.Key || !CheackPossibilityPlacement(room.Key)) continue;
+            // ¬еро€тность того, что враг заспавнитьс€ в этой комнате
+            if (UnityEngine.Random.Range(0, 100) < 50) continue;
+            return room.Key;
+        }
+        return currentRoom;
+    }
+
     /// <summary>
     /// —оздаем ботов и назначаем им маршруты
     /// </summary>
     public void CreateEnemy() 
     {
         int indexPatch;
-        List<SEnemyWayPoint> sEnemyWayPoints = new List<SEnemyWayPoint>();
-        SEnemyWayPoint sEnemyWayPoint = new SEnemyWayPoint();
+        RoomAccessControl room;
+        Transform spawnPoint;
         for (int i = 0; i < _countEnemy; i++) 
         {
-            foreach (KeyValuePair<RoomAccessControl, List<SEnemyWayPoint>> room in _waypoints)
-            {
-                // ѕроверка на возможность спавна
-                if (!CheackPossibilityPlacement(room.Key)) continue;
-                // ¬еро€тность того, что враг заспавнитьс€ в этой комнате
-                if (UnityEngine.Random.Range(0, 100) < 50) continue;
-                sEnemyWayPoints = room.Value;               
-                while (true)
-                {
-                    indexPatch = UnityEngine.Random.Range(0, sEnemyWayPoints.Count);
-                    if (sEnemyWayPoints[indexPatch].IsAvail) break;                    
-                }
-                GameObject newEnmy = Instantiate(_enemyPref, sEnemyWayPoints[indexPatch].Point);
-                EnemyAI enemyAi = newEnmy.GetComponent<EnemyAI>();
-                enemyAi.SetStartParameters(room.Key,indexPatch,this);
-                sEnemyWayPoint = sEnemyWayPoints[indexPatch];
-                sEnemyWayPoint.IsAvail = false;
-                sEnemyWayPoints[indexPatch] = sEnemyWayPoint;
-                // ƒобавл€ем врага в список
-                _enemys.Add(enemyAi);
-                _roomData[room.Key] = new Vector2(_roomData[room.Key].x, _roomData[room.Key].y + 1);
-                break;
-            }
-            /*
-            int indexRoom = UnityEngine.Random.Range(0, _itinerarys.Count);
-            int indexPatch = UnityEngine.Random.Range(0, _itinerarys[indexRoom].Count);
-            GameObject newEnmy = Instantiate(_enemyPref, _itinerarys[indexRoom][indexPatch]);
+            spawnPoint = GetNewPoint(null, -1, out room, out indexPatch);
+            if (spawnPoint == null) continue;
+            GameObject newEnmy = Instantiate(_enemyPref, spawnPoint);
             EnemyAI enemyAi = newEnmy.GetComponent<EnemyAI>();
-            enemyAi.SetPatch(_itinerarys[indexRoom]);
-            enemyAi.SetPlayer(_player);
-            //Ќадо добавить метод, который вернет ботам ссылку на EnemyManager
-            _enemys.Add(enemyAi);*/
+            enemyAi.SetStartParameters(room, indexPatch, this);
+            _enemys.Add(enemyAi);            
         }
     }
 
@@ -97,20 +84,47 @@ public class EnemyManager : MonoBehaviour
         _waypoints.Add(room, sEnemyWayPoints);        
     }
 
-    public Vector3 GetNewPoint(RoomAccessControl room, int indexRout, out RoomAccessControl newRoom, out int newIndex) 
+    public Transform GetNewPoint(RoomAccessControl room, int indexRout, out RoomAccessControl newRoom, out int newIndex) 
     {
+        // ≈сли это запрос от бота
+        if (room != null)
+        {
+            // Ўанс того, что бот захочет помен€ть комнату
+            if (UnityEngine.Random.Range(0, 100) < 25) newRoom = GetNewRoom(room);
+            else newRoom = room;
+        }
+        // ≈сли метод вызываетс€ при спавне ботов
+        else
+        {
+            newRoom = GetNewRoom(room);
+            if (newRoom == null)
+            {
+                newIndex = -1;
+                return null;
+            }
+        }
         while (true) 
         {
-            newIndex = UnityEngine.Random.Range(0, _waypoints[room].Count);
-            if (_waypoints[room][newIndex].IsAvail) break;
+            newIndex = UnityEngine.Random.Range(0, _waypoints[newRoom].Count);
+            if (_waypoints[newRoom][newIndex].IsAvail) break;
         }
-        SEnemyWayPoint editWaypoint = _waypoints[room][indexRout];
-        editWaypoint.IsAvail = true;
-        _waypoints[room][indexRout] = editWaypoint;
-        newRoom = room;
+        SEnemyWayPoint editWaypoint;
+        // —начала освободим занимаемое место, если оно было
+        if (room != null)
+        {
+            editWaypoint = _waypoints[room][indexRout];
+            editWaypoint.IsAvail = true;
+            _waypoints[room][indexRout] = editWaypoint;
+        }
+        // ≈сли бот помен€л комнату
+        if (room != newRoom)
+        {
+            if (room!=null) _roomData[room] = new Vector2(_roomData[room].x, _roomData[room].y-1);
+            _roomData[newRoom] = new Vector2(_roomData[newRoom].x, _roomData[newRoom].y + 1);
+        }
         editWaypoint = _waypoints[newRoom][newIndex];
         editWaypoint.IsAvail = false;
         _waypoints[newRoom][newIndex] = editWaypoint;
-        return _waypoints[newRoom][newIndex].Point.position;
+        return _waypoints[newRoom][newIndex].Point;
     }
 }

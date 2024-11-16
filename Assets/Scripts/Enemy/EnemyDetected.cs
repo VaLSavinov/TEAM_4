@@ -5,6 +5,7 @@ public class EnemyDetected : MonoBehaviour
 {
     [SerializeField, Tooltip("Точка обзора.")] private Transform _viewPoint;
     [SerializeField] private EnemyAI _enemyAI;
+    [SerializeField] private LayerMask _layerMask;
    
     private bool _isDetected = false;
     private bool _isInVievZone = false;
@@ -24,7 +25,7 @@ public class EnemyDetected : MonoBehaviour
         //Проверка        
         Debug.DrawRay(ray.origin, ray.direction * 200,Color.red);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit,20))
+        if (Physics.Raycast(ray, out hit,20, _layerMask))
         {
             if (hit.collider.tag == "Player")
             {
