@@ -307,8 +307,9 @@ public class GridManager : MonoBehaviour
         RoomAccessControl roomAccess = room.GetComponent<RoomAccessControl>();
 
         // Передаем ссылку на массив точек перемещения ботов деспетчеру ботов
-        EnemyRoute enemyRoute = room.GetComponent<EnemyRoute>();
-        _enemyManager.AddWaypoints(roomAccess, enemyRoute.CountMaxEnemyInRoom, enemyRoute.GetWayPoints());
+        EnemyRoute enemyRoute;
+        if (room.TryGetComponent<EnemyRoute>(out enemyRoute))
+            _enemyManager.AddWaypoints(roomAccess, enemyRoute.CountMaxEnemyInRoom, enemyRoute.GetWayPoints());
 
         // Отмечаем клетки как занятые
         for (int x = startX; x < startX + roomSize; x++)

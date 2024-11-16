@@ -142,7 +142,6 @@ Transform:
   - {fileID: 6276194107191099400}
   - {fileID: 8427862405570729606}
   - {fileID: 1011740014345956118}
-  - {fileID: 7471859358484461133}
   - {fileID: 8011654574262268188}
   - {fileID: 3429937880086229169}
   - {fileID: 6681078961686127517}
@@ -849,6 +848,7 @@ Transform:
   m_Children:
   - {fileID: 8975564105026529438}
   - {fileID: 3758907453183784971}
+  - {fileID: 7471859358484461133}
   - {fileID: 4012409955819521147}
   - {fileID: 4487098627659934657}
   - {fileID: 4102119136956646530}
@@ -884,6 +884,7 @@ MonoBehaviour:
   _wayPoints:
   - {fileID: 7135884214480689415}
   - {fileID: 1244243152286773258}
+  _countMaxEnemyInRoom: 0
 --- !u!1 &4920594068842418264
 GameObject:
   m_ObjectHideFlags: 0
@@ -1127,7 +1128,7 @@ Transform:
   m_LocalScale: {x: 1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4012409955819521147}
+  m_Father: {fileID: 4751115677378717686}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5260416568125317467
 MeshFilter:

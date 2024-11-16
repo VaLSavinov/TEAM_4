@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7343126944950836955}
   - component: {fileID: 832599429236277209}
   - component: {fileID: 188945973226609862}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: DoorPref
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,6 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animate: {fileID: 8303227791538498885}
+  _roomAccessControl: {fileID: 0}
 --- !u!1001 &6901926778506824300
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -126,6 +127,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8665374912803100077, guid: a4f960162455a684c863dd1922ffffcb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: -7995503127128131575, guid: a4f960162455a684c863dd1922ffffcb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -136,6 +142,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6828977723248325220, guid: a4f960162455a684c863dd1922ffffcb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: -3261226788322452980, guid: a4f960162455a684c863dd1922ffffcb,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -145,6 +156,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a4f960162455a684c863dd1922ffffcb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a4f960162455a684c863dd1922ffffcb,
         type: 3}

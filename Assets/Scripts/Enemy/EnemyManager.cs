@@ -6,7 +6,6 @@ public class EnemyManager : MonoBehaviour
 {
     [SerializeField, Tooltip(" оличество врагов.")] private int _countEnemy;
     [SerializeField] private GameObject _enemyPref;
-    private List<List<Transform>> _itinerarys; // —писок маршрутов
     private List<EnemyAI> _enemys;
 
     private Dictionary<RoomAccessControl,List<SEnemyWayPoint>> _waypoints = new Dictionary<RoomAccessControl, List<SEnemyWayPoint>>();
@@ -23,12 +22,10 @@ public class EnemyManager : MonoBehaviour
     /// ѕровекра на возможность спавна нового врага
     /// </summary>
     /// <returns></returns>
-    private bool CheackPossibilityPlacement(RoomAccessControl room, List<SEnemyWayPoint> points)
+    private bool CheackPossibilityPlacement(RoomAccessControl room)
     {
-        if (_roomData[room].x >= _roomData[room].y) return false;
-        foreach (SEnemyWayPoint point in points)
-            if (point.IsAvail) return true;
-        return false;
+        if (room.HasPower && _roomData[room].x > _roomData[room].y)  return true;
+        return false;        
     }
 
 
@@ -45,10 +42,10 @@ public class EnemyManager : MonoBehaviour
             foreach (KeyValuePair<RoomAccessControl, List<SEnemyWayPoint>> room in _waypoints)
             {
                 // ѕроверка на возможность спавна
-                if (!CheackPossibilityPlacement(room.Key, room.Value)) continue;
+                if (!CheackPossibilityPlacement(room.Key)) continue;
                 // ¬еро€тность того, что враг заспавнитьс€ в этой комнате
                 if (UnityEngine.Random.Range(0, 100) < 50) continue;
-                sEnemyWayPoints = room.Value;
+                sEnemyWayPoints = room.Value;               
                 while (true)
                 {
                     indexPatch = UnityEngine.Random.Range(0, sEnemyWayPoints.Count);
@@ -60,7 +57,9 @@ public class EnemyManager : MonoBehaviour
                 sEnemyWayPoint = sEnemyWayPoints[indexPatch];
                 sEnemyWayPoint.IsAvail = false;
                 sEnemyWayPoints[indexPatch] = sEnemyWayPoint;
+                // ƒобавл€ем врага в список
                 _enemys.Add(enemyAi);
+                _roomData[room.Key] = new Vector2(_roomData[room.Key].x, _roomData[room.Key].y + 1);
                 break;
             }
             /*
@@ -86,8 +85,8 @@ public class EnemyManager : MonoBehaviour
         if (patch==null || patch.Count == 0) return; 
         List<SEnemyWayPoint> sEnemyWayPoints = new List<SEnemyWayPoint>();
         SEnemyWayPoint sEnemyWayPoint = new SEnemyWayPoint();
-        // ≈сли максимальное кол-во врагов не задано, беркм от кол-ва точек (-1 чтобы оствалась вариативность)
-        if (maxCount == 0) maxCount = patch.Count - 1;
+        // ≈сли максимальное кол-во врагов не задано или больше, чем точек - берем от кол-ва точек (-1 чтобы оствалась вариативность)
+        if (maxCount == 0 || maxCount>= patch.Count)  maxCount = patch.Count - 1;
         _roomData.Add(room, new Vector2(maxCount, 0));
         foreach (Transform transform in patch) 
         {
@@ -96,5 +95,22 @@ public class EnemyManager : MonoBehaviour
             sEnemyWayPoints.Add(sEnemyWayPoint);
         }
         _waypoints.Add(room, sEnemyWayPoints);        
+    }
+
+    public Vector3 GetNewPoint(RoomAccessControl room, int indexRout, out RoomAccessControl newRoom, out int newIndex) 
+    {
+        while (true) 
+        {
+            newIndex = UnityEngine.Random.Range(0, _waypoints[room].Count);
+            if (_waypoints[room][newIndex].IsAvail) break;
+        }
+        SEnemyWayPoint editWaypoint = _waypoints[room][indexRout];
+        editWaypoint.IsAvail = true;
+        _waypoints[room][indexRout] = editWaypoint;
+        newRoom = room;
+        editWaypoint = _waypoints[newRoom][newIndex];
+        editWaypoint.IsAvail = false;
+        _waypoints[newRoom][newIndex] = editWaypoint;
+        return _waypoints[newRoom][newIndex].Point.position;
     }
 }
