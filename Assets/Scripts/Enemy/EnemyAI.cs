@@ -6,8 +6,6 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class EnemyAI : MonoBehaviour
 {
-    /// Для тестирования
-    [SerializeField] private PlayerCharacter _character; // Используем прямую ссылку на персонажа игрока (пока назначем в редакторе, за тем - берем из Enemymanager)
     [SerializeField, Tooltip("Точки перемещения врага.")] private Transform[] _waypoints;
     [SerializeField, Tooltip("Время ожидания на точках.")] private float _waitTime = 2f;
     [SerializeField, Tooltip("Время состояния тревоги.")] private float _alertTime = 2f;
@@ -24,7 +22,9 @@ public class EnemyAI : MonoBehaviour
 
 
     private NavMeshAgent _agent;
+    private RoomAccessControl _room;
     private int _currentWaypointIndex = 0;
+    private EnemyManager _enemyManager;
    
     private EEnemyState _state = EEnemyState.Patrolling; // Для хранение текущего состояния бота - по умолчанию - патруль
     private bool _isWalk = true;
@@ -98,15 +98,15 @@ public class EnemyAI : MonoBehaviour
 
     private void GoToNextWaypoint()
     {
-        if (_waypoints.Length == 0) return;        
+       /* if (_waypoints.Length == 0) return;        
         // Выбор следующей точки (рандомно или последовательно)
         int oldIndexPatch = _currentWaypointIndex;
         while (oldIndexPatch == _currentWaypointIndex)
         {
             _currentWaypointIndex = Random.Range(0, _waypoints.Length); // Рандомный выбор точки           
         }
-        _isWalk = true;
-        _agent.SetDestination(_waypoints[_currentWaypointIndex].position);        
+        _isWalk = true;*/
+        _agent.SetDestination(_enemyManager.GetNewPoint(_room, _currentWaypointIndex,out _room, out _currentWaypointIndex));        
     }
 
 
@@ -149,7 +149,7 @@ public class EnemyAI : MonoBehaviour
     {
         _state = EEnemyState.Chasing;
         _meshRenderer.material = materialChasing;
-        _agent.SetDestination(_character.transform.position);
+        _agent.SetDestination(GameMode.PersonHand.transform.position);
         _agent.speed = _speedChase;
     }
 
@@ -175,22 +175,14 @@ public class EnemyAI : MonoBehaviour
         _agent.speed = _speedAlertOrSearching;
         _isWalk = true;
 
-    }
+    }  
 
-    // ДОРАБОТАТЬ
-    public void SetPatch(List<Transform> newPutch)
+    public void SetStartParameters(RoomAccessControl room, int waypointIndex, EnemyManager enemyManager) 
     {
-        _waypoints = newPutch.ToArray();
+        _room = room;
+        _currentWaypointIndex = waypointIndex;
+        _enemyManager = enemyManager;
+        // Некоторое время стоит на месте, чтобы начать действовать только после того, как заспавняться все боты
+        StartCoroutine(WaitAtWaypoint());
     }
-
-    public void SetPlayer(PlayerCharacter player)
-    {
-        _character = player;
-    }
-
-    public Vector3 GetCharaterCameraPosition()
-    {
-        return _character.GetCameraPosition();
-    }
-
 }

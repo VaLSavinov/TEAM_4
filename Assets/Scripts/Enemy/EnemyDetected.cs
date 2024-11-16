@@ -20,7 +20,7 @@ public class EnemyDetected : MonoBehaviour
     {
         if (!_isInVievZone) return;   
         
-        Ray ray = new Ray(_viewPoint.position,NormolizateVector(_viewPoint.position, _enemyAI.GetCharaterCameraPosition()));
+        Ray ray = new Ray(_viewPoint.position,NormolizateVector(_viewPoint.position, GameMode.FirstPersonLook.transform.position));
         //Проверка        
         Debug.DrawRay(ray.origin, ray.direction * 200,Color.red);
         RaycastHit hit;

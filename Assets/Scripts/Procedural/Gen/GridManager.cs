@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 [System.Serializable]
@@ -12,7 +13,7 @@ public class RoomType
 public class GridManager : MonoBehaviour
 {
     /// Временно, дял тестов локализации
-    [SerializeField] private TextAsset _textAsset;
+    [SerializeField] private TextAsset _textAsset;    
 
     [Header("Tertiary Paths Settings")]
     public int minTertiaryPaths = 1; // Минимальное количество третичных путей
@@ -63,6 +64,8 @@ public class GridManager : MonoBehaviour
     public GameObject blueCardPrefab;
     public GameObject portableBatteryPrefab;
 
+    private EnemyManager _enemyManager;
+
     // Глобальные списки для имен предметов и комнат, где они размещены
     private List<string> itemNames = new List<string>
     {
@@ -79,7 +82,7 @@ public class GridManager : MonoBehaviour
     {
         // Временно, для тестов
         LocalizationManager.SetCSV(_textAsset);
-
+        _enemyManager = GetComponent<EnemyManager>();
         GenerateGrid();
         PlaceRooms();
         ComputeDistanceToRooms();
@@ -91,6 +94,8 @@ public class GridManager : MonoBehaviour
         AssignAccessLevelsToRooms(itemRooms);
         DisablePowerInRooms(itemRooms);
         GeneratePathReport();
+        GetComponent<NavMeshSurface>().BuildNavMesh();
+        _enemyManager.CreateEnemy();
     }
 
     void GenerateGrid()
@@ -300,6 +305,11 @@ public class GridManager : MonoBehaviour
     {
         // Получаем RoomAccessControl из комнаты
         RoomAccessControl roomAccess = room.GetComponent<RoomAccessControl>();
+
+        // Передаем ссылку на массив точек перемещения ботов деспетчеру ботов
+        EnemyRoute enemyRoute;
+        if (room.TryGetComponent<EnemyRoute>(out enemyRoute))
+            _enemyManager.AddWaypoints(roomAccess, enemyRoute.CountMaxEnemyInRoom, enemyRoute.GetWayPoints());
 
         // Отмечаем клетки как занятые
         for (int x = startX; x < startX + roomSize; x++)

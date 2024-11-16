@@ -48,7 +48,7 @@ public class LocationSetting : MonoBehaviour
     {
         foreach (RoomSetting room in _rooms) 
         {
-            _enemyManager.AddItinerary(room.GetEnemyTargetPoints());
+          //  _enemyManager.AddItinerary(room.GetEnemyTargetPoints());
         }
     }
 

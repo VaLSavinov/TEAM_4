@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8536574703716272330}
   - component: {fileID: 7278860913008966227}
   - component: {fileID: 5159496520736286942}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,3 +121,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridX: 0
   gridY: 0
+  isOccupied: 0
+  occupyingRoom: {fileID: 0}
+  isDoorway: 0
+  occupancyType: 0
+  isConnectedToMainPath: 0
+  roomAccessControl: {fileID: 0}
