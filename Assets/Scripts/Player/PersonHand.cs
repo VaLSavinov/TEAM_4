@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,18 +44,12 @@ public class PersonHand : MonoBehaviour
 
     private void GrabObject() 
     {
-        /*_grabObject = _hitObject.GetComponent<Rigidbody>(); // Оставлю на всякий случай
-        _grabObject.isKinematic = true;
-        _grabObject.transform.position = _handPoint.position;
-        _grabObject.transform.SetParent(_handPoint.transform);*/
-
         if (_hitObject == null) return;
         _grabObject = _hitObject.GetComponent<Rigidbody>();
         if (_grabObject != null)
         {
             _grabObject.isKinematic = true;
             StartCoroutine(MoveToHand()); // Плавно перемещаем объект к руке
-            _grabObject.transform.SetParent(_handPoint.transform); // Устанавливаем родителя
         }
     }
 
@@ -63,19 +58,21 @@ public class PersonHand : MonoBehaviour
     /// </summary>
     private IEnumerator MoveToHand()
     {
-        Vector3 targetPosition = _handPoint.position; // Позиция пуки
-        float duration = 0.1f; // Длительность анимации
+        // Делаем объект зависимым
+        _grabObject.transform.SetParent(_handPoint);
+        // А затем, пересещаем в центер координат
+        Vector3 targetPosition = Vector3.zero;
+        float duration = 0.3f; // Длительность анимации
         float elapsedTime = 0f;
 
-        while (elapsedTime < duration)
+        while (elapsedTime < duration && _grabObject!=null)
         {
             // Плавно перемещаем объект к позиции руки
-            _grabObject.transform.position = Vector3.Lerp(_grabObject.transform.position, targetPosition, (elapsedTime / duration));
+            _grabObject.transform.localPosition = Vector3.Lerp(_grabObject.transform.localPosition, targetPosition, (elapsedTime / duration));
             elapsedTime += Time.deltaTime; // Увеличиваем время
             yield return null; // Ждем следующего кадра
         }
-
-        _grabObject.transform.position = targetPosition; // Объект точно на позиции руки
+        if (_grabObject != null) _grabObject.transform.localPosition = targetPosition; // Объект точно на позиции руки
     }
 
     /// <summary>
@@ -130,7 +127,8 @@ public class PersonHand : MonoBehaviour
 
     private void SetInteractObject(GameObject newInteractObject)
     {
-        if (_hitObject == newInteractObject) return;
+        // Это для того, чтобы "не видеть" объекты у нас в руках
+        if (_grabObject!=null && _grabObject.gameObject == newInteractObject) return;
         _hitObject = newInteractObject;
         GameMode.PlayerUI.ShowText("UI.Interact");
     }
@@ -169,12 +167,24 @@ public class PersonHand : MonoBehaviour
 
     private void TransferObject()
     {
-        if (_hitObject.transform.GetComponent<PlacmentPoint>().PlaceObject(_grabObject.gameObject)) 
+        if (_hitObject.transform.GetComponent<PlacmentPoint>().PlaceObject(_grabObject.gameObject))
         {
             _grabObject.transform.SetParent(null);
             _grabObject.isKinematic = true;
             _grabObject = null;
         }
+        else 
+        {
+            GameMode.PlayerUI.DeactivatePanel();
+            GameMode.PlayerUI.ShowText("UI.Request");
+            StartCoroutine(ShowText());
+        }
+    }
+
+    private IEnumerator ShowText()
+    {
+        yield return new WaitForSeconds(6);
+        GameMode.PlayerUI.DeactivatePanel();
     }
 
     public bool HasCard(AccessCardColor card) 

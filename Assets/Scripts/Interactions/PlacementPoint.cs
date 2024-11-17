@@ -24,7 +24,7 @@ public class PlacmentPoint : MonoBehaviour
             obj.transform.tag = "Untagged";
             _interactable.Interact();
             return true;
-        }
+        }        
         return false;
     }
 }

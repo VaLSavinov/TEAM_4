@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Generator : MonoBehaviour, IInteractable
 {
+    [SerializeField] private GameObject _batareyPreview;
+
     public void Interact()
     {
          GameMode.InteractGenerator();
+        _batareyPreview.SetActive(false);
     }
 }

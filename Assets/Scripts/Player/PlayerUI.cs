@@ -15,6 +15,7 @@ public class PlayerUI : MonoBehaviour
 
     public void ShowText(string text) 
     {
+        if (_panel.activeSelf) return;
          _text.SetTag(text);
         _panel.SetActive(true);
     }
