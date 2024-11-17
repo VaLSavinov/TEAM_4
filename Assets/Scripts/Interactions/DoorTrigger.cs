@@ -21,7 +21,9 @@ public class DoorTrigger : MonoBehaviour
 
             }
             else return;
-        else if (_roomAccessControl != null &&!_roomAccessControl.HasPower)
+        else if (other.gameObject.tag == "Player" 
+                 &&_roomAccessControl != null 
+                 && !_roomAccessControl.HasPower)
         {
             GameMode.PlayerUI.ShowText("UI.NoPower");
         }
@@ -32,7 +34,7 @@ public class DoorTrigger : MonoBehaviour
         if (_roomAccessControl == null || _roomAccessControl.HasPower)
             if (other.gameObject.tag == "Player" && CheackCard() || other.gameObject.tag == "Enemy")
             {
-                // Закрываем дверь, только если все, кто может через нее прошли
+                // Закрываем дверь, только если все, кто может, через нее прошли
                 _interactors.Remove(other.gameObject);
                 if (_interactors.Count==0) PlayClip("CloseDoor");
             }
