@@ -15,7 +15,7 @@ public class PersonHand : MonoBehaviour
     private Rigidbody _grabObject;
     private float _throwVerticalForce = 0.2f;
     private Dictionary<AccessCardColor, bool> _inventaryCard = new Dictionary<AccessCardColor, bool>();
-    private List<AccessCardColor> _r;
+    //private List<AccessCardColor> _r;
 
     private void Awake()
     {
@@ -43,10 +43,39 @@ public class PersonHand : MonoBehaviour
 
     private void GrabObject() 
     {
-        _grabObject = _hitObject.GetComponent<Rigidbody>();
+        /*_grabObject = _hitObject.GetComponent<Rigidbody>(); // Оставлю на всякий случай
         _grabObject.isKinematic = true;
         _grabObject.transform.position = _handPoint.position;
-        _grabObject.transform.SetParent(_handPoint.transform);
+        _grabObject.transform.SetParent(_handPoint.transform);*/
+
+        if (_hitObject == null) return;
+        _grabObject = _hitObject.GetComponent<Rigidbody>();
+        if (_grabObject != null)
+        {
+            _grabObject.isKinematic = true;
+            StartCoroutine(MoveToHand()); // Плавно перемещаем объект к руке
+            _grabObject.transform.SetParent(_handPoint.transform); // Устанавливаем родителя
+        }
+    }
+
+    /// <summary>
+    /// Плавное перемещение объекта к руке
+    /// </summary>
+    private IEnumerator MoveToHand()
+    {
+        Vector3 targetPosition = _handPoint.position; // Позиция пуки
+        float duration = 0.1f; // Длительность анимации
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            // Плавно перемещаем объект к позиции руки
+            _grabObject.transform.position = Vector3.Lerp(_grabObject.transform.position, targetPosition, (elapsedTime / duration));
+            elapsedTime += Time.deltaTime; // Увеличиваем время
+            yield return null; // Ждем следующего кадра
+        }
+
+        _grabObject.transform.position = targetPosition; // Объект точно на позиции руки
     }
 
     /// <summary>
@@ -110,7 +139,7 @@ public class PersonHand : MonoBehaviour
     {        
         if (_grabObject == null) return;
         _grabObject.transform.SetParent(null);
-        _grabObject.isKinematic = false;
+        _grabObject.isKinematic = false; // Делаем объект динамическим
         _grabObject = null;
     }
 

@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8d583dbfc67e1fe42b4d65efbd1540c9, type: 2}
+  - {fileID: 2100000, guid: ef95032108343be41a5b78b21b48dcb5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -119,4 +119,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cardColor: 1
-  itemType: 0
+  _itemType: 0
