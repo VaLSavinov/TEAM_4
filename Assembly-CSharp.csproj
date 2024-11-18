@@ -60,6 +60,7 @@
     <Analyzer Include="C:\Users\Alina\UnityProject\2022.3.30f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Audio\AudioTrigger.cs" />
     <Compile Include="Assets\Scripts\Procedural\Gen\CorridorPiece.cs" />
     <Compile Include="Assets\Scripts\Procedural\Gen\Pathfinding.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyAI.cs" />
@@ -70,9 +71,9 @@
     <Compile Include="Assets\Scripts\Enemy\EnemyManager.cs" />
     <Compile Include="Assets\Scripts\Procedural\Gen\PickableItem.cs" />
     <Compile Include="Assets\Scripts\Procedural\Gen\RoomAccessControl.cs" />
-    <Compile Include="Assets\Scripts\AudioTrigger.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyRoute.cs" />
     <Compile Include="Assets\Scripts\Loaclization\LoaclizationText.cs" />
+    <Compile Include="Assets\Scripts\Audio\InteractSoundSource.cs" />
     <Compile Include="Assets\Scripts\Interactions\InteractionController.cs" />
     <Compile Include="Assets\Scripts\Procedural\Gen\Doorway.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyDetected.cs" />
@@ -88,7 +89,6 @@
     <Compile Include="Assets\Scripts\Player\InputManager.cs" />
     <Compile Include="Assets\Scripts\Loaclization\MainMenu.cs" />
     <Compile Include="Assets\Scripts\Procedural\Gen\GridManager.cs" />
-    <Compile Include="Assets\Scripts\Interactions\SoundSource.cs" />
     <Compile Include="Assets\Scripts\Loaclization\LocalizationManager.cs" />
     <Compile Include="Assets\Scripts\Player\PersonHand.cs" />
     <Compile Include="Assets\Scripts\ActivateSoundObject.cs" />

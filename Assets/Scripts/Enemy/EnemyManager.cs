@@ -16,6 +16,7 @@ public class EnemyManager : MonoBehaviour
     private void Awake()
     {
         _enemys = new List<EnemyAI>();
+        GameMode.EnemyManager = this;
     }
 
     /// <summary>
@@ -126,5 +127,18 @@ public class EnemyManager : MonoBehaviour
         editWaypoint.IsAvail = false;
         _waypoints[newRoom][newIndex] = editWaypoint;
         return _waypoints[newRoom][newIndex].Point;
+    }
+
+    /// <summary>
+    /// Напарвляем ботов к источнику шума
+    /// </summary>
+    /// <param name="pointAlaem"></param>
+    /// <param name="distance"></param>
+    public void AlarmAtDistance(Vector3 pointAlaem, float distance) 
+    {
+        foreach (EnemyAI enemyAI in _enemys)
+        {
+            if (Vector3.Distance(enemyAI.transform.position, pointAlaem) <= distance) enemyAI.StartAlerted(pointAlaem);
+        }
     }
 }

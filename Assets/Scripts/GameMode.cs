@@ -5,6 +5,7 @@ public static class GameMode
     private static FirstPersonLook _playerCamera;
     private static PersonHand _personHand;
     private static PlayerUI _playerUI;
+    private static EnemyManager _EnemyManager;
 
 
     public static event Action OnInteractGenerator;
@@ -25,6 +26,12 @@ public static class GameMode
     {
         get { return _playerUI; }
         set { _playerUI = value; }
+    }
+
+    public static EnemyManager EnemyManager
+    {
+        get { return _EnemyManager; }
+        set { _EnemyManager = value; }
     }
 
     public static void InteractGenerator() 

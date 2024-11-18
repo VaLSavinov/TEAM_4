@@ -1,3 +1,5 @@
+using System;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,12 +13,27 @@ public class FirstPersonLook : MonoBehaviour
     // Текущее вращение по оси X.
     private float _xRotation = 0f;
 
-    void Start() 
+    private PlayerControl _playerControl;
+
+    void Awake() 
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         GameMode.FirstPersonLook = this;
+        _playerControl = new PlayerControl();      
     }
+      
+    private void OnEnable()
+    {
+        _playerControl.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _playerControl.Disable();
+    }
+
+
 
     void Update()
     {
