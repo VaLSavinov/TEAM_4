@@ -5,7 +5,7 @@ using UnityEngine;
 public static class LocalizationManager
 {  
     private static char _fieldSeperator = ';';
-    private static char _lineSeperater = '\n';
+    private static char _lineSeperater = '|';
     private static TextAsset _csvAsset;
     private static string[,] _localization;
     private static string[] _languages = {"rus","eng"}; 
@@ -19,11 +19,13 @@ public static class LocalizationManager
         _csvAsset = csvAsset;
         string[] records = _csvAsset.text.Split(_lineSeperater);
         _localization = new string[records.Length, records[0].Split(_fieldSeperator).Length];
-        for (int i = 0; i < records.Length; i++)
+        for (int i = 0; i < records.Length-1; i++)
         {
             string[] fields = records[i].Split(_fieldSeperator);
+            if (fields[0] == "") continue;
             for (int j = 0;j<fields.Length;j++)
             {
+                if (j == 0) fields[j] = fields[j].Replace("\n", string.Empty);
                 _localization[i,j] = fields[j];
             }
         }
@@ -50,7 +52,8 @@ public static class LocalizationManager
             {
                 for (int i = 1; i < _localization.GetLength(0); i++)
                 {
-                    if (_localization[i, 0] == tag) return _localization[i, numLeng];
+                    if (_localization[i,0].Contains(tag)) 
+                        return _localization[i, numLeng].TrimStart('"').TrimEnd('"');
                 }
             }           
         }

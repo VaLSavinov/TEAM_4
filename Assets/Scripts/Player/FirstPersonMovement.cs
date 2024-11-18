@@ -1,3 +1,5 @@
+using System;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 
 public class FirstPersonMovement : MonoBehaviour
@@ -13,38 +15,57 @@ public class FirstPersonMovement : MonoBehaviour
     private const float GROUNDED_VELOCITY = -1f;
     private bool isGrounded;
     private Vector3 velocity;
+    private PlayerControl _control;
+    private float _currentSpeed;
 
     private float originalHeight;
 
-    void Start()
+    void Awake()
     {
         originalHeight = controller.height;
+        _control = new PlayerControl();
+        Walk();
+        // Подпись на кнопки бега и приседа
+        _control.Player.Run.started += context => Run();
+        _control.Player.Sneak.started += context => Sneak();
+        // Подпись на возвращение к хотьбе
+        _control.Player.Run.canceled += context => Walk();
+        _control.Player.Sneak.canceled += context => Walk();
+    }
+    private void OnEnable()
+    {
+        _control.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _control.Disable();
+    }
+
+    private void Sneak()
+    {
+        _currentSpeed = speed / 1.5f; // Приседание
+        controller.height = originalHeight / 2;
+    }
+
+    private void Walk()
+    {
+        _currentSpeed = speed;
+        controller.height = originalHeight;
+    }
+
+    private void Run()
+    {
+        _currentSpeed =  speed * 1.5f; // Спринт
     }
 
     void Update()
     {
-        float currentSpeed = CalculateSpeed();
-        Vector3 moveDirection = GetMoveDirection(currentSpeed);
+        Vector3 moveDirection = GetMoveDirection();
         HandleNormalMovement(moveDirection);
     }
-
-    float CalculateSpeed()
-    {
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            return speed * 1.5f; // Спринт
-        }
-        else if (Input.GetKey(KeyCode.LeftControl))
-        {
-            return speed / 1.5f; // Приседание
-        }
-        else
-        {
-            return speed; // Обычная ходьба
-        }
-    }
-
-    Vector3 GetMoveDirection(float currentSpeed)
+    
+    Vector3 GetMoveDirection()
     {
         float x = InputManager.Instance.Horizontal;
         float z = InputManager.Instance.Vertical;
@@ -52,7 +73,7 @@ public class FirstPersonMovement : MonoBehaviour
 
 
         Vector3 move = transform.right * x + transform.up * y + transform.forward * z;
-        return move * currentSpeed * Time.deltaTime;
+        return move * _currentSpeed * Time.deltaTime;
     }
 
     void HandleNormalMovement(Vector3 moveDirection)

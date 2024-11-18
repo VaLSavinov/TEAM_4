@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Numerics;
 using UnityEngine;
 
@@ -5,21 +7,26 @@ public class EnemyDetected : MonoBehaviour
 {
     [SerializeField, Tooltip("Точка обзора.")] private Transform _viewPoint;
     [SerializeField] private EnemyAI _enemyAI;
+    [SerializeField, Tooltip("Время отслеживания после потери из вида")] private float _waitToSearch = 2f;
     [SerializeField] private LayerMask _layerMask;
    
     private bool _isDetected = false;
     private bool _isInVievZone = false;
 
+    // Время, спустя которое 
+    private float _timeLoss;
+
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag=="Player")
-            _isInVievZone = true;           
+        /*if (other.gameObject.tag=="Player")
+            _isInVievZone = true;         */  
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if (!_isInVievZone) return;   
+
+        if (!_isInVievZone && _timeLoss == 0)  return;
         
         Ray ray = new Ray(_viewPoint.position,NormolizateVector(_viewPoint.position, GameMode.FirstPersonLook.transform.position));
         //Проверка        
@@ -35,15 +42,35 @@ public class EnemyDetected : MonoBehaviour
             else
             if (_isDetected)
             {
-               // _isInVievZone = false; //Без этого, кажется лучше
-                _isDetected =false;
-                _enemyAI.StartSearchingPlayer();
-            }
+                // _isInVievZone = false; //Без этого, кажется лучше
+                _isDetected = false;
+                _timeLoss = Time.time;
+            }           
+               
         }
-        
+        if (!_isDetected && _timeLoss > 0)
+            WaitToSearch();
+
+
     }
 
-     private void OnTriggerExit(Collider other)
+    /// <summary>
+    /// Некоторая задержка перед тем, как завершить слежение и перейти к поиску
+    /// </summary>
+    private void WaitToSearch()
+    {
+        if (Time.time - _timeLoss >= _waitToSearch)
+        {
+            _enemyAI.StartSearchingPlayer();
+            _timeLoss = 0;
+        }
+        else
+        {
+            _enemyAI.ChasePlayer();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
      {
          if (!_isDetected && other.gameObject.tag == "Player")
             _isInVievZone = false;
@@ -53,4 +80,5 @@ public class EnemyDetected : MonoBehaviour
     {
         return (endpoint - origin) / UnityEngine.Vector3.Distance(endpoint, origin);
     }
-}
+
+ }

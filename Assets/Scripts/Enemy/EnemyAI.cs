@@ -54,7 +54,8 @@ public class EnemyAI : MonoBehaviour
     {
         yield return new WaitForSeconds(_alertTime);
         if (_state == EEnemyState.Alerted) StartPatrol(); // Возвращаемся к патрулированию
-    }   
+    }
+       
 
     /// <summary>
     /// Обход точек
@@ -139,7 +140,7 @@ public class EnemyAI : MonoBehaviour
     /// Начало преследования игрока
     /// </summary>
     public void ChasePlayer() 
-    {
+    {        
         _state = EEnemyState.Chasing;
         _meshRenderer.material = materialChasing;
         _agent.SetDestination(GameMode.PersonHand.transform.position);
@@ -163,7 +164,7 @@ public class EnemyAI : MonoBehaviour
         // Если бот преследует, то не отвлекается
         if (_state == EEnemyState.Chasing) return; 
         _state = EEnemyState.Alerted;
-        _meshRenderer. material = materialAlerted;        
+        _meshRenderer. material = materialAlerted;
         _agent.SetDestination(noiseSours);
         _agent.speed = _speedAlertOrSearching;
         _isWalk = true;

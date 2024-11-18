@@ -1130,7 +1130,7 @@ public class GridManager : MonoBehaviour
     {
         List<GameObject> placedItemRooms = new List<GameObject>();
 
-        // Get all rooms except the start and finish rooms
+        // Получаем все комнаты, кроме стартовой и финишной
         HashSet<GameObject> uniqueRooms = new HashSet<GameObject>();
         foreach (GridCell cell in cells)
         {
@@ -1145,17 +1145,17 @@ public class GridManager : MonoBehaviour
 
         List<GameObject> rooms = new List<GameObject>(uniqueRooms);
 
-        // Check if we have enough rooms
+        // Проверяем, достаточно ли комнат
         if (rooms.Count < 4)
         {
             Debug.LogError("Недостаточно комнат для размещения предметов.");
             return placedItemRooms;
         }
 
-        // Shuffle rooms
+        // Перемешиваем комнаты
         ShuffleList(rooms);
 
-        // List of items to place
+        // Список предметов для размещения
         List<GameObject> itemsToPlace = new List<GameObject>
         {
             redCardPrefab,
@@ -1164,25 +1164,39 @@ public class GridManager : MonoBehaviour
             portableBatteryPrefab
         };
 
-        // Place items
+        // Размещение предметов
+        int roomIndex = 0;
         for (int i = 0; i < itemsToPlace.Count; i++)
         {
             GameObject item = itemsToPlace[i];
-            GameObject room = rooms[i];
 
-            // Find ObjectSpawnPoint in the room
-            Transform spawnPoint = room.transform.Find("ObjectSpawnPoint");
-            if (spawnPoint != null)
+            // Пытаемся найти комнату с точкой спауна
+            while (roomIndex < rooms.Count)
             {
-                Instantiate(item, spawnPoint.position, Quaternion.identity);
-                placedItemRooms.Add(room);
-                itemsPlacedRooms.Add(room);
-                itemsPlaced.Add(itemNames[i]);
-                Debug.Log($"{itemNames[i]} размещён в комнате {room.name}.");
+                GameObject room = rooms[roomIndex];
+                Transform spawnPoint = room.transform.Find("ObjectSpawnPoint");
+
+                if (spawnPoint != null)
+                {
+                    Instantiate(item, spawnPoint.position, Quaternion.identity);
+                    placedItemRooms.Add(room);
+                    itemsPlacedRooms.Add(room);
+                    itemsPlaced.Add(itemNames[i]);
+                    Debug.Log($"{itemNames[i]} размещён в комнате {room.name}.");
+                    roomIndex++; // Переходим к следующей комнате
+                    break;
+                }
+                else
+                {
+                    Debug.LogWarning($"В комнате {room.name} не найден ObjectSpawnPoint. Ищем другую комнату.");
+                    roomIndex++; // Переходим к следующей комнате
+                }
             }
-            else
+
+            if (roomIndex >= rooms.Count)
             {
-                Debug.LogWarning($"В комнате {room.name} не найден ObjectSpawnPoint.");
+                Debug.LogError("Недостаточно доступных комнат с точками спауна для размещения всех предметов.");
+                break;
             }
         }
 
