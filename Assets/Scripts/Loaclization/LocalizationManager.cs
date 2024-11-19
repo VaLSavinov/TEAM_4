@@ -52,7 +52,7 @@ public static class LocalizationManager
             {
                 for (int i = 1; i < _localization.GetLength(0); i++)
                 {
-                    if (_localization[i,0].Contains(tag)) 
+                    if (_localization[i,0].Contains(tag))
                         return _localization[i, numLeng].TrimStart('"').TrimEnd('"');
                 }
             }           

@@ -8,25 +8,19 @@ UI.NoPower;;Нет энергии;No power;|
 UI.Red;;Требуется КРАСНАЯ карта;A RED card is required;|
 UI.Green;;Требуется ЗЕЛЕНАЯ карта;A GREEN card is required;|
 UI.Blue;;Требуется СИНЯЯ карта;A BLUEcard is required;|
-Reports.Page1;;"ЭКСПЕРИМЕНТ №42-О
-От: Доктора Тревора Оуэнса
+UI.Request;;Отсутсвует необходимый объект;A object is required;|
+;;;;|
+Reports.Page1;;"ЭКСПЕРИМЕНТ №42-О Отчёт №1 Доктора Тревора Оуэнса
 Кому: Доктору Мартину Хендриксу, директору S.C.A.L.P. Lab.
-Дата: 12 октября 1982 года
-Отчёт №1
-После того, как три месяца назад шестой образец данного эксперимента погиб в результате отказа органов, не прожив и полугода, мы провели вскрытие, позволившее создать новейшие методы генной терапии для создания комбинированных клеток. Мы всё так же изучаем возможности слияния клеток млекопитающих с клетками более простых существ. Основное внимание уделялось попыткам создания гибридной ткани, способной к регенерации.
-В процессе эксперимента использовались образцы клеток #### и #####. На 5-й день наблюдения были зафиксированы необычные паттерны слияния клеток. Подопытный организм ###### продемонстрировал рост новых тканей, схожих с #####, но их функциональность оказалась непредсказуемой — клетки начали проявлять аномальную активность.
-Именно это и произошло с четвёртым образцом, поэтому мы превентивно ввели сыворотку-ингибитор.
-Моей настоятельной просьбой совету директоров будет увеличить сроки проведения эксперимента. Для получения желаемого результата спешка будет губительной, что показали предыдущие образцы.
-";"EXPERIMENT #42-O
-From: Dr. Trevor Owens
+12 октября 1982 года
+После того, как шестой образец погиб, мы провели вскрытие, позволившее создать новейшие методы генной терапии для создания комбинированных клеток. Основное внимание сейчас уделяется попыткам создания гибридной ткани, способной к регенерации.
+В процессе эксперимента использовались образцы клеток ██████ и ██████. Подопытный организм ███████ продемонстрировал рост новых тканей, схожих с ██████, но их функциональность оказалась непредсказуемой — клетки начали проявлять аномальную активность.
+Именно это и произошло с четвёртым образцом, поэтому мы превентивно ввели сыворотку-ингибитор.";"EXPERIMENT #42-O Report #1 by Dr. Trevor Owens
 To: Dr. Martin Hendricks, Director of S.C.A.L.P. Lab.
-Date: October 12, 1982
-Report #1
-After the sixth subject of this experiment died of organ failure before reaching six months of life, three months ago, we performed an autopsy that allowed us to develop new gene therapy techniques to create hybrid cells. We are still studying the possibilities of fusing mammalian cells with cells of simpler creatures. The primary focus has been on trying to create hybrid tissue capable of regeneration.
-The experiment involved using ##### and #### cells. On the 5th day of observation, we recorded unusual patterns of cell fusion. The test subject #### showed growth of new tissues similar to those in ####, but their functionality was unpredictable, with the cells exhibiting abnormal activity. 
-This is exactly what happened with the fourth subject, so we have preemptively administered the inhibitor serum.
-My urgent request to the Board of Directors is to extend the duration of the experiment. Rushing the process would be detrimental to achieving the desired results, as proven by the previous test subjects.
-";|
+October 12, 1982
+After the sixth subject died, we performed an autopsy that allowed us to develop new gene therapy techniques to create hybrid cells. The primary focus right now is on trying to create hybrid tissue capable of regeneration.
+The experiment involved using █████ and █████ cells. The test subject ██████ showed growth of new tissues similar to those in ████, but their functionality was unpredictable, with the cells exhibiting abnormal activity. 
+This is exactly what happened with the fourth subject, so we have preemptively administered the inhibitor serum.";|
 ;;;;
 ;;;;
 ;;;;

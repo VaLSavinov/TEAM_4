@@ -19,8 +19,8 @@ public class EnemyDetected : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        /*if (other.gameObject.tag=="Player")
-            _isInVievZone = true;         */  
+        if (other.gameObject.tag=="Player")
+            _isInVievZone = true;  
     }
 
     private void Update()

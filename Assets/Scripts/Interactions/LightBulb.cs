@@ -22,4 +22,9 @@ public class LightBulb : MonoBehaviour, IInteractable
        
 
     public void StopInteract() { }
+
+    public bool Interact(ref GameObject interactingOject)
+    {
+        throw new System.NotImplementedException();
+    }
 }

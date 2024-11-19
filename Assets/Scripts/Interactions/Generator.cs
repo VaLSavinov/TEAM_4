@@ -11,4 +11,9 @@ public class Generator : MonoBehaviour, IInteractable
          GameMode.InteractGenerator();
         _batareyPreview.SetActive(false);
     }
+
+    public bool Interact(ref GameObject interactingOject)
+    {
+        throw new System.NotImplementedException();
+    }
 }

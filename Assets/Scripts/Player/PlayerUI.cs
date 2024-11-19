@@ -13,10 +13,15 @@ public class PlayerUI : MonoBehaviour
         GameMode.PlayerUI = this;
     }
 
-    public void ShowText(string text) 
+    /// <summary>
+    /// Показать текст в центре экрана
+    /// </summary>
+    /// <param name="text"> Показываемый текст</param>
+    /// <param name="isRewrite"> Перезаписть текст, если в данный момент выводиться другой</param>
+    public void ShowText(string text, bool isRewrite) 
     {
-        if (_panel.activeSelf) return;
-         _text.SetTag(text);
+        if (!isRewrite && _panel.activeSelf) return;
+        _text.SetTag(text);
         _panel.SetActive(true);
     }
 
