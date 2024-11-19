@@ -17,5 +17,13 @@ public enum AccessCardColor
 public enum ItemType 
 {
     AccessCard,
-    PortableBattery
+    PortableBattery,
+    Collectible
+}
+
+public enum CollectibleType
+{
+    Reports,
+    Image,
+    AudioRecords  
 }

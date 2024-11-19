@@ -66,6 +66,19 @@ public static class LocalizationManager
         if (_currentLenguage== _languages.Length) {_currentLenguage = 0;}        
         OnChangeLanguage?.Invoke();
     }
-    
+
+    public static bool CheackAvail(string tag,string avail) 
+    {
+        for (int i = 1; i < _localization.GetLength(1); i++)
+            {
+                if (_localization[0, i] == tag && _localization[0, i]==avail) return true;            
+            }
+        return false;
+    }
+
+    public static void WriteAvailForTag(string tag, string avail) 
+    {
+
+    }
 }
 
