@@ -57,4 +57,9 @@ public class InteractSoundSource : MonoBehaviour, IInteractable
 
         }
     }
+
+    public bool Interact(ref GameObject interactingOject)
+    {
+        throw new System.NotImplementedException();
+    }
 }

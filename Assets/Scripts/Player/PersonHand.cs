@@ -13,7 +13,8 @@ public class PersonHand : MonoBehaviour
 
     private PlayerControl _control;
     private GameObject _hitObject;
-    private Rigidbody _grabObject;
+    private GameObject _grabObject;
+    private Rigidbody _grabObjectRigidbody;
     private float _throwVerticalForce = 0.2f;
     private Dictionary<AccessCardColor, bool> _inventaryCard = new Dictionary<AccessCardColor, bool>();
     //private List<AccessCardColor> _r;
@@ -45,10 +46,11 @@ public class PersonHand : MonoBehaviour
     private void GrabObject() 
     {
         if (_hitObject == null) return;
-        _grabObject = _hitObject.GetComponent<Rigidbody>();
+        _grabObject = _hitObject;
+        _grabObjectRigidbody = _hitObject.GetComponent<Rigidbody>();
         if (_grabObject != null)
         {
-            _grabObject.isKinematic = true;
+            _grabObjectRigidbody.isKinematic = true;
             StartCoroutine(MoveToHand()); // Плавно перемещаем объект к руке
         }
     }
@@ -114,8 +116,7 @@ public class PersonHand : MonoBehaviour
                     AddCard(_hitObject);
                     break;
                 case "Place":
-                    if (_grabObject != null)
-                        TransferObject();
+                    TransferObject();
                     break;
                 default:
                     break;
@@ -130,14 +131,14 @@ public class PersonHand : MonoBehaviour
         // Это для того, чтобы "не видеть" объекты у нас в руках
         if (_grabObject!=null && _grabObject.gameObject == newInteractObject) return;
         _hitObject = newInteractObject;
-        GameMode.PlayerUI.ShowText("UI.Interact");
+        GameMode.PlayerUI.ShowText("UI.Interact",false);
     }
         
     private void DropObject() 
     {        
         if (_grabObject == null) return;
         _grabObject.transform.SetParent(null);
-        _grabObject.isKinematic = false; // Делаем объект динамическим
+        _grabObjectRigidbody.isKinematic = false; // Делаем объект динамическим
         _grabObject = null;
     }
 
@@ -145,8 +146,8 @@ public class PersonHand : MonoBehaviour
     { 
         if (_grabObject == null) return;
         _grabObject.transform.SetParent(null);
-        _grabObject.isKinematic = false;
-        _grabObject.AddForce((_cameraTransform.forward + Vector3.up * _throwVerticalForce) * _throwForce);
+        _grabObjectRigidbody.isKinematic = false;
+        _grabObjectRigidbody.AddForce((_cameraTransform.forward + Vector3.up * _throwVerticalForce) * _throwForce);
         _grabObject = null;
     }
 
@@ -167,25 +168,19 @@ public class PersonHand : MonoBehaviour
 
     private void TransferObject()
     {
-        if (_hitObject.transform.GetComponent<PlacmentPoint>().PlaceObject(_grabObject.gameObject))
+        IInteractable interactObj = _hitObject.GetComponent<IInteractable>();
+        // Если у нас в руках есть предмет, который может взаимодействовть - пробуем им взаимодействовать
+        if (_grabObject != null && interactObj.Interact(ref _grabObject))
         {
-            _grabObject.transform.SetParent(null);
-            _grabObject.isKinematic = true;
-            _grabObject = null;
+            if (_grabObject == null) _grabObjectRigidbody = null;
         }
+        // Если нет - обычное взаимодействие
         else 
+        if (_grabObject == null)
         {
-            GameMode.PlayerUI.DeactivatePanel();
-            GameMode.PlayerUI.ShowText("UI.Request");
-            StartCoroutine(ShowText());
+            interactObj.Interact();
         }
-    }
-
-    private IEnumerator ShowText()
-    {
-        yield return new WaitForSeconds(6);
-        GameMode.PlayerUI.DeactivatePanel();
-    }
+    }    
 
     public bool HasCard(AccessCardColor card) 
     {

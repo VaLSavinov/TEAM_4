@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Audio\AudioTrigger.cs" />
+    <Compile Include="Assets\Scripts\Interactions\DoorCodLock.cs" />
     <Compile Include="Assets\Scripts\Procedural\Gen\CorridorPiece.cs" />
     <Compile Include="Assets\Scripts\Procedural\Gen\Pathfinding.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyAI.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Assets\Scripts\Player\Old\PlayerCharacter.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerUI.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyManager.cs" />
+    <Compile Include="Assets\Scripts\Interactions\DoorControl.cs" />
     <Compile Include="Assets\Scripts\Procedural\Gen\PickableItem.cs" />
     <Compile Include="Assets\Scripts\Procedural\Gen\RoomAccessControl.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyRoute.cs" />
@@ -82,7 +84,6 @@
     <Compile Include="Assets\Scripts\Player\FirstPersonLook.cs" />
     <Compile Include="Assets\Scripts\Interactions\LightBulb.cs" />
     <Compile Include="Assets\Scripts\Enum\Structure.cs" />
-    <Compile Include="Assets\Scripts\Interactions\DoorTrigger.cs" />
     <Compile Include="Assets\Scripts\Interactions\PlacementPoint.cs" />
     <Compile Include="Assets\Scripts\Enum\Enumenators.cs" />
     <Compile Include="Assets\Scripts\Interactions\IInteractable.cs" />
@@ -94,6 +95,29 @@
     <Compile Include="Assets\Scripts\ActivateSoundObject.cs" />
     <Compile Include="Assets\Scripts\Interactions\Generator.cs" />
     <Compile Include="Assets\Scripts\Player\FirstPersonMovement.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+    <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -14,4 +14,9 @@ public class PickableItem : MonoBehaviour, IInteractable
     {
         Destroy(gameObject);
     }
+
+    public bool Interact(ref GameObject interactingOject)
+    {
+        return true;
+    }
 }

@@ -1,6 +1,7 @@
 using System;
 using UnityEditor.ShaderGraph;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class FirstPersonLook : MonoBehaviour
@@ -20,9 +21,16 @@ public class FirstPersonLook : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         GameMode.FirstPersonLook = this;
-        _playerControl = new PlayerControl();      
+        _playerControl = new PlayerControl();
+        _playerControl.UI.PauseMenu.started += context => ShowMainMenu();
     }
-      
+
+    // Временное решение, пока нет UI
+    private void ShowMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     private void OnEnable()
     {
         _playerControl.Enable();
