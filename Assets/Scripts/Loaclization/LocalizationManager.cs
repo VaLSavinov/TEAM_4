@@ -1,5 +1,7 @@
 using System;
-using UnityEditor.Localization.Editor;
+using System.Collections.Generic;
+using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public static class LocalizationManager
@@ -66,6 +68,62 @@ public static class LocalizationManager
         if (_currentLenguage== _languages.Length) {_currentLenguage = 0;}        
         OnChangeLanguage?.Invoke();
     }
-    
+
+    /// <summary>
+    /// ѕолучение всех тегов, которые соответсвуют (equal=true) или не соответсвуют (equal=false) avail
+    /// </summary>
+    /// <param name="avail"> вид досутпности - f - не доступен, t - доступен, n - новый</param>
+    /// <param name="equal"> провер€етс€ равнество парматру avail или не равенство</param>
+    /// <returns></returns>
+    public static List<string> GetTagList(string avail, bool equal)
+    {
+        List<string> list = new List<string>();
+        for (int i = 1; i < _localization.GetLength(0); i++)
+        {
+            if (_localization[i, 1] != "" && (_localization[i, 1] == avail) == equal) list.Add(_localization[i, 0]);
+        }
+        return list;
+    }
+
+
+    /// <summary>
+    /// ѕроверка на доступность тега (пока не нужно, но модет пригадитьс€)
+    /// </summary>
+    /// <param name="tag"> “ег</param>
+    /// <param name="avail"> вид досутпности - f - не доступен, t - доступен, n - новый</param>
+    /// <param name="equal"> провер€етс€ равнество парматру avail или не равенство</param>
+    /// <returns></returns>
+    public static bool CheackAvail(string tag,string avail, bool equal) 
+    {
+        for (int i = 1; i < _localization.GetLength(0); i++)
+            {
+                if (_localization[i, 0].Contains(tag) && (_localization[i, 1]==avail) == equal && _localization[i, 1]!="") return true;   
+            }
+        return false;
+    }
+
+    public static void WriteAvailForTag(string tag, string avail) 
+    {
+        for (int i = 1; i < _localization.GetLength(0); i++)
+        {
+            if (_localization[i, 0].Contains(tag)) { _localization[i, 1] = avail; return; }
+        }
+    }
+
+    public static void SafeCSV() 
+    {
+        string line = "";
+        for (int i = 0; i < _localization.GetLength(0); i++)
+        {
+            for (int j = 0; j < _localization.GetLength(1); j++)            
+            {
+               
+                line = line + _localization[i, j] + _fieldSeperator;
+            }
+            line = line + _lineSeperater;
+        }
+        File.WriteAllText(Application.dataPath + "/Resources/Dictonary.csv", line);
+        Debug.Log("‘айл перезаписан!");
+    }
 }
 

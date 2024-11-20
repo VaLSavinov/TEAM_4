@@ -2918,6 +2918,7 @@ GameObject:
   - component: {fileID: 6711080452743759028}
   - component: {fileID: 8320112580640320029}
   - component: {fileID: -4081809078592492453}
+  - component: {fileID: -5898678442091711667}
   m_Layer: 0
   m_Name: Room 5x5 Rest (3)
   m_TagString: Untagged
@@ -2985,6 +2986,20 @@ MonoBehaviour:
   - {fileID: 2700475495068129923}
   - {fileID: 3491808785147190233}
   _countMaxEnemyInRoom: 0
+--- !u!114 &-5898678442091711667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7895898808978929535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b62f2631e296bc48b5a21474f1a504d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxCountCpllectebel: 0
+  _spawnPoints: []
 --- !u!1 &7921469055310554574
 GameObject:
   m_ObjectHideFlags: 0

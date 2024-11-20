@@ -3262,6 +3262,7 @@ GameObject:
   - component: {fileID: 748274788026810024}
   - component: {fileID: 5943689164014433578}
   - component: {fileID: 3705942594282847037}
+  - component: {fileID: -7515493445615914128}
   m_Layer: 0
   m_Name: Room 7x7 Ware (2)
   m_TagString: Untagged
@@ -3337,6 +3338,20 @@ MonoBehaviour:
   - {fileID: 8408118239738904040}
   - {fileID: 381903754759949552}
   _countMaxEnemyInRoom: 5
+--- !u!114 &-7515493445615914128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4549821485825259396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b62f2631e296bc48b5a21474f1a504d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxCountCpllectebel: 0
+  _spawnPoints: []
 --- !u!1 &4708748205231124991
 GameObject:
   m_ObjectHideFlags: 0

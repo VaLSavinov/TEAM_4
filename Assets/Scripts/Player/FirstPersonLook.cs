@@ -1,8 +1,6 @@
 using System;
-using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class FirstPersonLook : MonoBehaviour
 {
@@ -28,7 +26,10 @@ public class FirstPersonLook : MonoBehaviour
     // Временное решение, пока нет UI
     private void ShowMainMenu()
     {
-        SceneManager.LoadScene(0);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        // Сохранение подобранных предметов
+        // LocalizationManager.SafeCSV();
     }
 
     private void OnEnable()

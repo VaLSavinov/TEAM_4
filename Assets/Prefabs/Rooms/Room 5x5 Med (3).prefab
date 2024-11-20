@@ -2831,6 +2831,7 @@ GameObject:
   - component: {fileID: 6711080452743759028}
   - component: {fileID: 5471387133668137329}
   - component: {fileID: 6791787345086084411}
+  - component: {fileID: -8659794712529598533}
   m_Layer: 0
   m_Name: Room 5x5 Med (3)
   m_TagString: Untagged
@@ -2891,6 +2892,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _wayPoints: []
   _countMaxEnemyInRoom: 0
+--- !u!114 &-8659794712529598533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7895898808978929535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b62f2631e296bc48b5a21474f1a504d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxCountCpllectebel: 0
+  _spawnPoints: []
 --- !u!1 &7921469055310554574
 GameObject:
   m_ObjectHideFlags: 0

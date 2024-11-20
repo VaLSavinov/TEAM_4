@@ -255,6 +255,10 @@ MonoBehaviour:
     type: 3}
   portableBatteryPrefab: {fileID: 8873655814863264887, guid: 21641286e83a40e44b44c30151648c6f,
     type: 3}
+  _countCollectebelItems: 4
+  _reportSO: {fileID: 11400000, guid: ec9bfacfe9540db438ca80df809d0421, type: 2}
+  _imageSO: {fileID: 11400000, guid: b53c038fa2bdd5849abf26fd27608fb1, type: 2}
+  _audioSO: {fileID: 11400000, guid: c5cebe3c1133dac4cbdd36b9f37e752a, type: 2}
 --- !u!114 &175270004
 MonoBehaviour:
   m_ObjectHideFlags: 0

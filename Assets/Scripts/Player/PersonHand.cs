@@ -109,11 +109,9 @@ public class PersonHand : MonoBehaviour
                     if (_grabObject != null) DropObject();
                     GrabObject();
                     break;
+                case "Take":
                 case "Interact":
                     _hitObject.transform.GetComponent<IInteractable>().Interact();
-                    break;
-                case "Take":
-                    AddCard(_hitObject);
                     break;
                 case "Place":
                     TransferObject();
