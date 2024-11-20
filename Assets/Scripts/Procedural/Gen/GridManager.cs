@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Unity.AI.Navigation;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -64,7 +65,14 @@ public class GridManager : MonoBehaviour
     public GameObject blueCardPrefab;
     public GameObject portableBatteryPrefab;
 
+    [Header("Collectebel parameters")]
+    public int _countCollectebelItems;
+    public SOCollections _reportSO;
+    public SOCollections _imageSO;
+    public SOCollections _audioSO;
+
     private EnemyManager _enemyManager;
+    private List<SpawnCollectebel> _spawnConteiners = new List<SpawnCollectebel>();
 
     // Глобальные списки для имен предметов и комнат, где они размещены
     private List<string> itemNames = new List<string>
@@ -96,6 +104,108 @@ public class GridManager : MonoBehaviour
         GeneratePathReport();
         GetComponent<NavMeshSurface>().BuildNavMesh();
         _enemyManager.CreateEnemy();
+        SpawnCollectebelsObject();
+    }
+
+    private void SpawnCollectebelsObject()
+    {
+        List<string> collectebelItems = new List<string>();
+        string usTags = "";
+        string currentTag = "";
+        int index;
+        List<int> ExclRooms = new List<int>();
+        Transform spawnPoint;
+
+        // Получаем список не открытых предметов
+        collectebelItems = LocalizationManager.GetTagList("f", true);
+        // Если все объекты открыты, то получаем их
+        if (collectebelItems.Count == 0) collectebelItems = LocalizationManager.GetTagList("f", false);
+        // Если кол-во неоткрытых объектов меньше заданного, то устанавливаем это число
+        if(collectebelItems.Count<_countCollectebelItems)
+            _countCollectebelItems = collectebelItems.Count;
+        Debug.Log(collectebelItems.Count);
+        for (int i = 0; i <= _countCollectebelItems; i++) 
+        {
+           
+            /// Оперделяем, что спавним и исключаем спавн одинаковых объектов
+            while (true) 
+            {
+                index = UnityEngine.Random.Range(0, collectebelItems.Count);
+                if (usTags.Contains(collectebelItems[index]))
+                {
+                   // Debug.Log("Попытка повторно разместить коллекционный предмет " + collectebelItems[index]);
+                    continue;
+                }
+                usTags = usTags + collectebelItems[index];
+                currentTag = collectebelItems[index];
+                break;
+            }            
+            /// Ищем комнату и точку спавна
+            while (true) 
+            {
+                // Если все комнаты заняты, то нет смысла продолжать
+                if (ExclRooms.Count == _spawnConteiners.Count)
+                {
+                   // Debug.Log("Размещение коллекционных предметов остановлено - все комнаты исключены");
+                    return;
+                }
+                index = UnityEngine.Random.Range(0,_spawnConteiners.Count);
+                if (IsExclRoom(ExclRooms, index))
+                {
+                  //  Debug.Log("Попытка размещения объекта " + currentTag + " в исключенной комнате " + _spawnConteiners[index].gameObject.name);
+                    continue;
+                }
+                if (_spawnConteiners[index].CanSpawn())
+                {
+                    spawnPoint = _spawnConteiners[index].GetPointSpawnObject();
+                    break;
+                }
+                else
+                {
+                    Debug.Log("Комната " + _spawnConteiners[index].gameObject.name + " исключена");
+                    ExclRooms.Add(index);
+                }
+            }
+            /// Наконец, спавним самих объектов
+            if (currentTag.Contains("Reports."))
+            {
+                GameObject collectebelObject = GameObject.Instantiate(_reportSO.GetPrefab(), spawnPoint);
+                ReportCollectebel collec = collectebelObject.GetComponent<ReportCollectebel>();
+                collec.CollectibleType = CollectibleType.Reports;
+                collec.Tag = currentTag;
+                collec.Image = _reportSO.GetImageForTag(currentTag);
+                Debug.Log("Объект " + currentTag + " типа " + CollectibleType.Reports + " размещен в комнате " + _spawnConteiners[index].gameObject.name);
+                continue;
+            }
+            if (currentTag.Contains("Images."))
+            {
+                GameObject collectebelObject = GameObject.Instantiate(_imageSO.GetPrefab(), spawnPoint);
+                ReportCollectebel collec = collectebelObject.GetComponent<ReportCollectebel>();
+                collec.CollectibleType = CollectibleType.Image;
+                collec.Tag = currentTag;
+                collec.Image = _imageSO.GetImageForTag(currentTag);
+                Debug.Log("Объект " + currentTag + " типа " + CollectibleType.Image + " размещен в комнате " + _spawnConteiners[index].gameObject.name);
+                continue;
+            }
+            if (currentTag.Contains("Audio."))
+            {
+                GameObject collectebelObject = GameObject.Instantiate(_audioSO.GetPrefab(), spawnPoint);
+                ReportCollectebel collec = collectebelObject.GetComponent<ReportCollectebel>();
+                collec.CollectibleType = CollectibleType.AudioRecords;
+                collec.Tag = currentTag;
+                Debug.Log("Вызов GetAudioForTag");
+                collec.Clip = _audioSO.GetAudioForTag(currentTag);
+                Debug.Log("Объект " + currentTag + " типа " + CollectibleType.AudioRecords + " размещен в комнате " + _spawnConteiners[index].gameObject.name);
+                continue;
+            }
+        }
+    }
+
+    private bool IsExclRoom(List<int> ExclRooms,int index) 
+    {
+        foreach(int iRoom in ExclRooms)
+            if (iRoom == index) return true;
+        return false;
     }
 
     void GenerateGrid()
@@ -310,6 +420,11 @@ public class GridManager : MonoBehaviour
         EnemyRoute enemyRoute;
         if (room.TryGetComponent<EnemyRoute>(out enemyRoute))
             _enemyManager.AddWaypoints(roomAccess, enemyRoute.CountMaxEnemyInRoom, enemyRoute.GetWayPoints());
+
+        //Получаем ссылки на контейнеры с точками дял спавна коллбоксов
+        SpawnCollectebel spawnCollectebel;
+        if (room.TryGetComponent<SpawnCollectebel>(out spawnCollectebel))
+            _spawnConteiners.Add(spawnCollectebel);
 
         // Отмечаем клетки как занятые
         for (int x = startX; x < startX + roomSize; x++)

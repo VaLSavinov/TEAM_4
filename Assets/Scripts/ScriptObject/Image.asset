@@ -10,20 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6bbd9c1dc9f952488a0de3e49a300a3, type: 3}
-  m_Name: Reports
+  m_Name: Image
   m_EditorClassIdentifier: 
-  _typeColect: 0
-  _prefab: {fileID: 8348929628816133742, guid: 1f092ea90a0611c44af4829062da0029, type: 3}
+  _typeColect: 1
+  _prefab: {fileID: 8348929628816133742, guid: 9d29cfeacb33fdc4ebdee965ed376f1c, type: 3}
   _tagList:
-  - Reports.Page1
-  - Reports.Page2
-  - Reports.Page3
-  - Reports.Page4
-  - Reports.Page5
+  - Image.Image1
+  - Image.Image2
   _images:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   _audios: []

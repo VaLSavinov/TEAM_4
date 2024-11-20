@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ReportCollectebel : MonoBehaviour, IInteractable
 {
 
-    protected CollectibleType _collectibleType;
-    protected string _tag;
+    [SerializeField] private CollectibleType _collectibleType;
+    [SerializeField] private string _tag;
+    [SerializeField] private Image _image;
+    [SerializeField] private AudioClip _clip;
 
     public CollectibleType CollectibleType 
     {
@@ -20,9 +23,25 @@ public class ReportCollectebel : MonoBehaviour, IInteractable
         set { _tag = value; }
     }
 
+    public Image Image
+    {
+        get { return _image; }
+        set { _image = value; }
+    }
+
+    public AudioClip Clip
+    {
+        get { return _clip; }
+        set { _clip = value; }
+    }
+
     public void Interact()
     {
-
+        if (_collectibleType == CollectibleType.AudioRecords)
+            GameMode.PlayerUI.PlayAudioClip(_clip);
+        LocalizationManager.WriteAvailForTag(_tag, "n");
+        GameMode.PlayerUI.DeactivatePanel();
+        Destroy(gameObject);        
     }
 
     public bool Interact(ref GameObject interactingOject)

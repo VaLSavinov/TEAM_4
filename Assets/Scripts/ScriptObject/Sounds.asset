@@ -10,20 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6bbd9c1dc9f952488a0de3e49a300a3, type: 3}
-  m_Name: Reports
+  m_Name: Sounds
   m_EditorClassIdentifier: 
-  _typeColect: 0
-  _prefab: {fileID: 8348929628816133742, guid: 1f092ea90a0611c44af4829062da0029, type: 3}
-  _tagList:
-  - Reports.Page1
-  - Reports.Page2
-  - Reports.Page3
-  - Reports.Page4
-  - Reports.Page5
-  _images:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _audios: []
+  _typeColect: 2
+  _prefab: {fileID: 8348929628816133742, guid: 30f81c0b104d6034698a138cfc143d07, type: 3}
+  _tagList: []
+  _images: []
+  _audios:
+  - {fileID: 8300000, guid: 93971622ea27ca843ace8a8df6c3ca3a, type: 3}
+  - {fileID: 8300000, guid: 814b4ba57d8a466439b01052a3fb8c1b, type: 3}

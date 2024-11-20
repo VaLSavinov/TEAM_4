@@ -2326,6 +2326,7 @@ GameObject:
   - component: {fileID: 3789461845953351014}
   - component: {fileID: 1803496552423113124}
   - component: {fileID: 2840307784360990057}
+  - component: {fileID: -9116409087436153797}
   m_Layer: 0
   m_Name: Room 5x5 Lab (2)
   m_TagString: Untagged
@@ -2391,6 +2392,20 @@ MonoBehaviour:
   - {fileID: 1465512550076375237}
   - {fileID: 4338206372403001756}
   _countMaxEnemyInRoom: 0
+--- !u!114 &-9116409087436153797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5629654182576397510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b62f2631e296bc48b5a21474f1a504d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxCountCpllectebel: 0
+  _spawnPoints: []
 --- !u!1 &6428333454289079948
 GameObject:
   m_ObjectHideFlags: 0
