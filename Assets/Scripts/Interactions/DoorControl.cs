@@ -49,6 +49,7 @@ public class DoorControl : MonoBehaviour, IInteractable
         {
             // Закрываем дверь, только если все, кто может, через нее прошли
             if (_interactors.Count > 0) _interactors.Remove(other.gameObject);
+            if (_interactors.Count == 0) _isOpen = false;
              PlayClip("CloseDoor");
         }
     }

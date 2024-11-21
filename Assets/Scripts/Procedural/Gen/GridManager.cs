@@ -2,6 +2,7 @@
 using Unity.AI.Navigation;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [System.Serializable]
 public class RoomType
@@ -13,7 +14,9 @@ public class RoomType
 
 public class GridManager : MonoBehaviour
 {
-    /// Временно, дял тестов локализации
+    /// Временно, для тестов локализации <summary>
+    [SerializeField] private TextAsset _setting;    
+    /// </summary>
     [SerializeField] private TextAsset _textAsset;    
 
     [Header("Tertiary Paths Settings")]
@@ -68,7 +71,6 @@ public class GridManager : MonoBehaviour
     [Header("Collectebel parameters")]
     public int _countCollectebelItems;
     public SOCollections _reportSO;
-    public SOCollections _imageSO;
     public SOCollections _audioSO;
 
     private EnemyManager _enemyManager;
@@ -89,6 +91,7 @@ public class GridManager : MonoBehaviour
     void Start()
     {
         // Временно, для тестов
+        Settings.SetCSV(_setting);
         LocalizationManager.SetCSV(_textAsset);
         _enemyManager = GetComponent<EnemyManager>();
         GenerateGrid();
@@ -110,36 +113,25 @@ public class GridManager : MonoBehaviour
     private void SpawnCollectebelsObject()
     {
         List<string> collectebelItems = new List<string>();
-        string usTags = "";
         string currentTag = "";
-        int index;
+        int indexRoom,indexItem;
         List<int> ExclRooms = new List<int>();
         Transform spawnPoint;
+        List<string> _reports = new List<string>();
+        List<string> _audios = new List<string>();
+        List<string> _currentList = new List<string>();
 
         // Получаем список не открытых предметов
         collectebelItems = LocalizationManager.GetTagList("f", true);
         // Если все объекты открыты, то получаем их
         if (collectebelItems.Count == 0) collectebelItems = LocalizationManager.GetTagList("f", false);
         // Если кол-во неоткрытых объектов меньше заданного, то устанавливаем это число
-        if(collectebelItems.Count<_countCollectebelItems)
+        _reports = GetListForTag("Reports.", collectebelItems);
+        _audios = GetListForTag("Audio.", collectebelItems);
+        if (collectebelItems.Count<_countCollectebelItems)
             _countCollectebelItems = collectebelItems.Count;
-        Debug.Log(collectebelItems.Count);
         for (int i = 0; i <= _countCollectebelItems; i++) 
-        {
-           
-            /// Оперделяем, что спавним и исключаем спавн одинаковых объектов
-            while (true) 
-            {
-                index = UnityEngine.Random.Range(0, collectebelItems.Count);
-                if (usTags.Contains(collectebelItems[index]))
-                {
-                   // Debug.Log("Попытка повторно разместить коллекционный предмет " + collectebelItems[index]);
-                    continue;
-                }
-                usTags = usTags + collectebelItems[index];
-                currentTag = collectebelItems[index];
-                break;
-            }            
+        {    
             /// Ищем комнату и точку спавна
             while (true) 
             {
@@ -149,23 +141,38 @@ public class GridManager : MonoBehaviour
                    // Debug.Log("Размещение коллекционных предметов остановлено - все комнаты исключены");
                     return;
                 }
-                index = UnityEngine.Random.Range(0,_spawnConteiners.Count);
-                if (IsExclRoom(ExclRooms, index))
+                indexRoom = UnityEngine.Random.Range(0,_spawnConteiners.Count);
+                if (IsExclRoom(ExclRooms, indexRoom))
                 {
                   //  Debug.Log("Попытка размещения объекта " + currentTag + " в исключенной комнате " + _spawnConteiners[index].gameObject.name);
                     continue;
                 }
-                if (_spawnConteiners[index].CanSpawn())
+                if (_spawnConteiners[indexRoom].CanSpawn())
                 {
-                    spawnPoint = _spawnConteiners[index].GetPointSpawnObject();
+                    spawnPoint = _spawnConteiners[indexRoom].GetPointSpawnObject();
                     break;
                 }
                 else
                 {
-                    Debug.Log("Комната " + _spawnConteiners[index].gameObject.name + " исключена");
-                    ExclRooms.Add(index);
+                    Debug.Log("Комната " + _spawnConteiners[indexRoom].gameObject.name + " исключена");
+                    ExclRooms.Add(indexRoom);
                 }
             }
+            // Определяем, какой список использваоть
+            if (_spawnConteiners[indexRoom].GetLastSpawnType() == CollectibleType.None)
+                if (UnityEngine.Random.Range(0, 2) > 1)
+                    _currentList = _reports;
+                else _currentList = _audios;
+            else 
+            if ((_spawnConteiners[indexRoom].GetLastSpawnType() == CollectibleType.Reports || _audios.Count==0) && _reports.Count>0)
+                _currentList = _reports;
+            else _currentList = _audios;
+            if (_currentList.Count == 0) return;
+            /// Оперделяем, что спавним и исключаем спавн одинаковых объектов
+            indexItem = UnityEngine.Random.Range(0, _currentList.Count);
+            currentTag = _currentList[indexItem];
+            // Чистим список
+            _currentList.RemoveAt(indexItem); 
             /// Наконец, спавним самих объектов
             if (currentTag.Contains("Reports."))
             {
@@ -174,31 +181,34 @@ public class GridManager : MonoBehaviour
                 collec.CollectibleType = CollectibleType.Reports;
                 collec.Tag = currentTag;
                 collec.Image = _reportSO.GetImageForTag(currentTag);
-                Debug.Log("Объект " + currentTag + " типа " + CollectibleType.Reports + " размещен в комнате " + _spawnConteiners[index].gameObject.name);
+                _spawnConteiners[indexRoom].SetLastSpawnType(CollectibleType.Reports);
+                _reports = _currentList;
+                Debug.Log("Объект " + currentTag + " типа " + CollectibleType.Reports + " размещен в комнате " + _spawnConteiners[indexRoom].gameObject.name);
                 continue;
-            }
-            if (currentTag.Contains("Images."))
-            {
-                GameObject collectebelObject = GameObject.Instantiate(_imageSO.GetPrefab(), spawnPoint);
-                ReportCollectebel collec = collectebelObject.GetComponent<ReportCollectebel>();
-                collec.CollectibleType = CollectibleType.Image;
-                collec.Tag = currentTag;
-                collec.Image = _imageSO.GetImageForTag(currentTag);
-                Debug.Log("Объект " + currentTag + " типа " + CollectibleType.Image + " размещен в комнате " + _spawnConteiners[index].gameObject.name);
-                continue;
-            }
+            }           
             if (currentTag.Contains("Audio."))
             {
                 GameObject collectebelObject = GameObject.Instantiate(_audioSO.GetPrefab(), spawnPoint);
                 ReportCollectebel collec = collectebelObject.GetComponent<ReportCollectebel>();
                 collec.CollectibleType = CollectibleType.AudioRecords;
                 collec.Tag = currentTag;
-                Debug.Log("Вызов GetAudioForTag");
                 collec.Clip = _audioSO.GetAudioForTag(currentTag);
-                Debug.Log("Объект " + currentTag + " типа " + CollectibleType.AudioRecords + " размещен в комнате " + _spawnConteiners[index].gameObject.name);
+                _spawnConteiners[indexRoom].SetLastSpawnType(CollectibleType.AudioRecords);
+                _audios = _currentList;
+                Debug.Log("Объект " + currentTag + " типа " + CollectibleType.AudioRecords + " размещен в комнате " + _spawnConteiners[indexRoom].gameObject.name);
                 continue;
             }
         }
+    }
+
+    private List<string> GetListForTag(string tag,List<string> list) 
+    {
+        List<string> resultList = new List<string>();
+        foreach (string item in list)
+        {
+            if(item.Contains(tag)) resultList.Add(item);
+        }
+        return resultList;
     }
 
     private bool IsExclRoom(List<int> ExclRooms,int index) 

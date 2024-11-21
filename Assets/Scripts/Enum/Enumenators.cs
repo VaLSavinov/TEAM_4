@@ -23,7 +23,7 @@ public enum ItemType
 
 public enum CollectibleType
 {
+    None,
     Reports,
-    Image,
     AudioRecords  
 }

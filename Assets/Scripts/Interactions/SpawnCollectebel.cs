@@ -9,6 +9,7 @@ public class SpawnCollectebel : MonoBehaviour
     [SerializeField] private List<SEnemyWayPoint> _spawnPoints;
 
     private int _currentCollect;
+    private CollectibleType _lastType = CollectibleType.None;
 
     private void Awake()
     {
@@ -25,8 +26,14 @@ public class SpawnCollectebel : MonoBehaviour
         return false;
     }
 
+    public CollectibleType GetLastSpawnType() 
+    {
+        return _lastType;
+    } 
+
     public Transform GetPointSpawnObject() 
     {
+        
         int index;
         SEnemyWayPoint sEnemyWayPoint;
         while (true) 
@@ -39,6 +46,11 @@ public class SpawnCollectebel : MonoBehaviour
             _currentCollect++;
             return sEnemyWayPoint.Point;
         }
+    }
+
+    public void SetLastSpawnType(CollectibleType type) 
+    {
+        _lastType = type;
     }
 
 }
