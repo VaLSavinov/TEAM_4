@@ -19,6 +19,13 @@ public static class LocalizationManager
     public static void SetCSV(TextAsset csvAsset) 
     {
         _csvAsset = csvAsset;
+        ResetCSV();
+        SetLanguageSetting();
+        OnChangeLanguage?.Invoke();
+    }
+
+    public static void ResetCSV() 
+    {
         string[] records = _csvAsset.text.Split(_lineSeperater);
         _localization = new string[records.Length, records[0].Split(_fieldSeperator).Length];
         for (int i = 0; i < records.Length - 1; i++)
@@ -31,8 +38,6 @@ public static class LocalizationManager
                 _localization[i, j] = fields[j];
             }
         }
-        SetLanguageSetting();
-        OnChangeLanguage?.Invoke();
     }
 
     private static void SetLanguageSetting() 
