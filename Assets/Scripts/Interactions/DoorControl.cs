@@ -10,17 +10,8 @@ public class DoorControl : MonoBehaviour, IInteractable
     // Список всех, кто взаимодействует с дверью
     private List<GameObject> _interactors = new List<GameObject>();
     private bool _isOpen = false;
-    private bool _isLock = false;
+    private bool _isLock = true;
 
-
-    /// <summary>
-    /// Определяем, открыта ли комната
-    /// </summary>
-    private void Awake()
-    {
-        if (_roomAccessControl != null && _roomAccessControl.GetCardColor()!=AccessCardColor.None) _isLock = true;
-        else _isLock = false;
-    }
 
     /// <summary>
     /// Открытие дверей для Ботов
@@ -28,6 +19,9 @@ public class DoorControl : MonoBehaviour, IInteractable
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     { 
+        if(_isLock)
+            if(_roomAccessControl != null && _roomAccessControl.GetCardColor() == AccessCardColor.None || _roomAccessControl == null)
+                _isLock = false;
         if ((_roomAccessControl == null || _roomAccessControl.HasPower) && other.gameObject.tag == "Enemy")
         { 
             PlayClip("OpenDoor");
@@ -70,7 +64,7 @@ public class DoorControl : MonoBehaviour, IInteractable
     /// </summary>
     public void Interact()
     {
-        if (!_isLock) 
+        if (!_isLock && !_isOpen) 
         {
             _isOpen = true;
             //_interactors.Add(GameMode.PersonHand.gameObject);
