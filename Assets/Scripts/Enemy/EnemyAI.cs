@@ -4,7 +4,6 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    [SerializeField, Tooltip("Точки перемещения врага.")] private Transform[] _waypoints;
     [SerializeField, Tooltip("Время ожидания на точках.")] private float _waitTime = 2f;
     [SerializeField, Tooltip("Время состояния тревоги.")] private float _alertTime = 2f;
     [SerializeField, Tooltip("Время поиска.")] private float _searchTime = 5f;
@@ -12,6 +11,8 @@ public class EnemyAI : MonoBehaviour
     [SerializeField, Tooltip("Скорость во время патруля.")] private float _speedPatrol;
     [SerializeField, Tooltip("Скорость во время погони.")] private float _speedChase;
     [SerializeField, Tooltip("Скорость во время тревоги или поиска.")] private float _speedAlertOrSearching;
+
+    [SerializeField] private Animator _animator;
     /// Для тестирования
     [SerializeField] private Material materialPatrool;
     [SerializeField] private Material materialAlerted;
@@ -63,6 +64,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (_agent.remainingDistance < 0.5f && _isWalk)
         {
+            _animator.SetInteger("State",0);
             _isWalk = false;
             StartCoroutine(WaitAtWaypoint());
         }
@@ -91,6 +93,7 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
+            _animator.SetTrigger("Arraund");
             // Здесь возможен какой-нибудь код
         }
     }
@@ -98,7 +101,11 @@ public class EnemyAI : MonoBehaviour
     private void GoToNextWaypoint()
     {
         _isWalk = true;
-        _agent.SetDestination(_enemyManager.GetNewPoint(_room, _currentWaypointIndex,out _room, out _currentWaypointIndex).position);
+        Vector3 target = _enemyManager.GetNewPoint(_room, _currentWaypointIndex, out _room, out _currentWaypointIndex).position;
+        // Сюда вставить поворот (плавный)
+        transform.LookAt(target);
+        _animator.SetInteger("State", 1);
+        _agent.SetDestination(target);
     }
 
 
@@ -127,10 +134,11 @@ public class EnemyAI : MonoBehaviour
     /// Переходим в режим патрулирования
     /// </summary>
     private void StartPatrol()
-    {        
+    {
         _state = EEnemyState.Patrolling;
         _meshRenderer.material = materialPatrool;
         _agent.speed = _speedPatrol;
+        _animator.SetInteger("State", 1);
         GoToNextWaypoint();
     }    
 
@@ -143,6 +151,7 @@ public class EnemyAI : MonoBehaviour
         _meshRenderer.material = materialChasing;
         _agent.SetDestination(GameMode.PersonHand.transform.position);
         _agent.speed = _speedChase;
+        _animator.SetInteger("State", 2);
     }
 
     /// <summary>
@@ -154,6 +163,7 @@ public class EnemyAI : MonoBehaviour
         _meshRenderer.material = materialSearching;
         _countdownTimeSearch = Time.time;
         _agent.speed = _speedAlertOrSearching;
+       // _animator.SetInteger("State", 3);
 
     }
 
@@ -166,6 +176,7 @@ public class EnemyAI : MonoBehaviour
         _agent.SetDestination(noiseSours);
         _agent.speed = _speedAlertOrSearching;
         _isWalk = true;
+        _animator.SetInteger("State", 4);
 
     }  
 

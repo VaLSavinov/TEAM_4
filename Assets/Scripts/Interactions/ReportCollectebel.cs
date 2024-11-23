@@ -37,15 +37,15 @@ public class ReportCollectebel : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if (_collectibleType == CollectibleType.AudioRecords)
-            GameMode.PlayerUI.PlayAudioClip(_clip);
-        LocalizationManager.WriteAvailForTag(_tag, "n");
-        GameMode.PlayerUI.DeactivatePanel();
-        Destroy(gameObject);        
+              
     }
 
     public bool Interact(ref GameObject interactingOject)
     {
-        return true;
+        if (_collectibleType == CollectibleType.AudioRecords)
+            GameMode.PlayerUI.PlayAudioClip(_clip);
+        LocalizationManager.WriteAvailForTag(_tag, "n");
+       interactingOject = this.gameObject;
+       return true;
     }
 }
