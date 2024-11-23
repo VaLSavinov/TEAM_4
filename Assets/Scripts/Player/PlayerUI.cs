@@ -1,19 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
+    [SerializeField] private GameObject pauseScreen;
     [SerializeField] private GameObject _panel;
     [SerializeField] private LoaclizationText _centerText;
 
     private AudioSource _audioSource;
+    private PlayerControl _playerControl;
 
     private void Awake()
     {
         GameMode.PlayerUI = this;
         _audioSource = GetComponent<AudioSource>();
+        _playerControl = new PlayerControl();
+        _playerControl.UI.PauseMenu.started += context => Resume();
     }
 
     /// <summary>
@@ -40,5 +45,34 @@ public class PlayerUI : MonoBehaviour
             _audioSource.clip = clip;
             _audioSource.Play();
         }
+    }
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1;
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(0);
+        Time.timeScale = 1;
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 0;
+        pauseScreen.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        _playerControl.Enable();
+    }
+
+    public void Resume()
+    {
+        Time.timeScale = 1;
+        pauseScreen.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        _playerControl.Disable();
     }
 }
