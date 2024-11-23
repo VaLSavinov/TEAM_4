@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,29 +7,34 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] private TextAsset textAsset;
+    [SerializeField] private TextAsset _setting;
+    [SerializeField] private TextAsset _textAsset;
+    [SerializeField] private Slider _sliderVolume;
+    [SerializeField] private Slider _sliderSensitiviti;
+    [SerializeField] private GameObject _settingMenu;
     [SerializeField] private Image topBackground;
     [SerializeField] private Image bottomBackground;
     [SerializeField] private Text flashingText;
 
     private Color _topImageColor;
     private bool _isFlashing = true;
-
+    
     private void Start()
     {
-        LocalizationManager.SetCSV(textAsset);
-
+        Settings.SetCSV(_setting);
+        LocalizationManager.SetCSV(_textAsset);
         _topImageColor = topBackground.color;
         StartCoroutine(FlashText());
     }
+    
     private void Update()
     {
         if (Input.anyKeyDown && _isFlashing)
         {
-            StopAllCoroutines(); // Останавливаем мигание текста
+            StopAllCoroutines(); // ГЋГ±ГІГ Г­Г ГўГ«ГЁГўГ ГҐГ¬ Г¬ГЁГЈГ Г­ГЁГҐ ГІГҐГЄГ±ГІГ 
             StartCoroutine(FadeOutTopImage());
             flashingText.gameObject.SetActive(false);
-            _isFlashing = false; // Выключаем чтобы корутина не повторяла анимацию
+            _isFlashing = false; // Г‚Г»ГЄГ«ГѕГ·Г ГҐГ¬ Г·ГІГ®ГЎГ» ГЄГ®Г°ГіГІГЁГ­Г  Г­ГҐ ГЇГ®ГўГІГ®Г°ГїГ«Г  Г Г­ГЁГ¬Г Г¶ГЁГѕ
         }
     }
 
@@ -36,38 +42,45 @@ public class MainMenu : MonoBehaviour
     {
         while (_isFlashing)
         {
-            flashingText.color = Color.gray; // Делаем цвет текста серым
-            yield return new WaitForSeconds(0.6f); // Ждем 0.6 секунд
-            flashingText.color = Color.white; // Возвращаем цвет текста к белому
+            flashingText.color = Color.gray; // Г„ГҐГ«Г ГҐГ¬ Г¶ГўГҐГІ ГІГҐГЄГ±ГІГ  Г±ГҐГ°Г»Г¬
+            yield return new WaitForSeconds(0.6f); // Г†Г¤ГҐГ¬ 0.6 Г±ГҐГЄГіГ­Г¤
+            flashingText.color = Color.white; // Г‚Г®Г§ГўГ°Г Г№Г ГҐГ¬ Г¶ГўГҐГІ ГІГҐГЄГ±ГІГ  ГЄ ГЎГҐГ«Г®Г¬Гі
             yield return new WaitForSeconds(0.6f);
         }
     }
 
     private IEnumerator FadeOutTopImage()
     {
-        float duration = 2f; // Длительность анимации
+        float duration = 2f; // Г„Г«ГЁГІГҐГ«ГјГ­Г®Г±ГІГј Г Г­ГЁГ¬Г Г¶ГЁГЁ
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
-            float alpha = Mathf.Lerp(1f, 0f, elapsedTime / duration); // Вычисляем новую прозрачность
-            _topImageColor.a = alpha; // Устанавливаем новую прозрачность для верхнего изображения
-            topBackground.color = _topImageColor; // Применяем цвет к изображению
+            float alpha = Mathf.Lerp(1f, 0f, elapsedTime / duration); // Г‚Г»Г·ГЁГ±Г«ГїГҐГ¬ Г­Г®ГўГіГѕ ГЇГ°Г®Г§Г°Г Г·Г­Г®Г±ГІГј
+            _topImageColor.a = alpha; // Г“Г±ГІГ Г­Г ГўГ«ГЁГўГ ГҐГ¬ Г­Г®ГўГіГѕ ГЇГ°Г®Г§Г°Г Г·Г­Г®Г±ГІГј Г¤Г«Гї ГўГҐГ°ГµГ­ГҐГЈГ® ГЁГ§Г®ГЎГ°Г Г¦ГҐГ­ГЁГї
+            topBackground.color = _topImageColor; // ГЏГ°ГЁГ¬ГҐГ­ГїГҐГ¬ Г¶ГўГҐГІ ГЄ ГЁГ§Г®ГЎГ°Г Г¦ГҐГ­ГЁГѕ
 
-            yield return null; // Ждем следующего кадра
+            yield return null; // Г†Г¤ГҐГ¬ Г±Г«ГҐГ¤ГіГѕГ№ГҐГЈГ® ГЄГ Г¤Г°Г 
         }
 
-        // проверка что прозрачность установлена в 0 после завершения
+        // ГЇГ°Г®ГўГҐГ°ГЄГ  Г·ГІГ® ГЇГ°Г®Г§Г°Г Г·Г­Г®Г±ГІГј ГіГ±ГІГ Г­Г®ГўГ«ГҐГ­Г  Гў 0 ГЇГ®Г±Г«ГҐ Г§Г ГўГҐГ°ГёГҐГ­ГЁГї
         _topImageColor.a = 0f;
         topBackground.color = _topImageColor;
-        topBackground.gameObject.SetActive(false); // Выключаем (но вроде не обязательно)
+        topBackground.gameObject.SetActive(false); // Г‚Г»ГЄГ«ГѕГ·Г ГҐГ¬ (Г­Г® ГўГ°Г®Г¤ГҐ Г­ГҐ Г®ГЎГїГ§Г ГІГҐГ«ГјГ­Г®)
     }
 
-    // Вешаем на кнопку, по которой меняем язык
-    public void ChangeLang() 
+    // Г‚ГҐГёГ ГҐГ¬ Г­Г  ГЄГ­Г®ГЇГЄГі, ГЇГ® ГЄГ®ГІГ®Г°Г®Г© Г¬ГҐГ­ГїГҐГ¬ ГїГ§Г»ГЄ
+    public void ChangeLang()
     {
         LocalizationManager.Change();
+    }
+
+    public void OpenSetting()
+    {
+        _settingMenu.SetActive(true);
+        _sliderVolume.value = float.Parse(Settings.GetParam("volume"));
+        _sliderSensitiviti.value = float.Parse(Settings.GetParam("sensitivity"));
     }
 
     public void LoadScene(int sceneIndex)
@@ -75,6 +88,22 @@ public class MainMenu : MonoBehaviour
         {
             SceneManager.LoadScene(sceneIndex);
         }
+    }
+
+
+    public void SaveSetting() 
+    {
+        Settings.SafeCSV();
+    }
+
+    public void ChangeValueSound()
+    {         
+        Settings.SetParam("volume", _sliderVolume.value.ToString());
+    }
+
+    public void ChangeValueSensetiviti()
+    {
+        Settings.SetParam("sensitivity", _sliderSensitiviti.value.ToString());
     }
 
     public void QuitGame()

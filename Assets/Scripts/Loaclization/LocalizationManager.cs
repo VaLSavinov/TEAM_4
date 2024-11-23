@@ -19,19 +19,30 @@ public static class LocalizationManager
     public static void SetCSV(TextAsset csvAsset) 
     {
         _csvAsset = csvAsset;
+        ResetCSV();
+        SetLanguageSetting();
+        OnChangeLanguage?.Invoke();
+    }
+
+    public static void ResetCSV() 
+    {
         string[] records = _csvAsset.text.Split(_lineSeperater);
         _localization = new string[records.Length, records[0].Split(_fieldSeperator).Length];
-        for (int i = 0; i < records.Length-1; i++)
+        for (int i = 0; i < records.Length - 1; i++)
         {
             string[] fields = records[i].Split(_fieldSeperator);
             if (fields[0] == "") continue;
-            for (int j = 0;j<fields.Length;j++)
+            for (int j = 0; j < fields.Length; j++)
             {
                 if (j == 0) fields[j] = fields[j].Replace("\n", string.Empty);
-                _localization[i,j] = fields[j];
+                _localization[i, j] = fields[j];
             }
         }
-        OnChangeLanguage?.Invoke();
+    }
+
+    private static void SetLanguageSetting() 
+    {
+        _currentLenguage =int.Parse(Settings.GetParam("language"));
     }
 
     public static string GetTextForTag(string tag) 
@@ -65,7 +76,8 @@ public static class LocalizationManager
     public static void Change() 
     {
         _currentLenguage++;
-        if (_currentLenguage== _languages.Length) {_currentLenguage = 0;}        
+        if (_currentLenguage== _languages.Length) {_currentLenguage = 0;}
+        Settings.SetParam("language", _currentLenguage.ToString());
         OnChangeLanguage?.Invoke();
     }
 
@@ -117,10 +129,10 @@ public static class LocalizationManager
         {
             for (int j = 0; j < _localization.GetLength(1); j++)            
             {
-               
-                line = line + _localization[i, j] + _fieldSeperator;
+                if (j == _localization.GetLength(1) - 1) line = line + _localization[i, j];
+                else line = line + _localization[i, j] + _fieldSeperator;
             }
-            line = line + _lineSeperater;
+            if (i< _localization.GetLength(0)-1) line = line + _lineSeperater;
         }
         File.WriteAllText(Application.dataPath + "/Resources/Dictonary.csv", line);
         Debug.Log("Файл перезаписан!");

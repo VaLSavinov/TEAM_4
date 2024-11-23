@@ -8,7 +8,7 @@ public class ReportCollectebel : MonoBehaviour, IInteractable
 
     [SerializeField] private CollectibleType _collectibleType;
     [SerializeField] private string _tag;
-    [SerializeField] private Image _image;
+    [SerializeField] private Sprite _image;
     [SerializeField] private AudioClip _clip;
 
     public CollectibleType CollectibleType 
@@ -23,7 +23,7 @@ public class ReportCollectebel : MonoBehaviour, IInteractable
         set { _tag = value; }
     }
 
-    public Image Image
+    public Sprite Image
     {
         get { return _image; }
         set { _image = value; }

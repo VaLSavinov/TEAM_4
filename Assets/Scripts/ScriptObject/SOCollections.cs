@@ -11,7 +11,7 @@ public class SOCollections: ScriptableObject
     [SerializeField] private CollectibleType _typeColect;
     [SerializeField] private GameObject _prefab;
     [SerializeField] private List<string> _tagList;
-    [SerializeField] private List<Image> _images;
+    [SerializeField] private List<Sprite> _images;
     [SerializeField] private List<AudioClip> _audios;
 
     /// <summary>
@@ -32,13 +32,12 @@ public class SOCollections: ScriptableObject
         if (_audios.Count == 0) return null;
         for (int i =0;i<_tagList.Count;i++) 
         {
-            Debug.Log(tag + " " + tag.Contains(_tagList[i]) + " " + _tagList[i]);
             if (tag.Contains(_tagList[i]) && i<_audios.Count) return _audios[i]; 
         }
         return null;
     }
 
-    public Image GetImageForTag(string tag)
+    public Sprite GetImageForTag(string tag)
     {
         if (_images.Count == 0) return null;
         for (int i = 0; i < _tagList.Count; i++)

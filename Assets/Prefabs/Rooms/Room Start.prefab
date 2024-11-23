@@ -3416,7 +3416,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _roomAccessControl
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: -213209865356100319}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
