@@ -68,7 +68,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _viewPoint: {fileID: 5212978510541314487}
   _enemyAI: {fileID: 6941220044234651648}
-  _waitToSearch: 1.5
+  _waitToSearch: 3
   _layerMask:
     serializedVersion: 2
     m_Bits: 735
@@ -198,9 +198,10 @@ MonoBehaviour:
   _waitTime: 10
   _alertTime: 3
   _searchTime: 5
-  _speedPatrol: 0.5
+  _speedPatrol: 0.6
   _speedChase: 1.5
   _speedAlertOrSearching: 0.5
+  _speedRotate: 5
   _animator: {fileID: 2885805454305816498}
   materialPatrool: {fileID: 2100000, guid: c761f2bb109f0f54481c9d08e05e4144, type: 2}
   materialAlerted: {fileID: 2100000, guid: 2e0bdb90c5ad27c44831fdb5d9a9dbd2, type: 2}

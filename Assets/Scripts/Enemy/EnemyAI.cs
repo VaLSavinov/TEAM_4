@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField, Tooltip("Скорость во время патруля.")] private float _speedPatrol;
     [SerializeField, Tooltip("Скорость во время погони.")] private float _speedChase;
     [SerializeField, Tooltip("Скорость во время тревоги или поиска.")] private float _speedAlertOrSearching;
+    [SerializeField, Tooltip("Скорость поворота.")] private float _speedRotate;
 
     [SerializeField] private Animator _animator;
     /// Для тестирования
@@ -24,6 +26,12 @@ public class EnemyAI : MonoBehaviour
     private RoomAccessControl _room;
     private int _currentWaypointIndex = 0;
     private EnemyManager _enemyManager;
+
+    private bool _isRotation = false;
+    private Vector3 _targetPoint;
+    private float _timeToRotate = 0.3f;
+
+    private float _currentTime;
    
     private EEnemyState _state = EEnemyState.Patrolling; // Для хранение текущего состояния бота - по умолчанию - патруль
     private bool _isWalk = true;
@@ -40,7 +48,9 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-        CheckingState();        
+        if (_isRotation) Rotate();
+        else
+            CheckingState();      
     }
     
     private IEnumerator WaitAtWaypoint()
@@ -54,7 +64,30 @@ public class EnemyAI : MonoBehaviour
         yield return new WaitForSeconds(_alertTime);
         if (_state == EEnemyState.Alerted) StartPatrol(); // Возвращаемся к патрулированию
     }
-       
+
+
+    /// <summary>
+    ///  Поворот к цели и передача целевой точки
+    /// </summary>
+    /// <param name="targetPoint"></param>
+    /// <returns></returns>
+    private void Rotate()
+    {
+        // Плавно вращаем моба
+        if (Time.time - _currentTime < _timeToRotate)
+        {
+            Debug.Log("Попадаем во вращение " + Quaternion.LookRotation(_targetPoint - transform.position, Vector3.up));
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(_targetPoint - transform.position,Vector3.up), _speedRotate * Time.deltaTime);
+        }
+        else
+        {
+            _agent.SetDestination(_targetPoint);
+            _animator.SetInteger("State", 1);
+            _isRotation = false;
+        }
+
+    }
+
 
     /// <summary>
     /// Обход точек
@@ -79,7 +112,7 @@ public class EnemyAI : MonoBehaviour
         {
             _isWalk = false;
             StartCoroutine(WaitAlert());
-        }
+        }       
     }
 
     /// <summary>
@@ -88,24 +121,18 @@ public class EnemyAI : MonoBehaviour
     private void Searching()
     {
         if (Time.time - _countdownTimeSearch >= _searchTime)
-        {
-            StartPatrol();
-        }
-        else
-        {
-            _animator.SetTrigger("Arraund");
-            // Здесь возможен какой-нибудь код
-        }
+            StartPatrol();        
     }
 
     private void GoToNextWaypoint()
     {
         _isWalk = true;
         Vector3 target = _enemyManager.GetNewPoint(_room, _currentWaypointIndex, out _room, out _currentWaypointIndex).position;
-        // Сюда вставить поворот (плавный)
-        transform.LookAt(target);
-        _animator.SetInteger("State", 1);
-        _agent.SetDestination(target);
+        _isRotation = true;
+        _targetPoint = target;
+        _currentTime = Time.time;
+       /* _agent.SetDestination(_targetPoint);
+        _animator.SetInteger("State", 1);*/
     }
 
 
@@ -146,12 +173,16 @@ public class EnemyAI : MonoBehaviour
     /// Начало преследования игрока
     /// </summary>
     public void ChasePlayer() 
-    {        
-        _state = EEnemyState.Chasing;
-        _meshRenderer.material = materialChasing;
+    {
         _agent.SetDestination(GameMode.PersonHand.transform.position);
-        _agent.speed = _speedChase;
-        _animator.SetInteger("State", 2);
+        if (_state != EEnemyState.Chasing)
+        {
+            _agent.speed = _speedChase;
+            _animator.SetInteger("State", 2);
+            _state = EEnemyState.Chasing;
+            _meshRenderer.material = materialChasing;
+        }
+ 
     }
 
     /// <summary>
@@ -163,7 +194,8 @@ public class EnemyAI : MonoBehaviour
         _meshRenderer.material = materialSearching;
         _countdownTimeSearch = Time.time;
         _agent.speed = _speedAlertOrSearching;
-       // _animator.SetInteger("State", 3);
+        _agent.SetDestination(transform.position);
+        _animator.SetInteger("State", 3);
 
     }
 
@@ -186,6 +218,12 @@ public class EnemyAI : MonoBehaviour
         _currentWaypointIndex = waypointIndex;
         _enemyManager = enemyManager;
         // Некоторое время стоит на месте, чтобы начать действовать только после того, как заспавняться все боты
+        _animator.SetInteger("State", 0);
         StartCoroutine(WaitAtWaypoint());
+    }
+
+    public void GoToPoint() 
+    {
+        _agent.SetDestination(_targetPoint);
     }
 }
