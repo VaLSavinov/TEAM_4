@@ -26,8 +26,7 @@ public class FirstPersonLook : MonoBehaviour
     // Временное решение, пока нет UI
     private void ShowMainMenu()
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        GameMode.PlayerUI.Pause();
         // Сохранение подобранных предметов
         // LocalizationManager.SafeCSV();
     }
@@ -41,7 +40,6 @@ public class FirstPersonLook : MonoBehaviour
     {
         _playerControl.Disable();
     }
-
 
 
     void Update()
