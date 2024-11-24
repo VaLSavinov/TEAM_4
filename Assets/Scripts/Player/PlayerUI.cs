@@ -9,6 +9,10 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private GameObject _panel;
     [SerializeField] private LoaclizationText _centerText;
+    [SerializeField] private GameObject _settingMenu;
+    [SerializeField] private Slider _sliderVolume;
+    [SerializeField] private Slider _sliderSensitiviti;
+
 
     private AudioSource _audioSource;
     private PlayerControl _playerControl;
@@ -74,5 +78,29 @@ public class PlayerUI : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         _playerControl.Disable();
+    }
+
+    public void OpenSetting()
+    {
+        _settingMenu.SetActive(true);
+        _sliderVolume.value = float.Parse(Settings.GetParam("volume"));
+        _sliderSensitiviti.value = float.Parse(Settings.GetParam("sensitivity"));
+    }
+
+    public void SaveSetting()
+    {
+        Settings.SafeCSV();
+        GameMode.FirstPersonLook.ChangeSettings();
+        _settingMenu.SetActive(false);
+    }
+
+    public void ChangeValueSound()
+    {
+        Settings.SetParam("volume", _sliderVolume.value.ToString());
+    }
+
+    public void ChangeValueSensetiviti()
+    {
+        Settings.SetParam("sensitivity", _sliderSensitiviti.value.ToString());
     }
 }

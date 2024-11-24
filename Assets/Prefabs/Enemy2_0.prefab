@@ -172,12 +172,12 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 25
+  m_Acceleration: 10000
   avoidancePriority: 50
   m_AngularSpeed: 10000
   m_StoppingDistance: 0.5
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
@@ -200,7 +200,7 @@ MonoBehaviour:
   _searchTime: 5
   _speedPatrol: 0.6
   _speedChase: 1.5
-  _speedAlertOrSearching: 0.5
+  _speedAlertOrSearching: 0.3
   _speedRotate: 5
   _animator: {fileID: 2885805454305816498}
   materialPatrool: {fileID: 2100000, guid: c761f2bb109f0f54481c9d08e05e4144, type: 2}
@@ -319,7 +319,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d551adedc9ff3b046b389454b4dba357,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: -1.01
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d551adedc9ff3b046b389454b4dba357,
         type: 3}
