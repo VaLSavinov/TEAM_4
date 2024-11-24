@@ -302,9 +302,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e311efcc3a45cbd458f0865b6fbd4e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _countEnemy: 12
-  _enemyPref: {fileID: 3951362065859572769, guid: 5fa72638fbebd2945bf3ef3f2b463057,
+  _countEnemy: 10
+  _enemyPref: {fileID: 3951362065859572769, guid: bff2dccfc6a537143b95034aa1982540,
     type: 3}
+  _rooms: []
+  _setting: {fileID: 4900000, guid: 84f34ba1c84168d4c9c014ef85d6e012, type: 3}
+  _dictonary: {fileID: 4900000, guid: 8b81575053fe7894984b7dcba9dec133, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

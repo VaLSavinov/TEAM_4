@@ -11,6 +11,9 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private GameObject _panel;
     [SerializeField] private LoaclizationText _centerText;
     [SerializeField] private GameObject wintext;
+    [SerializeField] private GameObject _settingMenu;
+    [SerializeField] private Slider _sliderVolume;
+    [SerializeField] private Slider _sliderSensitiviti;
 
     private AudioSource _audioSource;
     private PlayerControl _playerControl;
@@ -24,10 +27,10 @@ public class PlayerUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Показать текст в центре экрана
+    /// ГЏГ®ГЄГ Г§Г ГІГј ГІГҐГЄГ±ГІ Гў Г¶ГҐГ­ГІГ°ГҐ ГЅГЄГ°Г Г­Г 
     /// </summary>
-    /// <param name="text"> Показываемый текст</param>
-    /// <param name="isRewrite"> Перезаписть текст, если в данный момент выводиться другой</param>
+    /// <param name="text"> ГЏГ®ГЄГ Г§Г»ГўГ ГҐГ¬Г»Г© ГІГҐГЄГ±ГІ</param>
+    /// <param name="isRewrite"> ГЏГҐГ°ГҐГ§Г ГЇГЁГ±ГІГј ГІГҐГЄГ±ГІ, ГҐГ±Г«ГЁ Гў Г¤Г Г­Г­Г»Г© Г¬Г®Г¬ГҐГ­ГІ ГўГ»ГўГ®Г¤ГЁГІГјГ±Гї Г¤Г°ГіГЈГ®Г©</param>
     public void ShowText(string text, bool isRewrite) 
     {
         if (!isRewrite && _panel.activeSelf) return;
@@ -86,5 +89,27 @@ public class PlayerUI : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         _playerControl.Disable();
+    public void OpenSetting()
+    {
+        _settingMenu.SetActive(true);
+        _sliderVolume.value = float.Parse(Settings.GetParam("volume"));
+        _sliderSensitiviti.value = float.Parse(Settings.GetParam("sensitivity"));
+    }
+
+    public void SaveSetting()
+    {
+        Settings.SafeCSV();
+        GameMode.FirstPersonLook.ChangeSettings();
+        _settingMenu.SetActive(false);
+    }
+
+    public void ChangeValueSound()
+    {
+        Settings.SetParam("volume", _sliderVolume.value.ToString());
+    }
+
+    public void ChangeValueSensetiviti()
+    {
+        Settings.SetParam("sensitivity", _sliderSensitiviti.value.ToString());
     }
 }

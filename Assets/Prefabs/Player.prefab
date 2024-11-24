@@ -112,7 +112,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 247.00002, y: -138.79797}
+  m_AnchoredPosition: {x: 258.00006, y: -44.00013}
   m_SizeDelta: {x: 200, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4050597125646617235
@@ -166,8 +166,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2286253728789255570}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+      - m_Target: {fileID: 6957988276439678574}
+        m_TargetAssemblyTypeName: PlayerUI, Assembly-CSharp
         m_MethodName: ChangeValueSensetiviti
         m_Mode: 1
         m_Arguments:
@@ -546,98 +546,6 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1479432839629613082
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6115348195866469749}
-  - component: {fileID: 5236661689957570168}
-  - component: {fileID: 8830821367384107735}
-  - component: {fileID: 6862813236124410702}
-  m_Layer: 5
-  m_Name: LanguageText
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &6115348195866469749
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1479432839629613082}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4673146990493976466}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -550.00006, y: -0.00018310547}
-  m_SizeDelta: {x: 300, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &5236661689957570168
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1479432839629613082}
-  m_CullTransparentMesh: 1
---- !u!114 &8830821367384107735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1479432839629613082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: 633d9adae9f8f2d49b21286680ba13ae, type: 3}
-    m_FontSize: 14
-    m_FontStyle: 0
-    m_BestFit: 1
-    m_MinSize: 10
-    m_MaxSize: 50
-    m_Alignment: 5
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Menu.Language
---- !u!114 &6862813236124410702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1479432839629613082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45ff2283e3cc85c47b39ccac9b23d0b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1518157423283083211
 GameObject:
   m_ObjectHideFlags: 0
@@ -845,7 +753,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 247.00002, y: 39.20211}
+  m_AnchoredPosition: {x: 258, y: 134}
   m_SizeDelta: {x: 200, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4206092741530215574
@@ -899,8 +807,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2286253728789255570}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+      - m_Target: {fileID: 6957988276439678574}
+        m_TargetAssemblyTypeName: PlayerUI, Assembly-CSharp
         m_MethodName: ChangeValueSound
         m_Mode: 1
         m_Arguments:
@@ -2322,7 +2230,6 @@ RectTransform:
   m_Children:
   - {fileID: 2093909483756522340}
   - {fileID: 6764398816147642870}
-  - {fileID: 4673146990493976466}
   - {fileID: 276363013547938965}
   - {fileID: 7136662519931238562}
   - {fileID: 6698618093229775394}
@@ -2627,7 +2534,6 @@ GameObject:
   - component: {fileID: 927189566463502318}
   - component: {fileID: 8357565408661387140}
   - component: {fileID: 6957988276439678574}
-  - component: {fileID: 2286253728789255570}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2851,12 +2757,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _setting: {fileID: 4900000, guid: 84f34ba1c84168d4c9c014ef85d6e012, type: 3}
   _textAsset: {fileID: 4900000, guid: 8b81575053fe7894984b7dcba9dec133, type: 3}
+  _settingMenu: {fileID: 4855378851091495168}
   _sliderVolume: {fileID: 4206092741530215574}
   _sliderSensitiviti: {fileID: 4050597125646617235}
-  _settingMenu: {fileID: 4855378851091495168}
-  topBackground: {fileID: 7816076952838787437}
-  bottomBackground: {fileID: 4935757721099484247}
-  flashingText: {fileID: 4289495462287978541}
 --- !u!1 &5838498627080102125
 GameObject:
   m_ObjectHideFlags: 0
@@ -3199,7 +3102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46983a75518289a4ebad7a19c5d5d328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mouseSensitivity: 200
+  _mouseMaxSensitivity: 250
   _playerBody: {fileID: 4363666750374050281}
   _canRotate: 1
 --- !u!1 &6178688566455069630
@@ -3685,10 +3588,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4855378851091495168}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 6957988276439678574}
+        m_TargetAssemblyTypeName: PlayerUI, Assembly-CSharp
+        m_MethodName: OpenSetting
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3953,20 +3856,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4855378851091495168}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2286253728789255570}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+      - m_Target: {fileID: 6957988276439678574}
+        m_TargetAssemblyTypeName: PlayerUI, Assembly-CSharp
         m_MethodName: SaveSetting
         m_Mode: 1
         m_Arguments:

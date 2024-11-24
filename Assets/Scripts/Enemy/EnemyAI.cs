@@ -49,8 +49,7 @@ public class EnemyAI : MonoBehaviour
     private void Update()
     {
         if (_isRotation) Rotate();
-        else
-            CheckingState();      
+        else CheckingState();
     }
     
     private IEnumerator WaitAtWaypoint()
@@ -65,6 +64,12 @@ public class EnemyAI : MonoBehaviour
         if (_state == EEnemyState.Alerted) StartPatrol(); // Возвращаемся к патрулированию
     }
 
+    private IEnumerator WaitFromAlert()
+    {
+        yield return new WaitForSeconds(4f);
+        GoToPoint();
+    }
+
 
     /// <summary>
     ///  Поворот к цели и передача целевой точки
@@ -76,7 +81,6 @@ public class EnemyAI : MonoBehaviour
         // Плавно вращаем моба
         if (Time.time - _currentTime < _timeToRotate)
         {
-            Debug.Log("Попадаем во вращение " + Quaternion.LookRotation(_targetPoint - transform.position, Vector3.up));
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(_targetPoint - transform.position,Vector3.up), _speedRotate * Time.deltaTime);
         }
         else
@@ -84,8 +88,8 @@ public class EnemyAI : MonoBehaviour
             _agent.SetDestination(_targetPoint);
             _animator.SetInteger("State", 1);
             _isRotation = false;
+            _isWalk = true;
         }
-
     }
 
 
@@ -111,6 +115,7 @@ public class EnemyAI : MonoBehaviour
         if (_agent.remainingDistance < 0.5f && _isWalk)
         {
             _isWalk = false;
+            _animator.SetInteger("State", 3);
             StartCoroutine(WaitAlert());
         }       
     }
@@ -126,13 +131,10 @@ public class EnemyAI : MonoBehaviour
 
     private void GoToNextWaypoint()
     {
-        _isWalk = true;
         Vector3 target = _enemyManager.GetNewPoint(_room, _currentWaypointIndex, out _room, out _currentWaypointIndex).position;
         _isRotation = true;
         _targetPoint = target;
         _currentTime = Time.time;
-       /* _agent.SetDestination(_targetPoint);
-        _animator.SetInteger("State", 1);*/
     }
 
 
@@ -202,14 +204,15 @@ public class EnemyAI : MonoBehaviour
     public void StartAlerted(Vector3 noiseSours) 
     {
         // Если бот преследует, то не отвлекается
-        if (_state == EEnemyState.Chasing) return; 
-        _state = EEnemyState.Alerted;
+        if (_state == EEnemyState.Chasing) return;
+        _state = EEnemyState.WaitAlert;
         _meshRenderer. material = materialAlerted;
-        _agent.SetDestination(noiseSours);
         _agent.speed = _speedAlertOrSearching;
-        _isWalk = true;
+        _agent.SetDestination(transform.position);
         _animator.SetInteger("State", 4);
-
+        _targetPoint = noiseSours;
+        transform.LookAt(noiseSours);
+        StartCoroutine(WaitFromAlert());
     }  
 
     public void SetStartParameters(RoomAccessControl room, int waypointIndex, EnemyManager enemyManager) 
@@ -222,8 +225,10 @@ public class EnemyAI : MonoBehaviour
         StartCoroutine(WaitAtWaypoint());
     }
 
-    public void GoToPoint() 
+    public void GoToPoint()
     {
+        _state = EEnemyState.Alerted;
         _agent.SetDestination(_targetPoint);
+        _isWalk = true;
     }
 }
