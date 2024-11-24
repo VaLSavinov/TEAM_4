@@ -6,6 +6,13 @@ public class EnemyManager : MonoBehaviour
 {
     [SerializeField, Tooltip(" оличество врагов.")] private int _countEnemy;
     [SerializeField] private GameObject _enemyPref;
+
+    [Header("Ќастройки дл€ обучающего уровн€")]
+    [SerializeField] private List<RoomAccessControl> _rooms;
+    [SerializeField] private TextAsset _setting;
+    [SerializeField] private TextAsset _dictonary;
+
+
     private List<EnemyAI> _enemys;
 
     private Dictionary<RoomAccessControl,List<SEnemyWayPoint>> _waypoints = new Dictionary<RoomAccessControl, List<SEnemyWayPoint>>();
@@ -17,6 +24,20 @@ public class EnemyManager : MonoBehaviour
     {
         _enemys = new List<EnemyAI>();
         GameMode.EnemyManager = this;
+        // ≈сли комнаты заданы вручную, значит спавним вручную
+        if (_rooms.Count > 0) 
+        {
+            Settings.SetCSV(_setting);
+            LocalizationManager.SetCSV(_dictonary);
+            EnemyRoute enemyRoute = null;
+            foreach (RoomAccessControl room in _rooms)
+            {
+                if (room.TryGetComponent<EnemyRoute>(out enemyRoute))
+                    AddWaypoints(room, enemyRoute.CountMaxEnemyInRoom,enemyRoute.GetWayPoints());
+                Debug.Log(enemyRoute);
+            }
+            CreateEnemy();
+        }
     }
 
     /// <summary>
@@ -36,8 +57,8 @@ public class EnemyManager : MonoBehaviour
         {
             // ѕроверка на возможность спавна и на соответсвие выбранной комнаты текущей
             if (currentRoom==room.Key || !CheackPossibilityPlacement(room.Key)) continue;
-            // ¬еро€тность того, что враг заспавнитьс€ в этой комнате
-            if (UnityEngine.Random.Range(0, 100) < 50) continue;
+            // ¬еро€тность того, что враг заспавнитьс€ в этой комнате (только дл€ основного уровн€)
+            if (_rooms.Count==0 && UnityEngine.Random.Range(0, 100) < 50)  continue;
             return room.Key;
         }
         return currentRoom;

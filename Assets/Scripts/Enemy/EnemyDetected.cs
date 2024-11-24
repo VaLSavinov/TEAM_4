@@ -7,7 +7,7 @@ public class EnemyDetected : MonoBehaviour
 {
     [SerializeField, Tooltip("Точка обзора.")] private Transform _viewPoint;
     [SerializeField] private EnemyAI _enemyAI;
-    [SerializeField, Tooltip("Время отслеживания после потери из вида")] private float _waitToSearch = 1f;
+    [SerializeField, Tooltip("Время отслеживания после потери из вида")] private float _waitToSearch;
     [SerializeField] private LayerMask _layerMask;
    
     private bool _isDetected = false;
@@ -62,7 +62,7 @@ public class EnemyDetected : MonoBehaviour
         {
             _enemyAI.StartSearchingPlayer();
             _timeLoss = 0;
-            _isInVievZone = false;
+            _isInVievZone = false; 
         }
         else
         {

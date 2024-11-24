@@ -110,6 +110,10 @@ public class PersonHand : MonoBehaviour
                     GrabObject();
                     break;
                 case "Take":
+                    _hitObject.transform.GetComponent<IInteractable>().Interact(ref _grabObject);
+                    Destroy(_grabObject);
+                    GameMode.PlayerUI.DeactivatePanel();
+                    break;
                 case "Interact":
                     _hitObject.transform.GetComponent<IInteractable>().Interact();
                     break;
@@ -153,14 +157,6 @@ public class PersonHand : MonoBehaviour
     {
         if (_hitObject == null) return ;
         _hitObject = null;
-        GameMode.PlayerUI.DeactivatePanel();
-    }
-
-    private void AddCard(GameObject card)
-    {
-        PickableItem cardPick = card.GetComponent<PickableItem>();
-        _inventaryCard.Add(cardPick.GetCardColor(), true);        
-        cardPick.Interact();
         GameMode.PlayerUI.DeactivatePanel();
     }
 

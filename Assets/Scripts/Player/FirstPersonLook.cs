@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class FirstPersonLook : MonoBehaviour
 {
     // Чувствительность мыши.
-    [SerializeField] private float _mouseSensitivity = 100f;
+    [SerializeField] private float _mouseMaxSensitivity = 100f;
     // Ссылка на тело игрока для вращения.
     [SerializeField] private Transform _playerBody;
     [SerializeField] private bool _canRotate = true;
@@ -13,6 +13,7 @@ public class FirstPersonLook : MonoBehaviour
     private float _xRotation = 0f;
 
     private PlayerControl _playerControl;
+    private float _mouseSensitivity;
 
     void Awake() 
     {
@@ -21,13 +22,15 @@ public class FirstPersonLook : MonoBehaviour
         GameMode.FirstPersonLook = this;
         _playerControl = new PlayerControl();
         _playerControl.UI.PauseMenu.started += context => ShowMainMenu();
+        // Убрать потом и раскоменнтировать ниже
+        _mouseSensitivity = _mouseMaxSensitivity;
+        //ChangeSettings();
     }
 
     // Временное решение, пока нет UI
     private void ShowMainMenu()
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        GameMode.PlayerUI.Pause();
         // Сохранение подобранных предметов
         // LocalizationManager.SafeCSV();
     }
@@ -41,7 +44,6 @@ public class FirstPersonLook : MonoBehaviour
     {
         _playerControl.Disable();
     }
-
 
 
     void Update()
@@ -73,5 +75,12 @@ public class FirstPersonLook : MonoBehaviour
                 Cursor.visible = true;
             }
         }*/
+    }
+
+    public void ChangeSettings() 
+    {
+        AudioListener.volume = float.Parse(Settings.GetParam("volume"));
+        _mouseSensitivity = _mouseMaxSensitivity * float.Parse(Settings.GetParam("sensitivity"));
+        Debug.Log(_mouseSensitivity);
     }
 }
