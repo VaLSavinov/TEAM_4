@@ -7,8 +7,10 @@ using UnityEngine.UI;
 public class PlayerUI : MonoBehaviour
 {
     [SerializeField] private GameObject pauseScreen;
+    [SerializeField] private GameObject finishScreen;
     [SerializeField] private GameObject _panel;
     [SerializeField] private LoaclizationText _centerText;
+    [SerializeField] private GameObject wintext;
 
     private AudioSource _audioSource;
     private PlayerControl _playerControl;
@@ -73,6 +75,16 @@ public class PlayerUI : MonoBehaviour
         pauseScreen.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        _playerControl.Disable();
+    }
+
+    public void Finish()
+    {
+        finishScreen.SetActive(true);
+        wintext.SetActive(true);
+        Time.timeScale = 0;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         _playerControl.Disable();
     }
 }
