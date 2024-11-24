@@ -7,12 +7,13 @@ using UnityEngine.UI;
 public class PlayerUI : MonoBehaviour
 {
     [SerializeField] private GameObject pauseScreen;
+    [SerializeField] private GameObject finishScreen;
     [SerializeField] private GameObject _panel;
     [SerializeField] private LoaclizationText _centerText;
+    [SerializeField] private GameObject wintext;
     [SerializeField] private GameObject _settingMenu;
     [SerializeField] private Slider _sliderVolume;
     [SerializeField] private Slider _sliderSensitiviti;
-
 
     private AudioSource _audioSource;
     private PlayerControl _playerControl;
@@ -26,10 +27,10 @@ public class PlayerUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Показать текст в центре экрана
+    /// ГЏГ®ГЄГ Г§Г ГІГј ГІГҐГЄГ±ГІ Гў Г¶ГҐГ­ГІГ°ГҐ ГЅГЄГ°Г Г­Г 
     /// </summary>
-    /// <param name="text"> Показываемый текст</param>
-    /// <param name="isRewrite"> Перезаписть текст, если в данный момент выводиться другой</param>
+    /// <param name="text"> ГЏГ®ГЄГ Г§Г»ГўГ ГҐГ¬Г»Г© ГІГҐГЄГ±ГІ</param>
+    /// <param name="isRewrite"> ГЏГҐГ°ГҐГ§Г ГЇГЁГ±ГІГј ГІГҐГЄГ±ГІ, ГҐГ±Г«ГЁ Гў Г¤Г Г­Г­Г»Г© Г¬Г®Г¬ГҐГ­ГІ ГўГ»ГўГ®Г¤ГЁГІГјГ±Гї Г¤Г°ГіГЈГ®Г©</param>
     public void ShowText(string text, bool isRewrite) 
     {
         if (!isRewrite && _panel.activeSelf) return;
@@ -80,6 +81,14 @@ public class PlayerUI : MonoBehaviour
         _playerControl.Disable();
     }
 
+    public void Finish()
+    {
+        finishScreen.SetActive(true);
+        wintext.SetActive(true);
+        Time.timeScale = 0;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        _playerControl.Disable();
     public void OpenSetting()
     {
         _settingMenu.SetActive(true);

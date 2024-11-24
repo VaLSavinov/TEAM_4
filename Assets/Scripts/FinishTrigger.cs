@@ -6,9 +6,10 @@ public class FinishTrigger : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Playr")        
+        if (other.tag == "Player")        
         {
             LocalizationManager.SafeCSV();
+            GameMode.PlayerUI.Finish();
         }
     }
 }
