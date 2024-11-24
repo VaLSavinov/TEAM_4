@@ -6,6 +6,13 @@ public class EnemyManager : MonoBehaviour
 {
     [SerializeField, Tooltip("Количество врагов.")] private int _countEnemy;
     [SerializeField] private GameObject _enemyPref;
+
+    [Header("Настройки для обучающего уровня")]
+    [SerializeField] private List<RoomAccessControl> _rooms;
+    [SerializeField] private TextAsset _setting;
+    [SerializeField] private TextAsset _dictonary;
+
+
     private List<EnemyAI> _enemys;
 
     private Dictionary<RoomAccessControl,List<SEnemyWayPoint>> _waypoints = new Dictionary<RoomAccessControl, List<SEnemyWayPoint>>();
@@ -17,6 +24,22 @@ public class EnemyManager : MonoBehaviour
     {
         _enemys = new List<EnemyAI>();
         GameMode.EnemyManager = this;
+        // Если комнаты заданы вручную, значит спавним вручную
+        if (_rooms.Count > 0) 
+        {
+            Debug.Log("Выполянется");
+            Settings.SetCSV(_setting);
+            LocalizationManager.SetCSV(_dictonary);
+            EnemyRoute enemyRoute = null;
+            foreach (RoomAccessControl room in _rooms)
+            {
+                Debug.Log("Попали");
+                if (room.TryGetComponent<EnemyRoute>(out enemyRoute))
+                    AddWaypoints(room, enemyRoute.CountMaxEnemyInRoom,enemyRoute.GetWayPoints());
+                Debug.Log(enemyRoute);
+            }
+            CreateEnemy();
+        }
     }
 
     /// <summary>
@@ -36,8 +59,8 @@ public class EnemyManager : MonoBehaviour
         {
             // Проверка на возможность спавна и на соответсвие выбранной комнаты текущей
             if (currentRoom==room.Key || !CheackPossibilityPlacement(room.Key)) continue;
-            // Вероятность того, что враг заспавниться в этой комнате
-            if (UnityEngine.Random.Range(0, 100) < 50) continue;
+            // Вероятность того, что враг заспавниться в этой комнате (только для основного уровня)
+            if (_rooms.Count==0 && UnityEngine.Random.Range(0, 100) < 50)  continue;
             return room.Key;
         }
         return currentRoom;
@@ -90,8 +113,8 @@ public class EnemyManager : MonoBehaviour
         // Если это запрос от бота
         if (room != null)
         {
-            // Шанс того, что бот захочет поменять комнату
-            if (UnityEngine.Random.Range(0, 100) < 25) newRoom = GetNewRoom(room);
+            // Шанс того, что бот захочет поменять комнату (Только для основного уровня)
+            if (_rooms.Count == 0 && UnityEngine.Random.Range(0, 100) < 25) newRoom = GetNewRoom(room);
             else newRoom = room;
         }
         // Если метод вызывается при спавне ботов
