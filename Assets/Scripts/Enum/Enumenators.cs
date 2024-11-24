@@ -3,6 +3,7 @@ public enum EEnemyState
     Patrolling,
     Alerted,
     Chasing,
+    WaitAlert,
     Searching
 }
 

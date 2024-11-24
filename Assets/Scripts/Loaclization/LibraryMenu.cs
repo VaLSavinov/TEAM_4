@@ -14,7 +14,13 @@ public class LibraryMenu : MonoBehaviour
     [SerializeField] private TMP_Text _outText;
     [SerializeField] private Image _imageMin;
     [SerializeField] private Image _imageMax;
-    [SerializeField] private GameObject _buttonPlay;
+    [SerializeField] private Button _buttonPlay;
+
+    [Header("Спрайты для кнопки Play")]
+    [SerializeField] private Sprite _passPlay;
+    [SerializeField] private Sprite _acctPlay;
+    [SerializeField] private Sprite _passStop;
+    [SerializeField] private Sprite _acctStop;
 
     [Header("Создание кнопки")]
     [SerializeField] private GameObject _prefabButton;
@@ -33,6 +39,25 @@ public class LibraryMenu : MonoBehaviour
     private void Awake()
     {
         _localizateText = _outText.GetComponent<LoaclizationText>();
+    }
+
+    private void SetPlayButtonImage(bool isPaly)        
+    {
+        SpriteState spriteState = _buttonPlay.spriteState;
+        if (isPaly)
+        {           
+            _buttonPlay.image.sprite = _passStop;
+            spriteState.highlightedSprite = _acctStop;
+            spriteState.pressedSprite = _acctStop;
+            _buttonPlay.spriteState = spriteState;
+        }
+        else 
+        {
+            _buttonPlay.image.sprite = _passPlay;
+            spriteState.highlightedSprite = _acctPlay;
+            spriteState.pressedSprite = _acctPlay;
+            _buttonPlay.spriteState = spriteState;
+        }
     }
 
     public void OpenLibrary()
@@ -78,7 +103,7 @@ public class LibraryMenu : MonoBehaviour
             _imageMax.sprite = _repotsSO.GetImageForTag(tag);
             _imageMax.gameObject.SetActive(true);
             _imageMin.gameObject.SetActive(false);
-            _buttonPlay.SetActive(false);
+            _buttonPlay.gameObject.SetActive(false);
             return;
         }
         if (tag.Contains("Reports."))
@@ -86,7 +111,7 @@ public class LibraryMenu : MonoBehaviour
             _imageMin.sprite = _repotsSO.GetImageForTag(tag);
             _imageMax.gameObject.SetActive(false);
             _imageMin.gameObject.SetActive(true);
-            _buttonPlay.SetActive(false);
+            _buttonPlay.gameObject.SetActive(false);
             return;
         }
         if (tag.Contains("Audio."))
@@ -94,7 +119,7 @@ public class LibraryMenu : MonoBehaviour
             _audioSource.clip = _audioSO.GetAudioForTag(tag);
             _imageMax.gameObject.SetActive(false);
             _imageMin.gameObject.SetActive(false);
-            _buttonPlay.SetActive(true);
+            _buttonPlay.gameObject.SetActive(true);
             return;
         }
 
@@ -103,9 +128,16 @@ public class LibraryMenu : MonoBehaviour
 
     public void PlayAudio() 
     {
-        if(_audioSource.isPlaying)
+        if (_audioSource.isPlaying)
+        {
             _audioSource.Pause();
-        else _audioSource.Play();
+            SetPlayButtonImage(false);
+        }
+        else 
+        {
+            _audioSource.Play();
+            SetPlayButtonImage(true);
+        }
     }
 
 
@@ -117,8 +149,10 @@ public class LibraryMenu : MonoBehaviour
             Destroy(button);
         }
         _audioSource.Stop();
-        _buttons.Clear();    
+        SetPlayButtonImage(false);
+        _buttons.Clear();
         gameObject.SetActive(false);
     }
+
 
 }
