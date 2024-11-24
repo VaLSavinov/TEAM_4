@@ -30,7 +30,7 @@ public class LoaclizationText : MonoBehaviour
     private void ChangeLanguage() 
     {
         if (_text != null)  _text.text = LocalizationManager.GetTextForTag(_tag);
-        else _textMeshPro.text = LocalizationManager.GetTextForTag(_tag);
+        else if (_textMeshPro != null)  _textMeshPro.text = LocalizationManager.GetTextForTag(_tag);
     }
 
     public void SetTag(string newTag)

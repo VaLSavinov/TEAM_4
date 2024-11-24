@@ -89,6 +89,8 @@ public class PlayerUI : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         _playerControl.Disable();
+    }
+
     public void OpenSetting()
     {
         _settingMenu.SetActive(true);
