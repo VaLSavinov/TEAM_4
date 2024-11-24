@@ -2701,7 +2701,7 @@ GameObject:
   - component: {fileID: 2588371348273262139}
   m_Layer: 0
   m_Name: FinishTrigger
-  m_TagString: Untagged
+  m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

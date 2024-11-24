@@ -200,7 +200,7 @@ MonoBehaviour:
     prefabs:
     - {fileID: 8235504648513398738, guid: 686f859569f7d8941acb89778040f7f4, type: 3}
     - {fileID: 5629654182576397510, guid: 68a3cd6ebfaf6dd458052b71c949d530, type: 3}
-    - {fileID: 5629654182576397510, guid: 68a3cd6ebfaf6dd458052b71c949d530, type: 3}
+    - {fileID: 7895898808978929535, guid: 1725c8d030f7fad4ab40b6b7f4c4e164, type: 3}
     roomSize: 5
   - typeName: 5x5 Med
     prefabs:
