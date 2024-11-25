@@ -10,6 +10,7 @@ public class FinishTrigger : MonoBehaviour
         {
             LocalizationManager.SafeCSV();
             GameMode.PlayerUI.Finish();
+            GameMode.FirstPersonLook.BlockPlayerController();
         }
     }
 }
