@@ -14,6 +14,7 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private GameObject _settingMenu;
     [SerializeField] private Slider _sliderVolume;
     [SerializeField] private Slider _sliderSensitiviti;
+    [SerializeField] private Image _visibleImage;
 
     private AudioSource _audioSource;
     private PlayerControl _playerControl;
@@ -113,5 +114,10 @@ public class PlayerUI : MonoBehaviour
     public void ChangeValueSensetiviti()
     {
         Settings.SetParam("sensitivity", _sliderSensitiviti.value.ToString());
+    }
+
+    public void ChangeVisiblePayer(bool isVisible) 
+    {
+        _visibleImage.gameObject.SetActive(isVisible);
     }
 }

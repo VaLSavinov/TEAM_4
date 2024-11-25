@@ -162,4 +162,13 @@ public class EnemyManager : MonoBehaviour
             if (Vector3.Distance(enemyAI.transform.position, pointAlaem) <= distance) enemyAI.StartAlerted(pointAlaem);
         }
     }
+
+    public EnemyAI GetEnemyForGameObject(GameObject enemyObgect) 
+    {
+        foreach (EnemyAI enemy in _enemys) 
+        {
+            if(enemy.gameObject == enemyObgect) return enemy;
+        }
+        return null;
+    }
 }
