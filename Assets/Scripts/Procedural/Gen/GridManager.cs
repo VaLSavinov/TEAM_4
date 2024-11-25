@@ -90,10 +90,9 @@ public class GridManager : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Здесь работает");
         // Временно, для тестов
-      //  Settings.SetCSV(_setting);
-      //  LocalizationManager.SetCSV(_textAsset);
+        Settings.SetCSV(_setting);
+        LocalizationManager.SetCSV(_textAsset);
         Debug.Log("Здесь тоже");
         _enemyManager = GetComponent<EnemyManager>();
         GenerateGrid();
