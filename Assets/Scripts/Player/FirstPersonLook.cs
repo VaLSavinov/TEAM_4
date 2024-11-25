@@ -35,6 +35,11 @@ public class FirstPersonLook : MonoBehaviour
         // LocalizationManager.SafeCSV();
     }
 
+    public void BlockPlayerController()
+    {
+        _playerControl.Disable();
+    }
+
     private void OnEnable()
     {
         _playerControl.Enable();
