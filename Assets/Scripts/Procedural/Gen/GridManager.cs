@@ -93,6 +93,7 @@ public class GridManager : MonoBehaviour
         // Временно, для тестов
         Settings.SetCSV(_setting);
         LocalizationManager.SetCSV(_textAsset);
+        Debug.Log("Здесь тоже");
         _enemyManager = GetComponent<EnemyManager>();
         GenerateGrid();
         PlaceRooms();

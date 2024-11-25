@@ -90,6 +90,7 @@ public static class LocalizationManager
     public static List<string> GetTagList(string avail, bool equal)
     {
         List<string> list = new List<string>();
+       // if(_localization !=null)
         for (int i = 1; i < _localization.GetLength(0); i++)
         {
             if (_localization[i, 1] != "" && (_localization[i, 1] == avail) == equal) list.Add(_localization[i, 0]);
