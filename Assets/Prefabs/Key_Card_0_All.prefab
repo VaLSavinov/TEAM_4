@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cardColor: 0
-  _itemType: 0
+  _itemType: 4
 --- !u!82 &-8448912314246528340
 AudioSource:
   m_ObjectHideFlags: 0

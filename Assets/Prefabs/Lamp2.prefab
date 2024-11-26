@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5123799113697730358}
   - component: {fileID: 5755444733198691367}
   - component: {fileID: 2455884122217657667}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Directional Light (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 9023256115219054662}
   - component: {fileID: 7503031582180949010}
   - component: {fileID: 1675286275026988972}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Lamp2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -401,6 +401,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: lamp
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7c68b7343dc446d4f868ca20ea173974,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

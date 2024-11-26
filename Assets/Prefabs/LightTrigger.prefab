@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2433640463266747901}
   - component: {fileID: 3135394159500318364}
   - component: {fileID: 5960231686656343925}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: LightTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,4 +70,5 @@ MonoBehaviour:
   - {fileID: 0}
   _layersMask:
     serializedVersion: 2
-    m_Bits: 1019
+    m_Bits: 1011
+  _coffMinim: 0.7
