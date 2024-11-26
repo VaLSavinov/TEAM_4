@@ -89,6 +89,7 @@
     <Compile Include="Assets\Scripts\Interactions\ReportCollectebel.cs" />
     <Compile Include="Assets\Scripts\Interactions\LightBulb.cs" />
     <Compile Include="Assets\Scripts\Enum\Structure.cs" />
+    <Compile Include="Assets\Scripts\LightController.cs" />
     <Compile Include="Assets\Scripts\Interactions\PlacementPoint.cs" />
     <Compile Include="Assets\Scripts\Interactions\PickableItem.cs" />
     <Compile Include="Assets\Scripts\Loaclization\ButtonOpenCollect.cs" />

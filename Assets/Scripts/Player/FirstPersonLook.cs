@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,6 +15,8 @@ public class FirstPersonLook : MonoBehaviour
 
     private PlayerControl _playerControl;
     private float _mouseSensitivity;
+    private bool _isVisibile = false;
+    private List<Light> _lights;
 
     void Awake() 
     {
@@ -24,6 +27,7 @@ public class FirstPersonLook : MonoBehaviour
         _playerControl.UI.PauseMenu.started += context => ShowMainMenu();
         // Убрать потом и раскоменнтировать ниже
         _mouseSensitivity = _mouseMaxSensitivity;
+        _lights = new List<Light>();
         //ChangeSettings();
     }
 
@@ -66,20 +70,6 @@ public class FirstPersonLook : MonoBehaviour
                 _playerBody.Rotate(Vector3.up * mouseX);
             }
         }
-
-        /*if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (Cursor.visible)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-            }
-        }*/
     }
 
     public void ChangeSettings() 
@@ -87,5 +77,41 @@ public class FirstPersonLook : MonoBehaviour
         AudioListener.volume = float.Parse(Settings.GetParam("volume"));
         _mouseSensitivity = _mouseMaxSensitivity * float.Parse(Settings.GetParam("sensitivity"));
         Debug.Log(_mouseSensitivity);
+    }
+
+    public void AddLight(Light newLight) 
+    {
+        if (_lights.Count == 0)
+        {
+            _lights.Add(newLight);
+            _isVisibile = true;
+            GameMode.PlayerUI.ChangeVisiblePayer(_isVisibile);
+        }
+        else
+        {
+            foreach (var light in _lights)
+                if (light == newLight) return;
+            _lights.Add(newLight);
+        }
+    }
+
+    public void RemoveLight(Light newLight)
+    {
+        if (_lights.Count == 0) 
+        { 
+            GameMode.PlayerUI.ChangeVisiblePayer(_isVisibile); 
+            return; 
+        }
+        _lights.Remove(newLight);
+        if (_lights.Count == 0)
+        {
+            _isVisibile = false;
+            GameMode.PlayerUI.ChangeVisiblePayer(_isVisibile);
+        }
+    }
+
+    public bool GetVisability() 
+    {
+        return _isVisibile;
     }
 }

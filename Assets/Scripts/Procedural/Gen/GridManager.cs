@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Unity.AI.Navigation;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -14,6 +15,8 @@ public class RoomType
 
 public class GridManager : MonoBehaviour
 {
+    private List<Light> allLights = new List<Light>();
+
     /// Временно, для тестов локализации <summary>
     [SerializeField] private TextAsset _setting;    
     /// </summary>
@@ -88,12 +91,23 @@ public class GridManager : MonoBehaviour
     private List<GameObject> itemsPlacedRooms = new List<GameObject>();
     private List<string> itemsPlaced = new List<string>();
 
+    private struct LightState
+    {
+        public float intensity;
+        public float range;
+        public Color color;
+        public bool isActive;
+    }
+
+    private Dictionary<Light, LightState> originalLightStates = new Dictionary<Light, LightState>();
+    private Dictionary<Light, Coroutine> activePulsations = new Dictionary<Light, Coroutine>();
+
+
     void Start()
     {
         // Временно, для тестов
         Settings.SetCSV(_setting);
         LocalizationManager.SetCSV(_textAsset);
-        Debug.Log("Здесь тоже");
         _enemyManager = GetComponent<EnemyManager>();
         GenerateGrid();
         PlaceRooms();
@@ -109,6 +123,9 @@ public class GridManager : MonoBehaviour
         GetComponent<NavMeshSurface>().BuildNavMesh();
         _enemyManager.CreateEnemy();
         SpawnCollectebelsObject();
+        FindAllLights();
+        StartCoroutine(FlickerLights());
+        ModifyLightSources(); // запускать при отключении света
     }
 
     private void SpawnCollectebelsObject()
@@ -1392,6 +1409,155 @@ public class GridManager : MonoBehaviour
         else
         {
             Debug.Log("Предметы не были размещены.");
+        }
+    }
+    private void ModifyLightSources()
+    {
+        // Находим все источники света
+        Light[] lights = FindObjectsOfType<Light>();
+        List<Light> directionalLights = new List<Light>();
+        foreach (Light light in lights)
+        {
+            if (light.name.StartsWith("Directional Light"))
+            {
+                directionalLights.Add(light);
+                // Сохраняем начальные параметры света
+                originalLightStates[light] = new LightState
+                {
+                    intensity = light.intensity,
+                    range = light.range,
+                    color = light.color,
+                    isActive = light.enabled
+                };
+            }
+        }
+
+        // Перебираем найденные источники и изменяем параметры
+        foreach (Light light in directionalLights)
+        {
+            // Изменяем параметры для аварийного освещения
+            light.intensity *= 0.5f;
+            light.color = new Color(0.8f, 0.2f, 0.2f); // Менее яркий красный
+            light.range *= 0.75f; // Уменьшаем радиус освещения
+
+            // Запускаем пульсацию с задержкой
+            float delay = Random.Range(0f, 1f); // Задержка до 1 секунды
+            Coroutine pulsation = StartCoroutine(PulseLight(light, delay));
+            activePulsations[light] = pulsation;
+        }
+
+        // Запускаем восстановление параметров через 30 секунд
+        StartCoroutine(RestoreLightSourcesAfterDelay(30f));
+    }
+
+    private IEnumerator PulseLight(Light light, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        float elapsedTime = 0f;
+        float duration = 3f; // Полный цикл пульсации
+        float randomFactor = Random.Range(0.8f, 1.2f); // Уникальная амплитуда для каждого источника света
+
+        while (true)
+        {
+            elapsedTime += Time.deltaTime;
+            float phase = Mathf.Sin((elapsedTime / duration) * Mathf.PI * 2); // Плавная синусоида
+
+            // Интенсивность пульсирует от -80% до +80% от текущего значения
+            light.intensity = originalLightStates[light].intensity * 0.5f * (1f + randomFactor * phase);
+            light.range = originalLightStates[light].range * (1f + 0.4f * phase * randomFactor);
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator RestoreLightSourcesAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        foreach (var pair in activePulsations)
+        {
+            Light light = pair.Key;
+            Coroutine pulsation = pair.Value;
+
+            // Останавливаем пульсацию
+            if (pulsation != null)
+            {
+                StopCoroutine(pulsation);
+            }
+        }
+
+        activePulsations.Clear();
+
+        foreach (var pair in originalLightStates)
+        {
+            Light light = pair.Key;
+            LightState state = pair.Value;
+
+            // Восстанавливаем параметры
+            light.intensity = state.intensity;
+            light.color = state.color;
+            light.range = state.range;
+            light.enabled = state.isActive;
+        }
+
+        Debug.Log("Световые параметры восстановлены.");
+    }
+    private void FindAllLights()
+    {
+        // Находим все источники света
+        Light[] lights = FindObjectsOfType<Light>();
+
+        foreach (Light light in lights)
+        {
+            if (light.name.StartsWith("Directional Light"))
+            {
+                allLights.Add(light);
+            }
+        }
+    }
+
+    private IEnumerator FlickerLights()
+    {
+        while (true)
+        {
+            // Длительность мерцания
+            float flickerDuration = 5f;
+            float intervalBetweenFlickers = Random.Range(4f, 8f);
+
+            // Мерцание в течение 5 секунд
+            float elapsed = 0f;
+            while (elapsed < flickerDuration)
+            {
+                foreach (Light light in allLights)
+                {
+                    if (Random.Range(0f, 1f) < 0.33f) // 20% шанс для каждой лампы
+                    {
+                        StartCoroutine(SingleLightFlicker(light));
+                    }
+                }
+
+                elapsed += 1f;
+                yield return new WaitForSeconds(1f); // Проверяем каждую секунду
+            }
+
+            // Пауза перед следующим запуском
+            yield return new WaitForSeconds(intervalBetweenFlickers);
+        }
+    }
+
+    private IEnumerator SingleLightFlicker(Light light)
+    {
+        if (light == null) yield break;
+
+        int flickerCount = Random.Range(3, 7); // Случайное количество мерцаний (2–5 раз)
+
+        for (int i = 0; i < flickerCount; i++)
+        {
+            light.enabled = false;
+            yield return new WaitForSeconds(0.1f); // Быстрое выключение
+            light.enabled = true;
+            yield return new WaitForSeconds(0.1f); // Быстрое включение
         }
     }
 }
