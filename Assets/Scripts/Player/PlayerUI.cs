@@ -89,7 +89,6 @@ public class PlayerUI : MonoBehaviour
         Time.timeScale = 0;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        _playerControl.Disable();
     }
 
     public void OpenSetting()
