@@ -9,6 +9,8 @@ public static class GameMode
 
 
     public static event Action OnInteractGenerator;
+    public static event Action<bool> OnBalckOut;
+    public static event Action<bool> OnOpenDoor;
 
     public static PersonHand PersonHand
     {
@@ -34,10 +36,30 @@ public static class GameMode
         set { _EnemyManager = value; }
     }
 
+    /// <summary>
+    /// Активация генератора
+    /// </summary>
     public static void InteractGenerator() 
     {
         OnInteractGenerator?.Invoke();
     }
 
+    /// <summary>
+    /// Запуск/остановка блекаута
+    /// </summary>
+    /// <param name="state"></param>
+    public static void ChangeStateBlackOut(bool state) 
+    {
+        OnBalckOut?.Invoke(state);
+    }
+
+    /// <summary>
+    /// Открытие/закрытие всех доступных дверей
+    /// </summary>
+    /// <param name="state"></param>
+    public static void ChangeOpenDoor(bool state)
+    {
+        OnOpenDoor?.Invoke(state);
+    }
 
 }

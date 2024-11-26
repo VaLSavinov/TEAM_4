@@ -12,7 +12,15 @@ public class LightController : MonoBehaviour, IInteractable
     private bool _isEnabled = true;
     private bool _isBlackout = false;
 
+    private void Awake()
+    {
+        GameMode.OnBalckOut += ChangeBlackOut;
+    }
 
+    private void OnDisable()
+    {
+        GameMode.OnBalckOut -= ChangeBlackOut;
+    }
 
     private void OnTriggerStay(Collider other)
     {
@@ -28,6 +36,7 @@ public class LightController : MonoBehaviour, IInteractable
                 h1 = h - GameMode.FirstPersonLook.transform.position.y;
                 r = (h1 / h) * light.range;
                 conusPos = new Vector3(light.transform.position.x, GameMode.FirstPersonLook.transform.position.y, light.transform.position.z);
+                Debug.Log(Vector3.Distance(GameMode.FirstPersonLook.transform.position, conusPos) + " " + r + " "+ light.range);
                 if (Vector3.Distance(GameMode.FirstPersonLook.transform.position, conusPos) < r)
                 {
                     ReleaseRayCast(light);
@@ -63,8 +72,9 @@ public class LightController : MonoBehaviour, IInteractable
         //Проверка        
         Debug.DrawRay(ray.origin, ray.direction * 200, Color.red);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 10, _layersMask))
+        if (Physics.Raycast(ray, out hit, 20, _layersMask))
         {
+            Debug.Log("Луч выпущен. Столкновение с " + hit);
             if (hit.collider.tag == "Player")
             {
                 GameMode.FirstPersonLook.AddLight(light);
@@ -73,7 +83,8 @@ public class LightController : MonoBehaviour, IInteractable
             {
                 GameMode.FirstPersonLook.RemoveLight(light);
             }
-        }       
+        }
+        else { Debug.Log("Лучь не попапл" + hit); }
     }
 
     public void Interact()
@@ -84,6 +95,10 @@ public class LightController : MonoBehaviour, IInteractable
             for (int i = 0; i < _lamps.Count; i++) 
             {
                 _lamps[i].enabled = _isEnabled;
+            }            
+            foreach (EnemyAI enemy in _enemyAIs)
+            {
+                enemy.LightAlways(!_isEnabled);
             }
         }
     }
@@ -91,6 +106,11 @@ public class LightController : MonoBehaviour, IInteractable
     public bool Interact(ref GameObject interactingOject)
     {
         throw new System.NotImplementedException();
+    }
+
+    public void ChangeBlackOut(bool state) 
+    {
+        _isBlackout = state;
     }
 }
 
