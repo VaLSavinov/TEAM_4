@@ -18,9 +18,16 @@ public class GridManager : MonoBehaviour
     private List<Light> allLights = new List<Light>();
 
     /// Временно, для тестов локализации <summary>
-    [SerializeField] private TextAsset _setting;    
+    [SerializeField] private TextAsset _setting;
     /// </summary>
-    [SerializeField] private TextAsset _textAsset;    
+    [SerializeField] private TextAsset _textAsset;
+
+    [Header("Door Outline Materials")]
+    public Material outlineWhiteMaterial;
+    public Material outlineBlackMaterial;
+    public Material outlineRedMaterial;
+    public Material outlineGreenMaterial;
+    public Material outlineBlueMaterial;
 
     [Header("Tertiary Paths Settings")]
     public int minTertiaryPaths = 1; // Минимальное количество третичных путей
@@ -70,6 +77,8 @@ public class GridManager : MonoBehaviour
     public GameObject greenCardPrefab;
     public GameObject blueCardPrefab;
     public GameObject portableBatteryPrefab;
+    public GameObject blackCardPrefab;
+    public GameObject stunGunPrefab;
 
     [Header("Collectebel parameters")]
     public int _countCollectebelItems;
@@ -82,10 +91,12 @@ public class GridManager : MonoBehaviour
     // Глобальные списки для имен предметов и комнат, где они размещены
     private List<string> itemNames = new List<string>
     {
-        "Красный ключ",
-        "Зелёный ключ",
-        "Синий ключ",
-        "Переносной аккумулятор"
+    "Красный ключ",       // соответствует redCardPrefab
+    "Зелёный ключ",       // соответствует greenCardPrefab
+    "Синий ключ",         // соответствует blueCardPrefab
+    "Чёрный ключ",        // соответствует blackCardPrefab
+    "Электрошокер",       // соответствует stunGunPrefab
+    "Переносной аккумулятор" // соответствует portableBatteryPrefab
     };
 
     private List<GameObject> itemsPlacedRooms = new List<GameObject>();
@@ -125,7 +136,8 @@ public class GridManager : MonoBehaviour
         SpawnCollectebelsObject();
         FindAllLights();
         StartCoroutine(FlickerLights());
-        ModifyLightSources(); // запускать при отключении света
+        //ModifyLightSources(); // запускать при отключении света
+        UpdateDoorMaterials();
     }
 
     private void SpawnCollectebelsObject()
@@ -305,6 +317,14 @@ public class GridManager : MonoBehaviour
             Vector3 roomPosition = new Vector3(chosenPosition.x + roomSize / 2f - 0.5f, 0, chosenPosition.y + roomSize / 2f - 0.5f);
 
             GameObject newRoom = Instantiate(roomPrefab, roomPosition, Quaternion.identity);
+
+            // Устанавливаем ссылку на GridManager в RoomAccessControl
+            RoomAccessControl roomAccess = newRoom.GetComponent<RoomAccessControl>();
+            if (roomAccess != null)
+            {
+                roomAccess.Initialize(this);
+            }
+
             MarkCellsAsOccupied(chosenPosition.x, chosenPosition.y, roomSize, newRoom);
         }
         else
@@ -329,6 +349,14 @@ public class GridManager : MonoBehaviour
                 Vector3 roomPosition = new Vector3(chosenPosition.x + roomSize / 2f - 0.5f, 0, chosenPosition.y + roomSize / 2f - 0.5f);
 
                 GameObject newRoom = Instantiate(roomPrefab, roomPosition, Quaternion.identity);
+
+                // Устанавливаем ссылку на GridManager в RoomAccessControl
+                RoomAccessControl roomAccess = newRoom.GetComponent<RoomAccessControl>();
+                if (roomAccess != null)
+                {
+                    roomAccess.Initialize(this);
+                }
+
                 MarkCellsAsOccupied(chosenPosition.x, chosenPosition.y, roomSize, newRoom);
             }
             else
@@ -337,6 +365,7 @@ public class GridManager : MonoBehaviour
             }
         }
     }
+
 
     bool IsNearOccupiedRoom(int startX, int startY, int roomSize, int minDistance, int maxDistance)
     {
@@ -388,6 +417,13 @@ public class GridManager : MonoBehaviour
             {
                 Vector3 roomPosition = new Vector3(x + roomSize / 2f - 0.5f, 0, y + roomSize / 2f - 0.5f);
                 GameObject newRoom = Instantiate(roomPrefab, roomPosition, Quaternion.Euler(0, randomRotation, 0));
+
+                // Устанавливаем ссылку на GridManager в RoomAccessControl
+                RoomAccessControl roomAccess = newRoom.GetComponent<RoomAccessControl>();
+                if (roomAccess != null)
+                {
+                    roomAccess.Initialize(this);
+                }
 
                 MarkCellsAsOccupied(x, y, roomSize, newRoom);
 
@@ -1219,23 +1255,16 @@ public class GridManager : MonoBehaviour
             allRooms.Add(finishRoomInstance);
         }
 
-        List<GameObject> roomsWithoutAccessLevels = new List<GameObject>();
-        foreach (GameObject room in allRooms)
-        {
-            RoomAccessControl accessControl = room.GetComponent<RoomAccessControl>();
-            if (accessControl != null && accessControl.RequiredAccessLevel == AccessCardColor.None)
-            {
-                roomsWithoutAccessLevels.Add(room);
-            }
-        }
+        // Удаляем условие, связанное с уровнем доступа
+        List<GameObject> availableRooms = new List<GameObject>(allRooms);
 
-        if (roomsWithoutAccessLevels.Count < 3)
+        if (availableRooms.Count < 3)
         {
             Debug.LogError("Недостаточно комнат для отключения питания.");
             return;
         }
 
-        ShuffleList(roomsWithoutAccessLevels);
+        ShuffleList(availableRooms);
 
         int roomsToDisablePower = 3;
 
@@ -1247,11 +1276,11 @@ public class GridManager : MonoBehaviour
             roomsToDisablePower--;
         }
 
-        for (int i = 0; roomsToDisablePower > 0 && i < roomsWithoutAccessLevels.Count; i++)
+        for (int i = 0; roomsToDisablePower > 0 && i < availableRooms.Count; i++)
         {
-            GameObject room = roomsWithoutAccessLevels[i];
+            GameObject room = availableRooms[i];
 
-            // Пропускаем комнату Generator
+            // Пропускаем финишную комнату и комнаты с генератором
             if (room == finishRoomInstance || room.name.Contains("Gen"))
                 continue;
 
@@ -1288,63 +1317,94 @@ public class GridManager : MonoBehaviour
 
         List<GameObject> rooms = new List<GameObject>(uniqueRooms);
 
-        // Проверяем, достаточно ли комнат
-        if (rooms.Count < 4)
+        // Список предметов для размещения
+        List<GameObject> itemsToPlace = new List<GameObject>
+    {
+        redCardPrefab,
+        greenCardPrefab,
+        blueCardPrefab,
+        blackCardPrefab,
+        stunGunPrefab,
+        portableBatteryPrefab
+    };
+
+        // Проверяем, что списки имеют одинаковую длину
+        if (itemsToPlace.Count != itemNames.Count)
         {
-            Debug.LogError("Недостаточно комнат для размещения предметов.");
+            Debug.LogError("Количество предметов и названий предметов не совпадает.");
             return placedItemRooms;
         }
 
-        // Перемешиваем комнаты
-        ShuffleList(rooms);
-
-        // Список предметов для размещения
-        List<GameObject> itemsToPlace = new List<GameObject>
+        // Собираем список комнат, имеющих хотя бы одну точку спауна
+        List<GameObject> roomsWithSpawnPoints = new List<GameObject>();
+        foreach (GameObject room in rooms)
         {
-            redCardPrefab,
-            greenCardPrefab,
-            blueCardPrefab,
-            portableBatteryPrefab
-        };
+            // Получаем все точки спауна в комнате
+            Transform[] childTransforms = room.GetComponentsInChildren<Transform>();
+            bool hasSpawnPoint = false;
+            foreach (Transform t in childTransforms)
+            {
+                if (t.name == "ObjectSpawnPoint")
+                {
+                    hasSpawnPoint = true;
+                    break;
+                }
+            }
+            if (hasSpawnPoint)
+            {
+                roomsWithSpawnPoints.Add(room);
+            }
+        }
 
-        // Размещение предметов
-        int roomIndex = 0;
+        // Проверяем, достаточно ли комнат
+        if (roomsWithSpawnPoints.Count < itemsToPlace.Count)
+        {
+            Debug.LogError("Недостаточно комнат с точками спауна для размещения предметов.");
+            return placedItemRooms;
+        }
+
+        // Перемешиваем комнаты с точками спауна
+        ShuffleList(roomsWithSpawnPoints);
+
+        // Размещаем предметы
         for (int i = 0; i < itemsToPlace.Count; i++)
         {
             GameObject item = itemsToPlace[i];
+            GameObject room = roomsWithSpawnPoints[i];
 
-            // Пытаемся найти комнату с точкой спауна
-            while (roomIndex < rooms.Count)
+            // Получаем все точки спауна в комнате
+            List<Transform> objectSpawnPoints = new List<Transform>();
+            foreach (Transform t in room.GetComponentsInChildren<Transform>())
             {
-                GameObject room = rooms[roomIndex];
-                Transform spawnPoint = room.transform.Find("ObjectSpawnPoint");
-
-                if (spawnPoint != null)
+                if (t.name == "ObjectSpawnPoint")
                 {
-                    Instantiate(item, spawnPoint.position, Quaternion.identity);
-                    placedItemRooms.Add(room);
-                    itemsPlacedRooms.Add(room);
-                    itemsPlaced.Add(itemNames[i]);
-                    Debug.Log($"{itemNames[i]} размещён в комнате {room.name}.");
-                    roomIndex++; // Переходим к следующей комнате
-                    break;
-                }
-                else
-                {
-                    Debug.LogWarning($"В комнате {room.name} не найден ObjectSpawnPoint. Ищем другую комнату.");
-                    roomIndex++; // Переходим к следующей комнате
+                    objectSpawnPoints.Add(t);
                 }
             }
 
-            if (roomIndex >= rooms.Count)
+            if (objectSpawnPoints.Count > 0)
             {
-                Debug.LogError("Недостаточно доступных комнат с точками спауна для размещения всех предметов.");
-                break;
+                // Выбираем случайную точку спауна
+                Transform spawnPoint = objectSpawnPoints[Random.Range(0, objectSpawnPoints.Count)];
+
+                // Размещаем предмет в выбранной точке спауна
+                Instantiate(item, spawnPoint.position, Quaternion.identity);
+
+                placedItemRooms.Add(room);
+                itemsPlacedRooms.Add(room);
+                itemsPlaced.Add(itemNames[i]);
+                Debug.Log($"{itemNames[i]} размещён в комнате {room.name}.");
+            }
+            else
+            {
+                Debug.LogWarning($"В комнате {room.name} не найдено ни одной ObjectSpawnPoint.");
             }
         }
 
         return placedItemRooms;
     }
+
+
 
     void GeneratePathReport()
     {
@@ -1416,11 +1476,13 @@ public class GridManager : MonoBehaviour
         // Находим все источники света
         Light[] lights = FindObjectsOfType<Light>();
         List<Light> directionalLights = new List<Light>();
+
         foreach (Light light in lights)
         {
             if (light.name.StartsWith("Directional Light"))
             {
                 directionalLights.Add(light);
+
                 // Сохраняем начальные параметры света
                 originalLightStates[light] = new LightState
                 {
@@ -1522,16 +1584,16 @@ public class GridManager : MonoBehaviour
         while (true)
         {
             // Длительность мерцания
-            float flickerDuration = 5f;
-            float intervalBetweenFlickers = Random.Range(4f, 8f);
+            float flickerDuration = 4f;
+            float intervalBetweenFlickers = Random.Range(6f, 9f);
 
-            // Мерцание в течение 5 секунд
+            // Мерцание в течение 4 секунд
             float elapsed = 0f;
             while (elapsed < flickerDuration)
             {
                 foreach (Light light in allLights)
                 {
-                    if (Random.Range(0f, 1f) < 0.33f) // 20% шанс для каждой лампы
+                    if (Random.Range(0f, 1f) < 0.10f) // 10% шанс для каждой лампы
                     {
                         StartCoroutine(SingleLightFlicker(light));
                     }
@@ -1550,14 +1612,121 @@ public class GridManager : MonoBehaviour
     {
         if (light == null) yield break;
 
-        int flickerCount = Random.Range(3, 7); // Случайное количество мерцаний (2–5 раз)
+        int flickerCount = Random.Range(2, 8); // Случайное количество мерцаний (2–5 раз)
 
         for (int i = 0; i < flickerCount; i++)
         {
             light.enabled = false;
-            yield return new WaitForSeconds(0.1f); // Быстрое выключение
+            yield return new WaitForSeconds(0.05f); // Быстрое выключение
             light.enabled = true;
-            yield return new WaitForSeconds(0.1f); // Быстрое включение
+            yield return new WaitForSeconds(0.05f); // Быстрое включение
+        }
+    }
+    public void UpdateDoorMaterials()
+    {
+        // Iterate over all cells to find rooms
+        HashSet<GameObject> roomsProcessed = new HashSet<GameObject>();
+
+        foreach (GridCell cell in cells)
+        {
+            if (cell != null && cell.occupancyType == OccupancyType.Room && cell.occupyingRoom != null)
+            {
+                GameObject room = cell.occupyingRoom;
+
+                // Ensure we process each room only once
+                if (roomsProcessed.Contains(room))
+                    continue;
+
+                roomsProcessed.Add(room);
+
+                // Get the RoomAccessControl component
+                RoomAccessControl roomAccess = room.GetComponent<RoomAccessControl>();
+                if (roomAccess == null)
+                {
+                    Debug.LogWarning($"Комната {room.name} не имеет компонента RoomAccessControl.");
+                    continue;
+                }
+
+                // Determine the material based on access level and power status
+                Material outlineMaterial = outlineWhiteMaterial; // Default to white
+
+                if (!roomAccess.HasPower)
+                {
+                    outlineMaterial = outlineBlackMaterial;
+                }
+                else
+                {
+                    switch (roomAccess.RequiredAccessLevel)
+                    {
+                        case AccessCardColor.None:
+                            outlineMaterial = outlineWhiteMaterial;
+                            break;
+                        case AccessCardColor.Red:
+                            outlineMaterial = outlineRedMaterial;
+                            break;
+                        case AccessCardColor.Green:
+                            outlineMaterial = outlineGreenMaterial;
+                            break;
+                        case AccessCardColor.Blue:
+                            outlineMaterial = outlineBlueMaterial;
+                            break;
+                        default:
+                            outlineMaterial = outlineWhiteMaterial;
+                            break;
+                    }
+                }
+
+                // Iterate over door objects in the room
+                foreach (Transform child in room.transform)
+                {
+                    if (child.name.StartsWith("DoorPref"))
+                    {
+                        Transform doorPref = child;
+
+                        Transform door = doorPref.Find("Door");
+                        if (door == null)
+                        {
+                            Debug.LogWarning($"В {doorPref.name} в комнате {room.name} не найден объект Door.");
+                            continue;
+                        }
+
+                        Transform door_2 = door.Find("Door_2");
+                        if (door_2 == null)
+                        {
+                            Debug.LogWarning($"В Door в {doorPref.name} в комнате {room.name} не найден объект Door_2.");
+                            continue;
+                        }
+
+                        Transform codeLock = door_2.Find("CodeLock");
+                        if (codeLock == null)
+                        {
+                            Debug.LogWarning($"В Door_2 в {doorPref.name} в комнате {room.name} не найден объект CodeLock.");
+                            continue;
+                        }
+
+                        Renderer renderer = codeLock.GetComponent<Renderer>();
+                        if (renderer == null)
+                        {
+                            Debug.LogWarning($"У объекта CodeLock в комнате {room.name} отсутствует компонент Renderer.");
+                            continue;
+                        }
+
+                        // Replace the second material (element1)
+                        Material[] materials = renderer.materials;
+
+                        if (materials.Length < 2)
+                        {
+                            Debug.LogWarning($"У объекта CodeLock в комнате {room.name} недостаточно материалов.");
+                            continue;
+                        }
+
+                        materials[1] = outlineMaterial;
+                        renderer.materials = materials;
+
+                        Debug.Log($"Дверь {doorPref.name} в комнате {room.name} обновлена с материалом {outlineMaterial.name}.");
+                    }
+                }
+            }
         }
     }
 }
