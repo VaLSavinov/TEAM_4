@@ -170,15 +170,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _setting: {fileID: 4900000, guid: 84f34ba1c84168d4c9c014ef85d6e012, type: 3}
   _textAsset: {fileID: 4900000, guid: 8b81575053fe7894984b7dcba9dec133, type: 3}
+  outlineWhiteMaterial: {fileID: 2100000, guid: fc1c098ad84940745a60b44fd96232f6,
+    type: 2}
+  outlineBlackMaterial: {fileID: 2100000, guid: d9cff7b6e6897004baaa7719c16c9993,
+    type: 2}
+  outlineRedMaterial: {fileID: 2100000, guid: 6a15f9df1541af44d81e2877510f3b57, type: 2}
+  outlineGreenMaterial: {fileID: 2100000, guid: 16469c8b14b75e448a72b5067d911100,
+    type: 2}
+  outlineBlueMaterial: {fileID: 2100000, guid: d2e2729fe8797224684e719de77d22b5, type: 2}
   minTertiaryPaths: 4
-  maxTertiaryPaths: 6
-  minTertiaryPathLength: 2
-  maxTertiaryPathLength: 4
+  maxTertiaryPaths: 8
+  minTertiaryPathLength: 1
+  maxTertiaryPathLength: 5
   tertiaryPathTurnChance: 0.33
   cellPrefab: {fileID: 4419418801268642881, guid: e46f5335820d03e4383c2f61f5d73b23,
     type: 3}
-  gridWidth: 34
-  gridHeight: 34
+  gridWidth: 32
+  gridHeight: 32
   blackMaterial: {fileID: 2100000, guid: e6dcd05c26c696a498fe144cb362f523, type: 2}
   whiteMaterial: {fileID: 2100000, guid: f27b63bea8d84494e8c03b165f20ad7d, type: 2}
   cellSize: 1
@@ -248,13 +256,17 @@ MonoBehaviour:
   minDistanceToRoom: 1
   maxDistanceToRoom: 2
   maxPlacementAttempts: 100
-  redCardPrefab: {fileID: 5261761750970419365, guid: 76a09b2206c7182449e707e9f383be7b,
+  redCardPrefab: {fileID: 5349812014005720687, guid: ca7a55402bb31384283763dcb1c4e934,
     type: 3}
-  greenCardPrefab: {fileID: 7036438911169027333, guid: 9d90ccb7ef5d99848a1cd2ae0339d7b6,
+  greenCardPrefab: {fileID: 9053853513715449996, guid: 4960d3f2931880046a65865d97451f55,
     type: 3}
-  blueCardPrefab: {fileID: 8182488735389093818, guid: 3f317804cc73cd74fbbf4f18950df10c,
+  blueCardPrefab: {fileID: 8707509408783106608, guid: db69b9a8044b36a4b90de03577767086,
     type: 3}
-  portableBatteryPrefab: {fileID: 8873655814863264887, guid: 21641286e83a40e44b44c30151648c6f,
+  portableBatteryPrefab: {fileID: 5076664765175136021, guid: 952853f748b2a5c4494cfbaaf3527bfb,
+    type: 3}
+  blackCardPrefab: {fileID: 8875061925989421326, guid: 8d1b844633ef4714a862ee2f46d49a5c,
+    type: 3}
+  stunGunPrefab: {fileID: 5666572727177582532, guid: dbf8caa8bd4ec20458455bc3ea2077e1,
     type: 3}
   _countCollectebelItems: 4
   _reportSO: {fileID: 11400000, guid: ec9bfacfe9540db438ca80df809d0421, type: 2}
