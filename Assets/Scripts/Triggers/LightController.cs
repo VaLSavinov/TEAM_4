@@ -6,6 +6,8 @@ public class LightController : MonoBehaviour, IInteractable
 {
     [SerializeField] private List<Light> _lamps;
     [SerializeField] private LayerMask _layersMask;
+    [SerializeField] private float _coffMinim = 1f;
+    [SerializeField] private bool _startEnabled = true;
 
     private List<EnemyAI> _enemyAIs = new List<EnemyAI>();
 
@@ -15,6 +17,7 @@ public class LightController : MonoBehaviour, IInteractable
     private void Awake()
     {
         GameMode.OnBalckOut += ChangeBlackOut;
+        _isBlackout = _startEnabled;
     }
 
     private void OnDisable()
@@ -26,18 +29,17 @@ public class LightController : MonoBehaviour, IInteractable
     {
         float h, h1,r;
         Vector3 conusPos;
-        if (other.tag == "Player" && _isEnabled)
+        if (other.tag == "Player" && _isEnabled && !_isBlackout)
         {
             foreach (Light light in _lamps)
             {
                 if (!light.enabled) continue;
                 // Запаминаем позицию по y лампочки
                 h = light.transform.position.y;
-                h1 = h - GameMode.FirstPersonLook.transform.position.y;
-                r = (h1 / h) * light.range;
-                conusPos = new Vector3(light.transform.position.x, GameMode.FirstPersonLook.transform.position.y, light.transform.position.z);
-                Debug.Log(Vector3.Distance(GameMode.FirstPersonLook.transform.position, conusPos) + " " + r + " "+ light.range);
-                if (Vector3.Distance(GameMode.FirstPersonLook.transform.position, conusPos) < r)
+                h1 = h - other.transform.position.y;
+                r = (h1 / h) * (light.range * _coffMinim);
+                conusPos = new Vector3(light.transform.position.x, other.transform.position.y, light.transform.position.z);
+                if (Vector3.Distance(other.transform.position, conusPos) < r)
                 {
                     ReleaseRayCast(light);
                 }
@@ -74,7 +76,7 @@ public class LightController : MonoBehaviour, IInteractable
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 20, _layersMask))
         {
-            Debug.Log("Луч выпущен. Столкновение с " + hit);
+            Debug.Log("Луч выпущен. Столкновение с " + hit.collider.gameObject);
             if (hit.collider.tag == "Player")
             {
                 GameMode.FirstPersonLook.AddLight(light);
@@ -111,6 +113,9 @@ public class LightController : MonoBehaviour, IInteractable
     public void ChangeBlackOut(bool state) 
     {
         _isBlackout = state;
+        if (_isBlackout)
+            foreach (Light light in _lamps)
+                GameMode.FirstPersonLook.RemoveLight(light);
     }
 }
 

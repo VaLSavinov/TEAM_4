@@ -136,8 +136,14 @@ public class GridManager : MonoBehaviour
         SpawnCollectebelsObject();
         FindAllLights();
         StartCoroutine(FlickerLights());
-        //ModifyLightSources(); // запускать при отключении света
         UpdateDoorMaterials();
+        // Подписываемся на событие отключения света
+        GameMode.OnBalckOut += StartBlackOut;
+    }
+    private void StartBlackOut(bool state)
+    {
+        // Запускаем откулбчение света
+        if (state) ModifyLightSources();
     }
 
     private void SpawnCollectebelsObject()
@@ -1562,7 +1568,8 @@ public class GridManager : MonoBehaviour
             light.range = state.range;
             light.enabled = state.isActive;
         }
-
+        // Вызываем событие включения света
+        GameMode.ChangeStateBlackOut(false);
         Debug.Log("Световые параметры восстановлены.");
     }
     private void FindAllLights()
