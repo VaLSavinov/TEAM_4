@@ -2325,13 +2325,13 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3885649075293191054}
   - {fileID: 9117569607077117126}
   - {fileID: 5540484064570012964}
   - {fileID: 2332304371724415860}
   - {fileID: 542994100416569046}
   - {fileID: 841590352965236898}
   - {fileID: 183756450318709952}
-  - {fileID: 3885649075293191054}
   m_Father: {fileID: 4363666750374050281}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2518,6 +2518,7 @@ MonoBehaviour:
   _settingMenu: {fileID: 4855378851091495168}
   _sliderVolume: {fileID: 4206092741530215574}
   _sliderSensitiviti: {fileID: 4050597125646617235}
+  _visibleImage: {fileID: 0}
 --- !u!1 &5838498627080102125
 GameObject:
   m_ObjectHideFlags: 0

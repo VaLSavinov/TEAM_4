@@ -109,6 +109,7 @@ public class LibraryMenu : MonoBehaviour
         if (tag.Contains("Reports."))
         {
             _imageMin.sprite = _repotsSO.GetImageForTag(tag);
+            _imageMin.preserveAspect = true;
             _imageMax.gameObject.SetActive(false);
             _imageMin.gameObject.SetActive(true);
             _buttonPlay.gameObject.SetActive(false);

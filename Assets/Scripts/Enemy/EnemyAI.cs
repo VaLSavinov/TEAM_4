@@ -15,6 +15,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField, Tooltip("—корость поворота.")] private float _speedRotate;
 
     [SerializeField] private Animator _animator;
+    [SerializeField] private GameObject _flashlight;
     /// ƒл€ тестировани€
     [SerializeField] private Material materialPatrool;
     [SerializeField] private Material materialAlerted;
@@ -37,13 +38,19 @@ public class EnemyAI : MonoBehaviour
     private bool _isWalk = true;
     private MeshRenderer _meshRenderer;
     private float _countdownTimeSearch; // ¬рем€ отсчета дл€ поиска игрока
-
+    private bool _isLightAlways = false;
 
     private void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
         _meshRenderer = GetComponent<MeshRenderer>();
         StartPatrol();
+        GameMode.OnBalckOut += LightAlways;
+    }
+
+    private void OnDisable()
+    {
+        GameMode.OnBalckOut -= LightAlways;
     }
 
     private void Update()
@@ -167,9 +174,17 @@ public class EnemyAI : MonoBehaviour
         _state = EEnemyState.Patrolling;
         _meshRenderer.material = materialPatrool;
         _agent.speed = _speedPatrol;
+        if (_isLightAlways)
+            ActivateFlashlight(true);
+        else ActivateFlashlight(false);
         _animator.SetInteger("State", 1);
         GoToNextWaypoint();
-    }    
+    }
+
+    private void ActivateFlashlight(bool activate)
+    {
+        _flashlight.SetActive(activate);
+    }
 
     /// <summary>
     /// Ќачало преследовани€ игрока
@@ -183,6 +198,7 @@ public class EnemyAI : MonoBehaviour
             _animator.SetInteger("State", 2);
             _state = EEnemyState.Chasing;
             _meshRenderer.material = materialChasing;
+            ActivateFlashlight(true);
         }
  
     }
@@ -196,6 +212,7 @@ public class EnemyAI : MonoBehaviour
         _meshRenderer.material = materialSearching;
         _countdownTimeSearch = Time.time;
         _agent.speed = _speedAlertOrSearching;
+        ActivateFlashlight(true);
         _agent.SetDestination(transform.position);
         _animator.SetInteger("State", 3);
 
@@ -212,6 +229,7 @@ public class EnemyAI : MonoBehaviour
         _animator.SetInteger("State", 4);
         _targetPoint = noiseSours;
         transform.LookAt(noiseSours);
+        ActivateFlashlight(true);
         StartCoroutine(WaitFromAlert());
     }  
 
@@ -222,6 +240,7 @@ public class EnemyAI : MonoBehaviour
         _enemyManager = enemyManager;
         // Ќекоторое врем€ стоит на месте, чтобы начать действовать только после того, как заспавн€тьс€ все боты
         _animator.SetInteger("State", 0);
+        ActivateFlashlight(false);
         StartCoroutine(WaitAtWaypoint());
     }
 
@@ -230,5 +249,10 @@ public class EnemyAI : MonoBehaviour
         _state = EEnemyState.Alerted;
         _agent.SetDestination(_targetPoint);
         _isWalk = true;
+    }
+
+    public void LightAlways(bool state) 
+    {
+        _isLightAlways = state;
     }
 }

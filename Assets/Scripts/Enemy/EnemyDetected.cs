@@ -19,8 +19,13 @@ public class EnemyDetected : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag=="Player" && GameMode.FirstPersonLook.GetVisability())
-            _isInVievZone = true;  
+         
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Player" && GameMode.FirstPersonLook.GetVisability() && !_isInVievZone)
+            _isInVievZone = true;
     }
 
     private void Update()
