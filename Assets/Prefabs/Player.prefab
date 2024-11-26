@@ -1479,7 +1479,6 @@ RectTransform:
   m_Children:
   - {fileID: 1100504391637413593}
   - {fileID: 5835637191295830430}
-  - {fileID: 6115348195866469749}
   m_Father: {fileID: 183756450318709952}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -2233,6 +2232,7 @@ RectTransform:
   - {fileID: 276363013547938965}
   - {fileID: 7136662519931238562}
   - {fileID: 6698618093229775394}
+  - {fileID: 4673146990493976466}
   m_Father: {fileID: 5189867994065864046}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2534,6 +2534,7 @@ GameObject:
   - component: {fileID: 927189566463502318}
   - component: {fileID: 8357565408661387140}
   - component: {fileID: 6957988276439678574}
+  - component: {fileID: 2286253728789255570}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2743,6 +2744,9 @@ MonoBehaviour:
   _panel: {fileID: 943048879244180396}
   _centerText: {fileID: 4846568832679781462}
   wintext: {fileID: 0}
+  _settingMenu: {fileID: 0}
+  _sliderVolume: {fileID: 0}
+  _sliderSensitiviti: {fileID: 0}
 --- !u!114 &2286253728789255570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2757,9 +2761,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _setting: {fileID: 4900000, guid: 84f34ba1c84168d4c9c014ef85d6e012, type: 3}
   _textAsset: {fileID: 4900000, guid: 8b81575053fe7894984b7dcba9dec133, type: 3}
-  _settingMenu: {fileID: 4855378851091495168}
   _sliderVolume: {fileID: 4206092741530215574}
   _sliderSensitiviti: {fileID: 4050597125646617235}
+  _settingMenu: {fileID: 4855378851091495168}
+  topBackground: {fileID: 0}
+  bottomBackground: {fileID: 0}
+  flashingText: {fileID: 0}
 --- !u!1 &5838498627080102125
 GameObject:
   m_ObjectHideFlags: 0
