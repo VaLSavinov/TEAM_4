@@ -21,7 +21,7 @@ Menu.PressAnyKey;;Нажмите любую кнопку;Press any key;|
 Menu.Resume;;Продолжить;Resume;|
 Menu.Restart;;Заново;Restart;|
 Menu.MainMenu;;Главное меню;Main menu;|
-UI.AlreadyActive;;Уже активно;Already active;
+UI.AlreadyActive;;Уже активно;Already active;|
 ;;;;|
 Reports.Page1;f;"<b>ЭКСПЕРИМЕНТ №42-D 
 Отчёт №1  Доктора Тревора Оуэнса</b>
@@ -233,28 +233,3 @@ Audio.Technical Report:Unusual Energy Fluctuations;f;"<b>Технический 
  
 Обнаружил нерегулярные энергетические колебания в секторе 4B. Оборудование вроде бы в порядке, но показания зашкаливают. Возможно, это сбой датчика, но я проведу полную диагностику для уверенности. Записываю для протокола.";"Technical Log 302, Alex Murphy reporting. 
 Detected irregular energy fluctuations in Sector 4B. Equipment seems fine, but the readings are off the charts. It could be a sensor glitch, but I'll run a full diagnostic to be sure. Logging for the record.";|
-;;;;
-;;;;
-;;;;
-;;;;
-;;;;
-;;;;
-;;;;
-;;;;
-;;;;
-;;;;
-;;;;
-;;;;
-;;;;
-;;;;
-;;;;
-;;;;
-;;;;
-;;;;
-;;;;
-;;;;
-;;;;
-;;;;
-;;;;
-;;;;
-;;;;
