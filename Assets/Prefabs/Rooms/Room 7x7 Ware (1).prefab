@@ -2826,7 +2826,7 @@ Transform:
   - {fileID: 901066209485439961}
   - {fileID: 8689266688595040631}
   - {fileID: 3737672104211948413}
-  - {fileID: 3986174173332121339}
+  - {fileID: 3902843446131309614}
   - {fileID: 2504212060896767047}
   - {fileID: 3280836128353009733}
   - {fileID: 4696775613448815951}
@@ -2855,6 +2855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 615ea7af8ff78404abec630b2ad2e8a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _tagNameRoom: RoomName.Ware
   gridManager: {fileID: 0}
   requiredAccessLevel: 0
   hasPower: 1
@@ -3093,7 +3094,7 @@ Transform:
   - {fileID: 7090726383984435977}
   - {fileID: 1394742333125165522}
   - {fileID: 8537792693623166727}
-  - {fileID: 6173354695751737362}
+  - {fileID: 5919577219528181754}
   m_Father: {fileID: 6121630435871771960}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4263466506276295505
@@ -8549,7 +8550,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _lamps.Array.data[2]
       value: 
-      objectReference: {fileID: 3986174173332121340}
+      objectReference: {fileID: 7527811385012972942}
     - target: {fileID: 5960231686656343925, guid: c03989a670ebba4418fcc94819511566,
         type: 3}
       propertyPath: _lamps.Array.data[3]
@@ -9460,7 +9461,7 @@ PrefabInstance:
     - target: {fileID: 7343126944950836955, guid: ade794e95f379f648ad7d96cc78ddcd5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.05
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7343126944950836955, guid: ade794e95f379f648ad7d96cc78ddcd5,
         type: 3}
@@ -10786,7 +10787,7 @@ PrefabInstance:
     - target: {fileID: 7343126944950836955, guid: ade794e95f379f648ad7d96cc78ddcd5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.05
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7343126944950836955, guid: ade794e95f379f648ad7d96cc78ddcd5,
         type: 3}
@@ -12128,13 +12129,13 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11f7d00db11527845801eb4e1980717c, type: 3}
---- !u!4 &3986174173332121339 stripped
+--- !u!4 &3902843446131309614 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 105855644549126868, guid: 11f7d00db11527845801eb4e1980717c,
     type: 3}
   m_PrefabInstance: {fileID: 3986174173332121338}
   m_PrefabAsset: {fileID: 0}
---- !u!108 &3986174173332121340 stripped
+--- !u!108 &7527811385012972942 stripped
 Light:
   m_CorrespondingSourceObject: {fileID: 6857175564920998772, guid: 11f7d00db11527845801eb4e1980717c,
     type: 3}
@@ -15368,6 +15369,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7ef200cdb571e344ea454da0f0bf10f5,
         type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7ef200cdb571e344ea454da0f0bf10f5,
+        type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4
       objectReference: {fileID: 0}
@@ -15386,7 +15392,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ef200cdb571e344ea454da0f0bf10f5, type: 3}
---- !u!4 &6173354695751737362 stripped
+--- !u!4 &5919577219528181754 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7ef200cdb571e344ea454da0f0bf10f5,
     type: 3}
@@ -18070,6 +18076,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Doorway (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7ef200cdb571e344ea454da0f0bf10f5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7ef200cdb571e344ea454da0f0bf10f5,
         type: 3}

@@ -1,31 +1,18 @@
+using System;
 using UnityEngine;
 
 public class RoomAccessControl : MonoBehaviour
 {
+    [SerializeField] private string _tagNameRoom;
     [SerializeField] private GridManager gridManager;
     [SerializeField] private AccessCardColor requiredAccessLevel;
     [SerializeField] private bool hasPower = true; // По умолчанию комнаты имеют питание
 
+    public event Action NoPower;
+
     private void Awake()
     {
         GameMode.OnInteractGenerator += ActivatePower;
-    }
-
-    public AccessCardColor RequiredAccessLevel
-    {
-        get => requiredAccessLevel;
-        set => requiredAccessLevel = value;
-    }
-
-    public bool HasPower
-    {
-        get => hasPower;
-        set => hasPower = value;
-    }
-
-    public AccessCardColor GetCardColor() 
-    {
-        return requiredAccessLevel;
     }
 
     private void ActivatePower()
@@ -45,6 +32,34 @@ public class RoomAccessControl : MonoBehaviour
             }
         }
     }
+
+    public void NoNav() 
+    {
+        NoPower?.Invoke();
+    }
+    public string GetTagNameRoom()
+    {
+        return _tagNameRoom;
+    }
+
+    public AccessCardColor RequiredAccessLevel
+    {
+        get => requiredAccessLevel;
+        set => requiredAccessLevel = value;
+    }
+
+    public bool HasPower
+    {
+        get => hasPower;
+        set => hasPower = value;
+    }
+
+    public AccessCardColor GetCardColor() 
+    {
+        return requiredAccessLevel;
+    }
+
+   
     public void Initialize(GridManager gridManager)
 {
     this.gridManager = gridManager;

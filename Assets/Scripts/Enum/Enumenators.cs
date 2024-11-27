@@ -30,3 +30,10 @@ public enum CollectibleType
     Reports,
     AudioRecords  
 }
+
+public enum TextType 
+{
+    None,
+    TMP,
+    TextMesh
+}

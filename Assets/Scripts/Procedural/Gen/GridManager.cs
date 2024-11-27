@@ -130,20 +130,28 @@ public class GridManager : MonoBehaviour
         List<GameObject> itemRooms = PlaceInteractiveItems();
         AssignAccessLevelsToRooms(itemRooms);
         DisablePowerInRooms(itemRooms);
-        GeneratePathReport();
-        GetComponent<NavMeshSurface>().BuildNavMesh();
+        GeneratePathReport();        
         _enemyManager.CreateEnemy();
         SpawnCollectebelsObject();
         FindAllLights();
         StartCoroutine(FlickerLights());
         UpdateDoorMaterials();
+        GetComponent<NavMeshSurface>().BuildNavMesh();
         // Подписываемся на событие отключения света
         GameMode.OnBalckOut += StartBlackOut;
+        // Подписываемся на событие включения генератора
+        GameMode.OnInteractGenerator +=BakeSurfce;
     }
     private void StartBlackOut(bool state)
     {
         // Запускаем откулбчение света
         if (state) ModifyLightSources();
+    }
+
+    // Перезапекаем карту для агентов
+    private void BakeSurfce() 
+    {
+        GetComponent<NavMeshSurface>().BuildNavMesh();
     }
 
     private void SpawnCollectebelsObject()
@@ -1278,6 +1286,7 @@ public class GridManager : MonoBehaviour
         if (finishRoomAccessControl != null && finishRoomAccessControl.HasPower)
         {
             finishRoomAccessControl.HasPower = false;
+            finishRoomAccessControl.NoNav();
             Debug.Log($"Питание отключено в комнате {finishRoomInstance.name}.");
             roomsToDisablePower--;
         }
@@ -1294,6 +1303,8 @@ public class GridManager : MonoBehaviour
             if (accessControl != null)
             {
                 accessControl.HasPower = false;
+                // В отключенных комнатах блокируем дверь
+                accessControl.NoNav();
                 Debug.Log($"Питание отключено в комнате {room.name}.");
                 roomsToDisablePower--;
             }
