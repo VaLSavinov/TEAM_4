@@ -1520,6 +1520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 615ea7af8ff78404abec630b2ad2e8a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _tagNameRoom: 
   gridManager: {fileID: 0}
   requiredAccessLevel: 0
   hasPower: 1
@@ -3544,7 +3545,7 @@ PrefabInstance:
     - target: {fileID: 2155628892829086678, guid: 024676f4593f4b146bb56c5a879cb1ca,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2155628892829086678, guid: 024676f4593f4b146bb56c5a879cb1ca,
         type: 3}

@@ -76,7 +76,6 @@ public class LightController : MonoBehaviour, IInteractable
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 20, _layersMask))
         {
-            Debug.Log("Луч выпущен. Столкновение с " + hit.collider.gameObject);
             if (hit.collider.tag == "Player")
             {
                 GameMode.FirstPersonLook.AddLight(light);
