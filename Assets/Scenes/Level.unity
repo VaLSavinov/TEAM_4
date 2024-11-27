@@ -213,7 +213,7 @@ MonoBehaviour:
   - typeName: 5x5 Med
     prefabs:
     - {fileID: 8235504648513398738, guid: 89b9071914cfabe479dbc9606c740d39, type: 3}
-    - {fileID: 5629654182576397510, guid: e36073cd7ed4a5348b042a8299adaee5, type: 3}
+    - {fileID: 7757331189248528992, guid: e36073cd7ed4a5348b042a8299adaee5, type: 3}
     - {fileID: 7895898808978929535, guid: ed2e5f299a44d194c966860bd77f8357, type: 3}
     roomSize: 5
   - typeName: 5x5 Rest
@@ -230,12 +230,12 @@ MonoBehaviour:
     roomSize: 5
   - typeName: 7x7 Can
     prefabs:
-    - {fileID: 6855379865884446789, guid: f7443bcf89756854187298128a6485d7, type: 3}
+    - {fileID: 4796267648897557055, guid: f7443bcf89756854187298128a6485d7, type: 3}
     - {fileID: 4549821485825259396, guid: fb1eb3c387e3c6f45a81cc5720a54b7d, type: 3}
     roomSize: 7
   - typeName: 7x7 Ware
     prefabs:
-    - {fileID: 6855379865884446789, guid: 82462eab8ba98cb4cbbb51d425903f11, type: 3}
+    - {fileID: 3725457852782813442, guid: 82462eab8ba98cb4cbbb51d425903f11, type: 3}
     - {fileID: 4549821485825259396, guid: 6abb0a88fcbd30845bc9e66c64ad9584, type: 3}
     roomSize: 7
   startRoomPrefab: {fileID: 4193917468734626167, guid: 1ace43c14c011584c840168f9719e854,
