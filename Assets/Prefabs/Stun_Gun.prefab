@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 4382048990945135867}
   - component: {fileID: 1439297529883541630}
   - component: {fileID: 8753957724257276392}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Stun_Gun
-  m_TagString: Untagged
+  m_TagString: Placed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

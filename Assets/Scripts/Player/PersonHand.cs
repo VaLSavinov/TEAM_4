@@ -67,14 +67,19 @@ public class PersonHand : MonoBehaviour
         float duration = 0.3f; // Длительность анимации
         float elapsedTime = 0f;
 
-        while (elapsedTime < duration && _grabObject!=null)
+        while (elapsedTime < duration && _grabObject != null)
         {
             // Плавно перемещаем объект к позиции руки
             _grabObject.transform.localPosition = Vector3.Lerp(_grabObject.transform.localPosition, targetPosition, (elapsedTime / duration));
+            _grabObject.transform.rotation = Quaternion.Lerp(_grabObject.transform.rotation, transform.rotation, elapsedTime / duration);
             elapsedTime += Time.deltaTime; // Увеличиваем время
             yield return null; // Ждем следующего кадра
         }
-        if (_grabObject != null) _grabObject.transform.localPosition = targetPosition; // Объект точно на позиции руки
+        if (_grabObject != null)
+        {
+            _grabObject.transform.localPosition = targetPosition; // Объект точно на позиции руки
+            _grabObject.transform.rotation = transform.rotation;
+        }
     }
 
     /// <summary>

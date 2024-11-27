@@ -17,7 +17,7 @@ public class LightController : MonoBehaviour, IInteractable
     private void Awake()
     {
         GameMode.OnBalckOut += ChangeBlackOut;
-        _isBlackout = _startEnabled;
+        _isEnabled = _startEnabled;
     }
 
     private void OnDisable()

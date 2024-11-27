@@ -254,5 +254,7 @@ public class EnemyAI : MonoBehaviour
     public void LightAlways(bool state) 
     {
         _isLightAlways = state;
+        if (_state== EEnemyState.Patrolling)
+            _flashlight.SetActive(state);
     }
 }
