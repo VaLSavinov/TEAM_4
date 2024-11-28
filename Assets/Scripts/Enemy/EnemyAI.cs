@@ -112,9 +112,7 @@ public class EnemyAI : MonoBehaviour
             _animator.SetInteger("State", 0);
             _isWalk = false;
             StartCoroutine(WaitAtWaypoint());
-        }
-        else if (_agent.remainingDistance == 0 && _isWalk) 
-            GoToNextWaypoint();
+        }        
     }
 
     /// <summary>

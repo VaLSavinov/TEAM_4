@@ -163,9 +163,9 @@ public class GridManager : MonoBehaviour
         List<string> _currentList = new List<string>();
 
         // Получаем список не открытых предметов
-        collectebelItems = GameMode.LocalizationManager.GetTagList("f", true);
+        collectebelItems = LocalizationManager.Instance.GetTagList("f", true);
         // Если все объекты открыты, то получаем их
-        if (collectebelItems.Count == 0) collectebelItems = GameMode.LocalizationManager.GetTagList("f", false);
+        if (collectebelItems.Count == 0) collectebelItems = LocalizationManager.Instance.GetTagList("f", false);
         // Если кол-во неоткрытых объектов меньше заданного, то устанавливаем это число
         _reports = GetListForTag("Reports.", collectebelItems);
         _audios = GetListForTag("Audio.", collectebelItems);

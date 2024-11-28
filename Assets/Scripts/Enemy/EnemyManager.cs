@@ -110,7 +110,7 @@ public class EnemyManager : MonoBehaviour
         if (room != null)
         {
             // Шанс того, что бот захочет поменять комнату
-            if (UnityEngine.Random.Range(0, 100) < 25) newRoom = GetNewRoom(room);
+            if (UnityEngine.Random.Range(0, 100) < 50) newRoom = GetNewRoom(room);
             else newRoom = room;
         }
         // Если метод вызывается при спавне ботов

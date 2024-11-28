@@ -3936,7 +3936,7 @@ MonoBehaviour:
   - {fileID: 32941698315411889}
   - {fileID: 8960627529391870864}
   - {fileID: 5887154691221981237}
-  _countMaxEnemyInRoom: 3
+  _countMaxEnemyInRoom: 2
 --- !u!114 &7042731404213363665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9639,36 +9639,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8692416912021248545}
     m_Modifications:
-    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.8260491
-      objectReference: {fileID: 0}
-    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.5635982
-      objectReference: {fileID: 0}
-    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 68.61
-      objectReference: {fileID: 0}
-    - target: {fileID: -3686481207457156611, guid: d249b1a9bc71687418820d2b72b55d31,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 423585911497421671, guid: d249b1a9bc71687418820d2b72b55d31,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c4610328b609ec54783d53fe4589ecd3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9725,6 +9695,36 @@ PrefabInstance:
       value: bookcase
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c4610328b609ec54783d53fe4589ecd3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8260491
+      objectReference: {fileID: 0}
+    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5635982
+      objectReference: {fileID: 0}
+    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 68.61
+      objectReference: {fileID: 0}
+    - target: {fileID: -3686481207457156611, guid: d249b1a9bc71687418820d2b72b55d31,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 423585911497421671, guid: d249b1a9bc71687418820d2b72b55d31,
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4

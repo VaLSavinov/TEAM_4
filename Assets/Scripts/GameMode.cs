@@ -7,8 +7,6 @@ public static class GameMode
     private static PlayerUI _playerUI;
     private static FirstPersonMovement _personMovement;
     private static EnemyManager _enemyManager;
-    private static LocalizationManager _localizationManager;
-    private static Settings _settings;
     private static Events _events;    
 
     public static PersonHand PersonHand
@@ -39,19 +37,7 @@ public static class GameMode
     {
         get { return _enemyManager; }
         set { _enemyManager = value; }
-    }
-
-    public static LocalizationManager LocalizationManager
-    {
-        get { return _localizationManager; }
-        set { _localizationManager = value; }
-    }
-
-    public static Settings Settings
-    {
-        get { return _settings; }
-        set { _settings = value; }
-    }
+    }   
 
     public static Events Events
     {

@@ -71,14 +71,14 @@ public class MainMenu : MonoBehaviour
     // Âåøàåì íà êíîïêó, ïî êîòîðîé ìåíÿåì ÿçûê
     public void ChangeLang()
     {
-        GameMode.LocalizationManager.Change();
+        LocalizationManager.Instance.Change();
     }
 
     public void OpenSetting()
     {
         _settingMenu.SetActive(true);
-        _sliderVolume.value = float.Parse(GameMode.Settings.GetParam("volume"));
-        _sliderSensitiviti.value = float.Parse(GameMode.Settings.GetParam("sensitivity"));
+        _sliderVolume.value = float.Parse(Settings.Instance.GetParam("volume"));
+        _sliderSensitiviti.value = float.Parse(Settings.Instance.GetParam("sensitivity"));
     }
 
     public void LoadScene(int sceneIndex)
@@ -91,18 +91,18 @@ public class MainMenu : MonoBehaviour
 
     public void SaveSetting() 
     {
-        GameMode.Settings.SafeCSV();
+        Settings.Instance.SafeCSV();
     }
 
     public void ChangeValueSound()
     {         
-        GameMode.Settings.SetParam("volume", _sliderVolume.value.ToString());
+        Settings.Instance.SetParam("volume", _sliderVolume.value.ToString());
         AudioListener.volume = _sliderVolume.value;
     }
 
     public void ChangeValueSensetiviti()
     {
-        GameMode.Settings.SetParam("sensitivity", _sliderSensitiviti.value.ToString());
+        Settings.Instance.SetParam("sensitivity", _sliderSensitiviti.value.ToString());
     }
 
     public void QuitGame()

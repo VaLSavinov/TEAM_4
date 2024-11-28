@@ -72,8 +72,8 @@ public class FirstPersonLook : MonoBehaviour
 
     public void ChangeSettings() 
     {
-        AudioListener.volume = float.Parse(GameMode.Settings.GetParam("volume"));
-        _mouseSensitivity = _mouseMaxSensitivity * float.Parse(GameMode.Settings.GetParam("sensitivity"));
+        AudioListener.volume = float.Parse(Settings.Instance.GetParam("volume"));
+        _mouseSensitivity = _mouseMaxSensitivity * float.Parse(Settings.Instance.GetParam("sensitivity"));
     }
 
     public void AddLight(Light newLight) 
