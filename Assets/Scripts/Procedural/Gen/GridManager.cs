@@ -116,9 +116,6 @@ public class GridManager : MonoBehaviour
 
     void Start()
     {
-        // Временно, для тестов
-        Settings.SetCSV(_setting);
-        LocalizationManager.SetCSV(_textAsset);
         _enemyManager = GetComponent<EnemyManager>();
         GenerateGrid();
         PlaceRooms();
@@ -138,9 +135,9 @@ public class GridManager : MonoBehaviour
         UpdateDoorMaterials();
         GetComponent<NavMeshSurface>().BuildNavMesh();
         // Подписываемся на событие отключения света
-        GameMode.OnBalckOut += StartBlackOut;
+        GameMode.Events.OnBalckOut += StartBlackOut;
         // Подписываемся на событие включения генератора
-        GameMode.OnInteractGenerator +=BakeSurfce;
+        GameMode.Events.OnInteractGenerator +=BakeSurfce;
     }
     private void StartBlackOut(bool state)
     {
@@ -166,9 +163,9 @@ public class GridManager : MonoBehaviour
         List<string> _currentList = new List<string>();
 
         // Получаем список не открытых предметов
-        collectebelItems = LocalizationManager.GetTagList("f", true);
+        collectebelItems = GameMode.LocalizationManager.GetTagList("f", true);
         // Если все объекты открыты, то получаем их
-        if (collectebelItems.Count == 0) collectebelItems = LocalizationManager.GetTagList("f", false);
+        if (collectebelItems.Count == 0) collectebelItems = GameMode.LocalizationManager.GetTagList("f", false);
         // Если кол-во неоткрытых объектов меньше заданного, то устанавливаем это число
         _reports = GetListForTag("Reports.", collectebelItems);
         _audios = GetListForTag("Audio.", collectebelItems);
@@ -1580,7 +1577,7 @@ public class GridManager : MonoBehaviour
             light.enabled = state.isActive;
         }
         // Вызываем событие включения света
-        GameMode.ChangeStateBlackOut(false);
+        GameMode.Events.ChangeStateBlackOut(false);
         Debug.Log("Световые параметры восстановлены.");
     }
     private void FindAllLights()

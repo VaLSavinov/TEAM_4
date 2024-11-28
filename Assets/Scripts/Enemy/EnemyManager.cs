@@ -27,8 +27,6 @@ public class EnemyManager : MonoBehaviour
         // Если комнаты заданы вручную, значит спавним вручную
         if (_rooms.Count > 0) 
         {
-            Settings.SetCSV(_setting);
-            LocalizationManager.SetCSV(_dictonary);
             EnemyRoute enemyRoute = null;
             foreach (RoomAccessControl room in _rooms)
             {

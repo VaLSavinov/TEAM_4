@@ -29,7 +29,7 @@ public class LoaclizationText : MonoBehaviour
                 _tag = _textMeshPro2.text;
                 break;
         }        
-        LocalizationManager.OnChangeLanguage += ChangeLanguage;
+        GameMode.LocalizationManager.OnChangeLanguage += ChangeLanguage;
 
     }
 
@@ -52,17 +52,17 @@ public class LoaclizationText : MonoBehaviour
         {
             case TextType.None:
                 if (_text != null)
-                    _text.text = LocalizationManager.GetTextForTag(_tag);
+                    _text.text = GameMode.LocalizationManager.GetTextForTag(_tag);
                 break;
             case TextType.TMP:
                 if (_textMeshPro != null)
-                    _textMeshPro.text = LocalizationManager.GetTextForTag(_tag);
+                    _textMeshPro.text = GameMode.LocalizationManager.GetTextForTag(_tag);
                 break;
             case TextType.TextMesh:
                 // Это какая-то жесть.... Без этого гемороя, выходят сообщения об ошибке
-                if (_tag.Contains("RoomName") && TryGetComponent<TextMeshPro>(out _textMeshPro2)) 
+                if ((_tag.Contains("RoomName") || _tag.Contains("UI.")) && TryGetComponent<TextMeshPro>(out _textMeshPro2)) 
                 {
-                _textMeshPro2.text = LocalizationManager.GetTextForTag(_tag);
+                _textMeshPro2.text = GameMode.LocalizationManager.GetTextForTag(_tag);
         }
                 break;
         }

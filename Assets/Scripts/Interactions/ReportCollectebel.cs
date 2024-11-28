@@ -44,7 +44,7 @@ public class ReportCollectebel : MonoBehaviour, IInteractable
     {
         if (_collectibleType == CollectibleType.AudioRecords)
             GameMode.PlayerUI.PlayAudioClip(_clip);
-        LocalizationManager.WriteAvailForTag(_tag, "n");
+       GameMode.LocalizationManager.WriteAvailForTag(_tag, "n");
        interactingOject = this.gameObject;
        return true;
     }

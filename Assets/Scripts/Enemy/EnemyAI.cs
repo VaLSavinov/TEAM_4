@@ -45,12 +45,12 @@ public class EnemyAI : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _meshRenderer = GetComponent<MeshRenderer>();
         StartPatrol();
-        GameMode.OnBalckOut += LightAlways;
+         GameMode.Events.OnBalckOut += LightAlways;
     }
 
     private void OnDisable()
     {
-        GameMode.OnBalckOut -= LightAlways;
+        GameMode.Events.OnBalckOut -= LightAlways;
     }
 
     private void Update()
@@ -74,6 +74,7 @@ public class EnemyAI : MonoBehaviour
     private IEnumerator WaitFromAlert()
     {
         yield return new WaitForSeconds(4f);
+        _animator.SetInteger("State", 1);
         GoToPoint();
     }
 
@@ -106,12 +107,14 @@ public class EnemyAI : MonoBehaviour
     /// 
     private void Patrol()
     {
-        if (_agent.remainingDistance < 0.5f && _isWalk)
+        if (_agent.remainingDistance < 0.5f && _agent.remainingDistance > 0 && _isWalk)
         {
-            _animator.SetInteger("State",0);
+            _animator.SetInteger("State", 0);
             _isWalk = false;
             StartCoroutine(WaitAtWaypoint());
         }
+        else if (_agent.remainingDistance == 0 && _isWalk) 
+            GoToNextWaypoint();
     }
 
     /// <summary>
@@ -139,6 +142,9 @@ public class EnemyAI : MonoBehaviour
     private void GoToNextWaypoint()
     {
         Vector3 target = _enemyManager.GetNewPoint(_room, _currentWaypointIndex, out _room, out _currentWaypointIndex).position;
+        _isWalk = false;
+        _animator.SetInteger("State", 0);
+        _agent.SetDestination(transform.position);
         _isRotation = true;
         _targetPoint = target;
         _currentTime = Time.time;
@@ -190,8 +196,7 @@ public class EnemyAI : MonoBehaviour
     /// Начало преследования игрока
     /// </summary>
     public void ChasePlayer() 
-    {
-        _agent.SetDestination(GameMode.PersonHand.transform.position);
+    {        
         if (_state != EEnemyState.Chasing)
         {
             _agent.speed = _speedChase;
@@ -199,8 +204,24 @@ public class EnemyAI : MonoBehaviour
             _state = EEnemyState.Chasing;
             _meshRenderer.material = materialChasing;
             ActivateFlashlight(true);
+            _targetPoint = _agent.destination;
         }
- 
+        if (Vector3.Distance(transform.position, GameMode.FirstPersonMovement.transform.position) < 0.6)
+        {            
+            _agent.SetDestination(_agent.destination);
+            transform.LookAt(GameMode.FirstPersonMovement.transform.position);
+            if (GameMode.FirstPersonMovement.IsAlive())
+            {
+                _animator.SetBool("Found", true);
+                 GameMode.FirstPersonMovement.Die();
+            }
+            else
+                _animator.SetInteger("State", 0);
+           
+        }
+        else
+            _agent.SetDestination(GameMode.FirstPersonMovement.transform.position);
+
     }
 
     /// <summary>

@@ -69,8 +69,8 @@ public class LibraryMenu : MonoBehaviour
         _imageMin.gameObject.SetActive(false);
         _imageMax.gameObject.SetActive(false);
         _buttonPlay.gameObject.SetActive(false);
-        _audioSource.volume = float.Parse(Settings.GetParam("volume"));
-        tags = LocalizationManager.GetTagList("n", true);
+        _audioSource.volume = float.Parse(GameMode.Settings.GetParam("volume"));
+        tags = GameMode.LocalizationManager.GetTagList("n", true);
         foreach (string tag in tags)
         {
             newButtonObject =  GameObject.Instantiate(_prefabButton,_buttonsGroup);
@@ -81,7 +81,7 @@ public class LibraryMenu : MonoBehaviour
             _buttons.Add(newButtonObject);
 
         }
-        tags = LocalizationManager.GetTagList("t", true);
+        tags = GameMode.LocalizationManager.GetTagList("t", true);
         foreach (string tag in tags)
         {
             newButtonObject = GameObject.Instantiate(_prefabButton, _buttonsGroup);
@@ -144,7 +144,7 @@ public class LibraryMenu : MonoBehaviour
 
     public void Back() 
     {
-        LocalizationManager.SafeCSV();
+        GameMode.LocalizationManager.SafeCSV();
         foreach (GameObject button in _buttons)
         {
             Destroy(button);

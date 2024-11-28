@@ -1,19 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using UnityEditor.Localization.Editor;
 using UnityEngine;
 
-public static class Settings
+public   class Settings: MonoBehaviour
 {
-    private static char _fieldSeperator = ';';
-    private static char _lineSeperater = '\n';
-    private static TextAsset _csvAsset;
-    private static string[,] _settings;
+    [SerializeField] private TextAsset _csvAsset;
+    private  char _fieldSeperator = ';';
+    private  char _lineSeperater = '\n';
+    private  string[,] _settings;
 
-    public static void SetCSV(TextAsset csvAsset)
+
+    private void Awake()
     {
-        _csvAsset = csvAsset;
+        GameMode.Settings = this;
+        SetCSV();
+    }
+
+    /// <summary>
+    /// Оставим. Как ресет
+    /// </summary>
+    /// <param name="csvAsset"></param>
+    public  void SetCSV()
+    {
         string[] records = _csvAsset.text.Split(_lineSeperater);
         _settings = new string[records.Length, records[0].Split(_fieldSeperator).Length];
         for (int i = 0; i < records.Length - 1; i++)
@@ -24,10 +31,10 @@ public static class Settings
             {                
                 _settings[i, j] = fields[j];
             }
-        }        
+        }
     }
 
-    public static string GetParam(string tag) 
+    public  string GetParam(string tag) 
     {
         for(int i = 0;i< _settings.GetLength(0);i++) 
         {            
@@ -39,7 +46,7 @@ public static class Settings
         return null;
     }
 
-    public static void SetParam(string tag, string value)
+    public   void SetParam(string tag, string value)
     {
         for (int i = 0; i < _settings.GetLength(0); i++)
         {
@@ -50,7 +57,7 @@ public static class Settings
         }
     }
 
-    public static void SafeCSV()
+    public   void SafeCSV()
     {
         string line = "";
         for (int i = 0; i < _settings.GetLength(0); i++)
