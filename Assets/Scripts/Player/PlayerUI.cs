@@ -100,6 +100,7 @@ public class PlayerUI : MonoBehaviour
         Time.timeScale = 0;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        GameMode.FirstPersonLook.BlockPlayerController();
     }
 
     public void OpenSetting()
