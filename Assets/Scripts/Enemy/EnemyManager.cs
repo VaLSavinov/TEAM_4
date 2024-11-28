@@ -128,7 +128,7 @@ public class EnemyManager : MonoBehaviour
     private Transform GetFreePoint(ref int indexPatch)
     {        
         SEnemyWayPoint newPoint;
-        int newIndex;
+        int newIndex;       
         while (true)
         {
             newIndex = UnityEngine.Random.Range(0, _corridorPoints.Count);
@@ -186,12 +186,13 @@ public class EnemyManager : MonoBehaviour
         // Если это запрос от бота
         if (!isSpawn)
         {
+            Debug.Log("Запрос на смену пути " + room);
             if (room != null)
             {
                 if (_roomData[room].z==1) canChange = true;
                 else canChange = false;
                 // Шанс того, что бот захочет поменять комнату и он может ее поменять
-                if (canChange && UnityEngine.Random.Range(0, 100) < 50) newRoom = GetNewRoom(room, true);
+                if (canChange && UnityEngine.Random.Range(0, 100) < 50 && canChange) newRoom = GetNewRoom(room, true);
                 else newRoom = room;
             }
             else return GetFreePoint(ref indexRout);
@@ -222,8 +223,8 @@ public class EnemyManager : MonoBehaviour
         // Если бот поменял комнату
         if (room != newRoom)
         {
-            if (room!=null) _roomData[room] = new Vector2(_roomData[room].x, _roomData[room].y-1);
-            _roomData[newRoom] = new Vector2(_roomData[newRoom].x, _roomData[newRoom].y + 1);
+            if (room!=null) _roomData[room] = new Vector3(_roomData[room].x, _roomData[room].y-1, _roomData[room].z);
+            _roomData[newRoom] = new Vector3(_roomData[newRoom].x, _roomData[newRoom].y + 1, _roomData[newRoom].z);
         }
         editWaypoint = _waypoints[newRoom][newIndex];
         editWaypoint.IsAvail = false;

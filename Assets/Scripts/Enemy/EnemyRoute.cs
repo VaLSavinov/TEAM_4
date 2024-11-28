@@ -12,8 +12,8 @@ public class EnemyRoute : MonoBehaviour
     public List<Transform> GetWayPoints() { return _wayPoints; }
 
     public int CountMaxEnemyInRoom 
-    { get { if (_hasExit) return 1;
-            return _countMaxEnemyInRoom; } 
+    { get { if (_hasExit) return _countMaxEnemyInRoom;
+            return 1; } 
     }
 
     public bool HasExit

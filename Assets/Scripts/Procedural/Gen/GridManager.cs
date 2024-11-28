@@ -127,8 +127,7 @@ public class GridManager : MonoBehaviour
         List<GameObject> itemRooms = PlaceInteractiveItems();
         AssignAccessLevelsToRooms(itemRooms);
         DisablePowerInRooms(itemRooms);
-        GeneratePathReport();        
-        _enemyManager.CreateEnemy();
+        GeneratePathReport();  
         SpawnCollectebelsObject();
         FindAllLights();
         StartCoroutine(FlickerLights());
@@ -138,6 +137,7 @@ public class GridManager : MonoBehaviour
         GameMode.Events.OnBalckOut += StartBlackOut;
         // Подписываемся на событие включения генератора
         GameMode.Events.OnInteractGenerator +=BakeSurfce;
+        _enemyManager.CreateEnemy();
     }
     private void StartBlackOut(bool state)
     {
@@ -979,15 +979,21 @@ public class GridManager : MonoBehaviour
                 corridor.left = originalLeft;
 
                 if (prefabToInstantiate != null)
+                {                   
                     break;
+                }
             }
 
             if (prefabToInstantiate != null)
-            {
+            {                
                 Vector3 position = new Vector3(cell.gridX, 0, cell.gridY);
                 Quaternion rot = Quaternion.Euler(0, rotation, 0);
                 GameObject passage = Instantiate(prefabToInstantiate, position, rot);
                 passage.transform.parent = corridorsParent.transform;
+
+                CorridorPiece corridor = passage.GetComponent<CorridorPiece>();
+                if (corridor.EnemyPoint != null)
+                    _enemyManager.AddFreePoint(corridor.EnemyPoint);
             }
             else
             {

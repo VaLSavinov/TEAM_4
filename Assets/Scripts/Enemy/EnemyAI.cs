@@ -16,12 +16,6 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField] private Animator _animator;
     [SerializeField] private GameObject _flashlight;
-    /// ƒл€ тестировани€
-    [SerializeField] private Material materialPatrool;
-    [SerializeField] private Material materialAlerted;
-    [SerializeField] private Material materialChasing;
-    [SerializeField] private Material materialSearching;
-
 
     private NavMeshAgent _agent;
     private RoomAccessControl _room;
@@ -57,7 +51,6 @@ public class EnemyAI : MonoBehaviour
     {
         if (_isRotation) Rotate();
         CheckingState();
-        Debug.Log("комната бота " + _room + " индекс пути " + _currentWaypointIndex);
     }
     
     private IEnumerator WaitAtWaypoint()
@@ -144,13 +137,12 @@ public class EnemyAI : MonoBehaviour
 
     private void GoToNextWaypoint()
     {
-        Debug.Log(_enemyManager.GetNewPoint(ref _room, ref _currentWaypointIndex, false, true));
-       // Vector3 target = _enemyManager.GetNewPoint(ref _room, ref _currentWaypointIndex,false,true).position;
+        Vector3 target = _enemyManager.GetNewPoint(ref _room, ref _currentWaypointIndex,false,true).position;
         _isWalk = false;
         _animator.SetInteger("State", 0);
         _agent.SetDestination(transform.position);
         _isRotation = true;
-       // _targetPoint = target;
+        _targetPoint = target;
         _currentTime = Time.time;
     }
 
@@ -182,7 +174,6 @@ public class EnemyAI : MonoBehaviour
     private void StartPatrol()
     {
         _state = EEnemyState.Patrolling;
-        _meshRenderer.material = materialPatrool;
         _agent.speed = _speedPatrol;
         if (_isLightAlways)
             ActivateFlashlight(true);
@@ -201,16 +192,16 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     public void ChasePlayer() 
     {        
-        if (_state != EEnemyState.Chasing)
+        if (_state != EEnemyState.Chasing && _state!=EEnemyState.WaitChasing)
         {
             _agent.speed = _speedChase;
             _animator.SetInteger("State", 2);
-            _state = EEnemyState.Chasing;
-            _meshRenderer.material = materialChasing;
+            _state = EEnemyState.WaitChasing;
             ActivateFlashlight(true);
             _targetPoint = _agent.destination;
+            _agent.SetDestination(transform.position);
         }
-        if (Vector3.Distance(transform.position, GameMode.FirstPersonMovement.transform.position) < 0.6)
+        if (_state == EEnemyState.Chasing && Vector3.Distance(transform.position, GameMode.FirstPersonMovement.transform.position) < 0.6)
         {            
             _agent.SetDestination(_agent.destination);
             transform.LookAt(new Vector3(GameMode.FirstPersonMovement.transform.position.x,transform.position.y, GameMode.FirstPersonMovement.transform.position.z));
@@ -224,6 +215,7 @@ public class EnemyAI : MonoBehaviour
            
         }
         else
+            if (_state == EEnemyState.Chasing)
             _agent.SetDestination(GameMode.FirstPersonMovement.transform.position);
 
     }
@@ -234,7 +226,6 @@ public class EnemyAI : MonoBehaviour
     public void StartSearchingPlayer()
     {
         _state = EEnemyState.Searching;
-        _meshRenderer.material = materialSearching;
         _countdownTimeSearch = Time.time;
         _agent.speed = _speedAlertOrSearching;
         ActivateFlashlight(true);
@@ -248,7 +239,6 @@ public class EnemyAI : MonoBehaviour
         // ≈сли бот преследует, то не отвлекаетс€
         if (_state == EEnemyState.Chasing) return;
         _state = EEnemyState.WaitAlert;
-        _meshRenderer. material = materialAlerted;
         _agent.speed = _speedAlertOrSearching;
         _agent.SetDestination(transform.position);
         _animator.SetInteger("State", 4);
@@ -282,5 +272,19 @@ public class EnemyAI : MonoBehaviour
         _isLightAlways = state;
         if (_state== EEnemyState.Patrolling)
             _flashlight.SetActive(state);
+    }
+
+    public void StartChasing() 
+    {
+        _agent.speed = _speedChase;
+        _animator.SetInteger("State", 2);       
+        ActivateFlashlight(true);
+        _targetPoint = _agent.destination;
+    }
+
+    public void GoChasing()
+    {
+        if (_state == EEnemyState.WaitChasing)
+            _state = EEnemyState.Chasing;
     }
 }

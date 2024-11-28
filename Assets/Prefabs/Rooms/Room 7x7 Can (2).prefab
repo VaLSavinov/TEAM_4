@@ -3182,6 +3182,7 @@ MonoBehaviour:
   - {fileID: 4759258438764763144}
   - {fileID: 1092171900122313668}
   _countMaxEnemyInRoom: 2
+  _hasExit: 1
 --- !u!114 &-7741912675163679989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9385,6 +9386,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1890885259842907102}
     m_Modifications:
+    - target: {fileID: -1325473422965867027, guid: 58fe913d8da4121428b21d65ff9a760c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 66f2c5978ee28aa40a70674d35262526,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9456,11 +9462,6 @@ PrefabInstance:
       value: gaz 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 66f2c5978ee28aa40a70674d35262526,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: -1325473422965867027, guid: 58fe913d8da4121428b21d65ff9a760c,
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4

@@ -840,6 +840,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _wayPoints: []
   _countMaxEnemyInRoom: 0
+  _hasExit: 1
 --- !u!114 &640474109222544164
 MonoBehaviour:
   m_ObjectHideFlags: 0
