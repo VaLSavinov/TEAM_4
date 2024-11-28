@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 6353aa5c25b1d7b4aa91af977c7a1723
+guid: f65cae276b6f9e54cafe40e91d7020eb
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: board_trashcan_mat
+    second: {fileID: 2100000, guid: d54b8fd6c11732642acd86221bcafaed, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

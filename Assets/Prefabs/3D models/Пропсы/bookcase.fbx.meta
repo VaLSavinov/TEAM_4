@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: d249b1a9bc71687418820d2b72b55d31
+guid: c4610328b609ec54783d53fe4589ecd3
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bookcase_mat
+    second: {fileID: 2100000, guid: 34b4fe8f37ad13644b7cb8e127405908, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -90,7 +95,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.005
+    globalScale: 0.5
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

@@ -1,9 +1,29 @@
 fileFormatVersion: 2
-guid: 89f5920beb560a54b979236fbb708a68
+guid: c757bf61a8f4aa042bb8a81a9836d471
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bottom_of_main_part_mat
+    second: {fileID: 2100000, guid: b10cb290cd6261343a8fc6ffd90fdd8d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: glass_mat
+    second: {fileID: 2100000, guid: c6a725188adadc34485e17c7ad67d02b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: metal_door_mat
+    second: {fileID: 2100000, guid: fa85550eb129ba9479e5b1c5faa6b603, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: the_outer_part_mat
+    second: {fileID: 2100000, guid: 1a687dd9755f8e04182744efa88c0a5b, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -90,7 +110,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.005
+    globalScale: 0.5
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

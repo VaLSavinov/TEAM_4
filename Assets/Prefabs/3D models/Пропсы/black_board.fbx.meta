@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 0bd2abe0c2070ea489a8024f0779c66a
+guid: ad4fa79453a9d554a87744d9643ca2a9
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: board_trashcan_mat
+    second: {fileID: 2100000, guid: 8ff06ccd72b272f44bf2d73be82117f7, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -90,7 +95,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.005
+    globalScale: 0.5
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

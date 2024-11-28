@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: fd2a8a6df77bef043b6f6c32371466f8
+guid: fa68c486fe6c87241a9225d288a6ef87
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lamp_palet_mat
+    second: {fileID: 2100000, guid: 4db729572c210df42937e7cd11212abb, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -90,7 +95,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.005
+    globalScale: 0.5
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

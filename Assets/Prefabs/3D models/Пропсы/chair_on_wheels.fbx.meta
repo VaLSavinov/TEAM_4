@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 261dfc7d598a37e4d9aa159a5ca0eeb0
+guid: 59efd904627731140bcdd65908e199bf
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: chairs_nigtstand_mat
+    second: {fileID: 2100000, guid: 6d9d3fa970618aa42bdcf356cb6935e6, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -90,7 +95,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.005
+    globalScale: 0.5
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

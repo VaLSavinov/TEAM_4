@@ -3,7 +3,12 @@ guid: fd3d0f028b827234f9ab4b1fece6643b
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Intercom_Mat
+    second: {fileID: 2100000, guid: a77b1db3e3e986343887c22d0d569be7, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
