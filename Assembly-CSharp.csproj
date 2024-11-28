@@ -76,6 +76,7 @@
     <Compile Include="Assets\Scripts\Interactions\DoorControl.cs" />
     <Compile Include="Assets\Scripts\Procedural\Gen\RoomAccessControl.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioFallingObject.cs" />
+    <Compile Include="Assets\Scripts\Interactions\LampDubler.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyRoute.cs" />
     <Compile Include="Assets\Scripts\Loaclization\LoaclizationText.cs" />
     <Compile Include="Assets\Scripts\Loaclization\Settings.cs" />

@@ -56,7 +56,8 @@ public class EnemyAI : MonoBehaviour
     private void Update()
     {
         if (_isRotation) Rotate();
-        else CheckingState();
+        CheckingState();
+        Debug.Log("комната бота " + _room + " индекс пути " + _currentWaypointIndex);
     }
     
     private IEnumerator WaitAtWaypoint()
@@ -86,18 +87,22 @@ public class EnemyAI : MonoBehaviour
     /// <returns></returns>
     private void Rotate()
     {
-        // Плавно вращаем моба
-        if (Time.time - _currentTime < _timeToRotate)
+        if (_state != EEnemyState.Chasing && _state != EEnemyState.Alerted)
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(_targetPoint - transform.position,Vector3.up), _speedRotate * Time.deltaTime);
+            // Плавно вращаем моба
+            if (Time.time - _currentTime < _timeToRotate)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(_targetPoint - transform.position, Vector3.up), _speedRotate * Time.deltaTime);
+            }
+            else
+            {
+                _agent.SetDestination(_targetPoint);
+                _animator.SetInteger("State", 1);
+                _isRotation = false;
+                _isWalk = true;
+            }
         }
-        else
-        {
-            _agent.SetDestination(_targetPoint);
-            _animator.SetInteger("State", 1);
-            _isRotation = false;
-            _isWalk = true;
-        }
+        else _isRotation = false;
     }
 
 
@@ -107,7 +112,7 @@ public class EnemyAI : MonoBehaviour
     /// 
     private void Patrol()
     {
-        if (_agent.remainingDistance < 0.5f && _agent.remainingDistance > 0 && _isWalk)
+        if (_agent.remainingDistance < 0.5f && _agent.remainingDistance > 0 && _isWalk && !_isRotation)
         {
             _animator.SetInteger("State", 0);
             _isWalk = false;
@@ -139,12 +144,13 @@ public class EnemyAI : MonoBehaviour
 
     private void GoToNextWaypoint()
     {
-        Vector3 target = _enemyManager.GetNewPoint(_room, _currentWaypointIndex, out _room, out _currentWaypointIndex).position;
+        Debug.Log(_enemyManager.GetNewPoint(ref _room, ref _currentWaypointIndex, false, true));
+       // Vector3 target = _enemyManager.GetNewPoint(ref _room, ref _currentWaypointIndex,false,true).position;
         _isWalk = false;
         _animator.SetInteger("State", 0);
         _agent.SetDestination(transform.position);
         _isRotation = true;
-        _targetPoint = target;
+       // _targetPoint = target;
         _currentTime = Time.time;
     }
 
@@ -207,7 +213,7 @@ public class EnemyAI : MonoBehaviour
         if (Vector3.Distance(transform.position, GameMode.FirstPersonMovement.transform.position) < 0.6)
         {            
             _agent.SetDestination(_agent.destination);
-            transform.LookAt(GameMode.FirstPersonMovement.transform.position);
+            transform.LookAt(new Vector3(GameMode.FirstPersonMovement.transform.position.x,transform.position.y, GameMode.FirstPersonMovement.transform.position.z));
             if (GameMode.FirstPersonMovement.IsAlive())
             {
                 _animator.SetBool("Found", true);
@@ -261,6 +267,7 @@ public class EnemyAI : MonoBehaviour
         _animator.SetInteger("State", 0);
         ActivateFlashlight(false);
         StartCoroutine(WaitAtWaypoint());
+        Debug.Log("Стартовые параметы");
     }
 
     public void GoToPoint()

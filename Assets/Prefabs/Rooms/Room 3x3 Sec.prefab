@@ -825,14 +825,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b62f2631e296bc48b5a21474f1a504d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxCountCpllectebel: 1
-  _spawnPoints:
-  - Point: {fileID: 470264479561054423}
-    IsAvail: 1
-  - Point: {fileID: 1775789562428893024}
-    IsAvail: 1
-  - Point: {fileID: 460937062721074985}
-    IsAvail: 1
+  _maxCountCpllectebel: 0
+  _spawnPoints: []
 --- !u!1 &4706544055007321735
 GameObject:
   m_ObjectHideFlags: 0
