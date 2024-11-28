@@ -105,26 +105,26 @@ public class PlayerUI : MonoBehaviour
     public void OpenSetting()
     {
         _settingMenu.SetActive(true);
-        _sliderVolume.value = float.Parse(GameMode.Settings.GetParam("volume"));
-        _sliderSensitiviti.value = float.Parse(GameMode.Settings.GetParam("sensitivity"));
+        _sliderVolume.value = float.Parse(Settings.Instance.GetParam("volume"));
+        _sliderSensitiviti.value = float.Parse(Settings.Instance.GetParam("sensitivity"));
     }
 
     public void SaveSetting()
     {
-        GameMode.Settings.SafeCSV();
+        Settings.Instance.SafeCSV();
         GameMode.FirstPersonLook.ChangeSettings();
         _settingMenu.SetActive(false);
     }
 
     public void ChangeValueSound()
     {
-        GameMode.Settings.SetParam("volume", _sliderVolume.value.ToString());
+        Settings.Instance.SetParam("volume", _sliderVolume.value.ToString());
         AudioListener.volume = _sliderSensitiviti.value;
     }
 
     public void ChangeValueSensetiviti()
     {
-        GameMode.Settings.SetParam("sensitivity", _sliderSensitiviti.value.ToString());
+        Settings.Instance.SetParam("sensitivity", _sliderSensitiviti.value.ToString());
     }
 
     public void ChangeVisiblePayer(bool isVisible) 

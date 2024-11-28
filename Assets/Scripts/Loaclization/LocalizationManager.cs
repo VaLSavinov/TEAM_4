@@ -12,14 +12,22 @@ public class LocalizationManager: MonoBehaviour
     private string[] _languages = {"rus","eng"}; 
     private int _currentLenguage = 1;
 
-    public   event Action OnChangeLanguage;
+    public  event Action OnChangeLanguage;
 
+    public static LocalizationManager Instance;
 
     private void Awake()
     {
-        GameMode.LocalizationManager = this;
-        ResetCSV();
-        SetLanguageSetting();
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        // end of new code
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        ResetCSV();        
         OnChangeLanguage?.Invoke();
     }  
 
@@ -39,9 +47,9 @@ public class LocalizationManager: MonoBehaviour
         }
     }
 
-    private void SetLanguageSetting() 
+    public void SetLanguageSetting() 
     {
-        _currentLenguage =int.Parse(GameMode.Settings.GetParam("language"));
+        _currentLenguage =int.Parse(Settings.Instance.GetParam("language"));
     }
 
     public string GetTextForTag(string tag) 
@@ -78,7 +86,7 @@ public class LocalizationManager: MonoBehaviour
     {
         _currentLenguage++;
         if (_currentLenguage== _languages.Length) {_currentLenguage = 0;}
-        GameMode.Settings.SetParam("language", _currentLenguage.ToString());
+        Settings.Instance.SetParam("language", _currentLenguage.ToString());
         OnChangeLanguage?.Invoke();
     }
 

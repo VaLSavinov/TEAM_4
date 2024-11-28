@@ -3638,7 +3638,7 @@ MonoBehaviour:
   - {fileID: 5086738106242072512}
   - {fileID: 3566310010769987742}
   - {fileID: 8934923131192275277}
-  _countMaxEnemyInRoom: 3
+  _countMaxEnemyInRoom: 2
 --- !u!114 &3251875499883955169
 MonoBehaviour:
   m_ObjectHideFlags: 0

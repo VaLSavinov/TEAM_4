@@ -2528,7 +2528,7 @@ MonoBehaviour:
   - {fileID: 9035263563224108915}
   - {fileID: 1465512550076375237}
   - {fileID: 4338206372403001756}
-  _countMaxEnemyInRoom: 0
+  _countMaxEnemyInRoom: 2
 --- !u!114 &-9116409087436153797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4584,36 +4584,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7378863694130970379}
     m_Modifications:
-    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7765965
-      objectReference: {fileID: 0}
-    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.6299984
-      objectReference: {fileID: 0}
-    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 78.1
-      objectReference: {fileID: 0}
-    - target: {fileID: -3686481207457156611, guid: d249b1a9bc71687418820d2b72b55d31,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 423585911497421671, guid: d249b1a9bc71687418820d2b72b55d31,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c4610328b609ec54783d53fe4589ecd3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4670,6 +4640,36 @@ PrefabInstance:
       value: bookcase (1)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c4610328b609ec54783d53fe4589ecd3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7765965
+      objectReference: {fileID: 0}
+    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.6299984
+      objectReference: {fileID: 0}
+    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 78.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3686481207457156611, guid: d249b1a9bc71687418820d2b72b55d31,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 423585911497421671, guid: d249b1a9bc71687418820d2b72b55d31,
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4
@@ -7165,36 +7165,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7378863694130970379}
     m_Modifications:
-    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9521827
-      objectReference: {fileID: 0}
-    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.30552906
-      objectReference: {fileID: 0}
-    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 35.58
-      objectReference: {fileID: 0}
-    - target: {fileID: -3686481207457156611, guid: d249b1a9bc71687418820d2b72b55d31,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 423585911497421671, guid: d249b1a9bc71687418820d2b72b55d31,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c4610328b609ec54783d53fe4589ecd3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7251,6 +7221,36 @@ PrefabInstance:
       value: bookcase
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c4610328b609ec54783d53fe4589ecd3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9521827
+      objectReference: {fileID: 0}
+    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.30552906
+      objectReference: {fileID: 0}
+    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3842863698181805148, guid: d249b1a9bc71687418820d2b72b55d31,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 35.58
+      objectReference: {fileID: 0}
+    - target: {fileID: -3686481207457156611, guid: d249b1a9bc71687418820d2b72b55d31,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 423585911497421671, guid: d249b1a9bc71687418820d2b72b55d31,
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4

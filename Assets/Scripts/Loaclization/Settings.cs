@@ -8,11 +8,21 @@ public   class Settings: MonoBehaviour
     private  char _lineSeperater = '\n';
     private  string[,] _settings;
 
+    public static Settings Instance;
 
     private void Awake()
     {
-        GameMode.Settings = this;
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        // end of new code
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
         SetCSV();
+        LocalizationManager.Instance.SetLanguageSetting();
     }
 
     /// <summary>

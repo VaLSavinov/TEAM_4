@@ -8,7 +8,7 @@ public class FinishTrigger : MonoBehaviour
     {
         if (other.tag == "Player")        
         {
-            GameMode.LocalizationManager.SafeCSV();
+            LocalizationManager.Instance.SafeCSV();
             GameMode.PlayerUI.Finish();
             GameMode.FirstPersonLook.BlockPlayerController();
         }
