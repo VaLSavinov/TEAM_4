@@ -4,7 +4,8 @@ public enum EEnemyState
     Alerted,
     Chasing,
     WaitAlert,
-    Searching
+    Searching,
+    WaitChasing
 }
 
 public enum AccessCardColor

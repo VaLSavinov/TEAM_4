@@ -55,8 +55,11 @@ public class PlayerUI : MonoBehaviour
     }
     public void Restart()
     {
+        _playerControl.UI.PauseMenu.started -= context => Resume();
+        _playerControl.Disable();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Time.timeScale = 1;
+       
     }
 
     public void LoadMainMenu()
@@ -81,7 +84,8 @@ public class PlayerUI : MonoBehaviour
         pauseScreen.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-       
+        
+
     }
 
     public void Finish()

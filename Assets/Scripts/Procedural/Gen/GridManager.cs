@@ -127,8 +127,7 @@ public class GridManager : MonoBehaviour
         List<GameObject> itemRooms = PlaceInteractiveItems();
         AssignAccessLevelsToRooms(itemRooms);
         DisablePowerInRooms(itemRooms);
-        GeneratePathReport();        
-        _enemyManager.CreateEnemy();
+        GeneratePathReport();  
         SpawnCollectebelsObject();
         FindAllLights();
         StartCoroutine(FlickerLights());
@@ -138,6 +137,7 @@ public class GridManager : MonoBehaviour
         GameMode.Events.OnBalckOut += StartBlackOut;
         // Подписываемся на событие включения генератора
         GameMode.Events.OnInteractGenerator +=BakeSurfce;
+        _enemyManager.CreateEnemy();
     }
     private void StartBlackOut(bool state)
     {
@@ -171,7 +171,7 @@ public class GridManager : MonoBehaviour
         _audios = GetListForTag("Audio.", collectebelItems);
         if (collectebelItems.Count<_countCollectebelItems)
             _countCollectebelItems = collectebelItems.Count;
-        for (int i = 0; i <= _countCollectebelItems; i++) 
+        for (int i = 0; i < _countCollectebelItems; i++) 
         {    
             /// Ищем комнату и точку спавна
             while (true) 
@@ -201,14 +201,17 @@ public class GridManager : MonoBehaviour
             }
             // Определяем, какой список использваоть
             if (_spawnConteiners[indexRoom].GetLastSpawnType() == CollectibleType.None)
-                if (UnityEngine.Random.Range(0, 2) > 1)
+                if (UnityEngine.Random.Range(0, 2) > 0)
                     _currentList = _reports;
                 else _currentList = _audios;
             else 
             if ((_spawnConteiners[indexRoom].GetLastSpawnType() == CollectibleType.Reports || _audios.Count==0) && _reports.Count>0)
                 _currentList = _reports;
             else _currentList = _audios;
-            if (_currentList.Count == 0) return;
+            if (_currentList.Count == 0)
+                if (_reports.Count > 0) _currentList = _reports;
+                else if (_audios.Count > 0) _currentList = _audios;
+                else return;
             /// Оперделяем, что спавним и исключаем спавн одинаковых объектов
             indexItem = UnityEngine.Random.Range(0, _currentList.Count);
             currentTag = _currentList[indexItem];
@@ -494,7 +497,13 @@ public class GridManager : MonoBehaviour
         // Передаем ссылку на массив точек перемещения ботов деспетчеру ботов
         EnemyRoute enemyRoute;
         if (room.TryGetComponent<EnemyRoute>(out enemyRoute))
-            _enemyManager.AddWaypoints(roomAccess, enemyRoute.CountMaxEnemyInRoom, enemyRoute.GetWayPoints());
+        {            
+            float canExit;
+            if (enemyRoute.HasExit)
+                canExit = 1;
+            else canExit = 0;
+            _enemyManager.AddWaypoints(roomAccess, enemyRoute.CountMaxEnemyInRoom, enemyRoute.GetWayPoints(), canExit);
+        }
 
         //Получаем ссылки на контейнеры с точками дял спавна коллбоксов
         SpawnCollectebel spawnCollectebel;
@@ -970,15 +979,21 @@ public class GridManager : MonoBehaviour
                 corridor.left = originalLeft;
 
                 if (prefabToInstantiate != null)
+                {                   
                     break;
+                }
             }
 
             if (prefabToInstantiate != null)
-            {
+            {                
                 Vector3 position = new Vector3(cell.gridX, 0, cell.gridY);
                 Quaternion rot = Quaternion.Euler(0, rotation, 0);
                 GameObject passage = Instantiate(prefabToInstantiate, position, rot);
                 passage.transform.parent = corridorsParent.transform;
+
+                CorridorPiece corridor = passage.GetComponent<CorridorPiece>();
+                if (corridor.EnemyPoint != null)
+                    _enemyManager.AddFreePoint(corridor.EnemyPoint);
             }
             else
             {
