@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 9ca27e11e3a589f4fabab217f822fc11
+guid: e82cbbe1ddc8513439eaa9e82d62b1df
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: med_bed_mat
+    second: {fileID: 2100000, guid: 5043879a430ccb147a309935eb0069fd, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -90,7 +95,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.005
+    globalScale: 0.5
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

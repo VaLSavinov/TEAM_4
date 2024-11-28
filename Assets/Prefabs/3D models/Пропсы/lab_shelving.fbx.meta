@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: f3bd58a048572a3429e2df39b1d42592
+guid: 9d7b9be10cf232d40be9d5cfa75d7ed3
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lab_stuff_mat
+    second: {fileID: 2100000, guid: 500493ed26d63f844a1dfb7957b216a5, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -90,7 +95,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.005
+    globalScale: 0.5
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

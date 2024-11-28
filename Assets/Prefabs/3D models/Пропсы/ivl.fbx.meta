@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: e0f674b222c44404ba5b579b6488f70d
+guid: 45ced629b093dea4c82878561b99ce66
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ivl_mat1
+    second: {fileID: 2100000, guid: 0cfd80e17149ade41886cc79e5e5f949, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -90,7 +95,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.005
+    globalScale: 0.5
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

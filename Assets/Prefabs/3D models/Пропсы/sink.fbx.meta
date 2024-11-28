@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 022c7aa782f5f1148867d8a7fa47cfe9
+guid: db9536aed9e0fc443a2813f0cc2d8dbb
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sink_scale_mat
+    second: {fileID: 2100000, guid: 9ff8680a539a1bd4786b491c3f5c4fb4, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -90,7 +95,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.005
+    globalScale: 0.5
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
