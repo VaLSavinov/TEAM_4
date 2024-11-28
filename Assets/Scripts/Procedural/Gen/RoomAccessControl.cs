@@ -61,7 +61,7 @@ public class RoomAccessControl : MonoBehaviour
 
    
     public void Initialize(GridManager gridManager)
-{
-    this.gridManager = gridManager;
-}
+    {
+        this.gridManager = gridManager;
+    }
 }
