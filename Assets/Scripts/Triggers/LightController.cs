@@ -16,13 +16,13 @@ public class LightController : MonoBehaviour, IInteractable
 
     private void Awake()
     {
-        GameMode.OnBalckOut += ChangeBlackOut;
+        GameMode.Events.OnBalckOut += ChangeBlackOut;
         _isEnabled = _startEnabled;
     }
 
     private void OnDisable()
     {
-        GameMode.OnBalckOut -= ChangeBlackOut;
+        GameMode.Events.OnBalckOut -= ChangeBlackOut;
     }
 
     private void OnTriggerStay(Collider other)

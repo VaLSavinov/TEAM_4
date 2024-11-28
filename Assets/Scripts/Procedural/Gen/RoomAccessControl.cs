@@ -12,7 +12,7 @@ public class RoomAccessControl : MonoBehaviour
 
     private void Awake()
     {
-        GameMode.OnInteractGenerator += ActivatePower;
+        GameMode.Events.OnInteractGenerator += ActivatePower;
     }
 
     private void ActivatePower()

@@ -21,8 +21,6 @@ public class MainMenu : MonoBehaviour
     
     private void Start()
     {
-        Settings.SetCSV(_setting);
-        LocalizationManager.SetCSV(_textAsset);
         _topImageColor = topBackground.color;
         StartCoroutine(FlashText());
     }
@@ -73,14 +71,14 @@ public class MainMenu : MonoBehaviour
     // Âåøàåì íà êíîïêó, ïî êîòîðîé ìåíÿåì ÿçûê
     public void ChangeLang()
     {
-        LocalizationManager.Change();
+        GameMode.LocalizationManager.Change();
     }
 
     public void OpenSetting()
     {
         _settingMenu.SetActive(true);
-        _sliderVolume.value = float.Parse(Settings.GetParam("volume"));
-        _sliderSensitiviti.value = float.Parse(Settings.GetParam("sensitivity"));
+        _sliderVolume.value = float.Parse(GameMode.Settings.GetParam("volume"));
+        _sliderSensitiviti.value = float.Parse(GameMode.Settings.GetParam("sensitivity"));
     }
 
     public void LoadScene(int sceneIndex)
@@ -93,17 +91,18 @@ public class MainMenu : MonoBehaviour
 
     public void SaveSetting() 
     {
-        Settings.SafeCSV();
+        GameMode.Settings.SafeCSV();
     }
 
     public void ChangeValueSound()
     {         
-        Settings.SetParam("volume", _sliderVolume.value.ToString());
+        GameMode.Settings.SetParam("volume", _sliderVolume.value.ToString());
+        AudioListener.volume = _sliderVolume.value;
     }
 
     public void ChangeValueSensetiviti()
     {
-        Settings.SetParam("sensitivity", _sliderSensitiviti.value.ToString());
+        GameMode.Settings.SetParam("sensitivity", _sliderSensitiviti.value.ToString());
     }
 
     public void QuitGame()

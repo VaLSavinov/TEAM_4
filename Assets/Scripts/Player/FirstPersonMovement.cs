@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class FirstPersonMovement : MonoBehaviour
@@ -18,6 +19,7 @@ public class FirstPersonMovement : MonoBehaviour
     private float _currentSpeed;
 
     private float originalHeight;
+    private bool _isAlive = true;
 
     void Awake()
     {
@@ -30,6 +32,7 @@ public class FirstPersonMovement : MonoBehaviour
         // Подпись на возвращение к хотьбе
         _control.Player.Run.canceled += context => Walk();
         _control.Player.Sneak.canceled += context => Walk();
+        GameMode.FirstPersonMovement = this;
     }
     private void OnEnable()
     {
@@ -58,6 +61,13 @@ public class FirstPersonMovement : MonoBehaviour
         _currentSpeed =  speed * 1.5f; // Спринт
     }
 
+    private IEnumerator GameOver()
+    {
+        yield return new WaitForSeconds(3f);
+        GameMode.PlayerUI.GameOver();
+        
+    }
+
     void Update()
     {
         Vector3 moveDirection = GetMoveDirection();
@@ -77,6 +87,7 @@ public class FirstPersonMovement : MonoBehaviour
 
     void HandleNormalMovement(Vector3 moveDirection)
     {
+        if (!_isAlive) return;
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)
@@ -94,4 +105,13 @@ public class FirstPersonMovement : MonoBehaviour
         velocity.y += GRAVITY * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
+
+    public void Die() 
+    {
+        _isAlive = false;
+        _control.Disable();
+        StartCoroutine(GameOver());
+    }
+
+    public bool IsAlive() => _isAlive;
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InteractSecSystem : MonoBehaviour, IInteractable
@@ -26,9 +24,9 @@ public class InteractSecSystem : MonoBehaviour, IInteractable
         if (item.GetItemType() == _typeInteractObg && !_isActivate)
         {
             if (_typeInteractObg == ItemType.StunGun)
-                GameMode.ChangeStateBlackOut(true);
+                GameMode.Events.ChangeStateBlackOut(true);
             else
-                GameMode.ChangeOpenDoor(true);
+                GameMode.Events.ChangeOpenDoor(true);
             _isActivate = true;
         }
         else Impossible();
