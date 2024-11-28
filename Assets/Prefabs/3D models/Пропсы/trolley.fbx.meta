@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 071c73e0b6553e7499a4a113aaf24975
+guid: 73da743e02772444784ee91b1fa46b2a
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: trolley_bag_gaz_mat
+    second: {fileID: 2100000, guid: 859b55c0071aa6044bb1bbea7581603f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -90,7 +95,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.005
+    globalScale: 0.5
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

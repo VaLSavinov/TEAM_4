@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: d37d82d6e28ac3c44b19f831ce50135c
+guid: 59e822d4e02da8a4da8874923e13977f
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: med_curtain_mat1
+    second: {fileID: 2100000, guid: 6c1cda2040e722c42b7d145c04be47e5, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -90,7 +95,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.005
+    globalScale: 0.5
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

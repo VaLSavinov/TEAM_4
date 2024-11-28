@@ -1,9 +1,19 @@
 fileFormatVersion: 2
-guid: 1f2f498d97b08454cb35aa424f0688a2
+guid: 7e2c65767d0a7ff459208a8c8934cd14
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: beds_mat
+    second: {fileID: 2100000, guid: 19feba2af1a43bc418f4e5a3687111ab, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: 03f16c092239bc148929e6b49b92887a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -90,7 +100,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.005
+    globalScale: 0.5
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

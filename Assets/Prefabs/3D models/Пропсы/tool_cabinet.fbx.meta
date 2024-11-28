@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: b6a4f92636456de409bb2a3957f5385f
+guid: c7e295d81970faa4daa335c263f5f624
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lockers_mat
+    second: {fileID: 2100000, guid: fbd9b74d6802e4c46917c724302b2e59, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -90,7 +95,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.005
+    globalScale: 0.5
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
