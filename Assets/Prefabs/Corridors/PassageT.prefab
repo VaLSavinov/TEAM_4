@@ -581,6 +581,7 @@ MonoBehaviour:
   right: 0
   down: 1
   left: 1
+  _enemyPoint: {fileID: 0}
 --- !u!1001 &169416197741842440
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -812,6 +813,16 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 2800847479148201402, guid: 08b867fe6fa0f6144b605614144c1176,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4787126600412046595, guid: 08b867fe6fa0f6144b605614144c1176,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7503031582180949010, guid: 08b867fe6fa0f6144b605614144c1176,
         type: 3}
       propertyPath: m_Materials.Array.size
@@ -826,6 +837,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8484215123579211793, guid: 08b867fe6fa0f6144b605614144c1176,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2
       objectReference: {fileID: 0}
     - target: {fileID: 8915877022503727481, guid: 08b867fe6fa0f6144b605614144c1176,
         type: 3}
@@ -845,6 +861,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1628475373240655960, guid: 08b867fe6fa0f6144b605614144c1176, type: 3}
+    - {fileID: 456163053494242212, guid: 08b867fe6fa0f6144b605614144c1176, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 105855644549126868, guid: 08b867fe6fa0f6144b605614144c1176,
         type: 3}
@@ -945,7 +962,7 @@ PrefabInstance:
     - target: {fileID: 5960231686656343925, guid: c03989a670ebba4418fcc94819511566,
         type: 3}
       propertyPath: _coffMinim
-      value: 0.55
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5960231686656343925, guid: c03989a670ebba4418fcc94819511566,
         type: 3}
