@@ -204,8 +204,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.046335574, y: 0.002679113, z: 0.110463254}
-  m_Center: {x: 0.0000000018626451, y: 0, z: -0.0033065788}
+  m_Size: {x: 0.046335574, y: 0.0076447614, z: 0.110463254}
+  m_Center: {x: 0.0000000018626451, y: -0.00019559823, z: -0.0033065788}
 --- !u!114 &-1607057887935540868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,7 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cardColor: 0
-  _itemType: 0
+  _itemType: 5
 --- !u!114 &-2390026225271808132
 MonoBehaviour:
   m_ObjectHideFlags: 0

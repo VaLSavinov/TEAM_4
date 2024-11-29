@@ -219,7 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cardColor: 0
-  _itemType: 0
+  _itemType: 5
 --- !u!114 &1504129166555137529
 MonoBehaviour:
   m_ObjectHideFlags: 0
