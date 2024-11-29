@@ -66,7 +66,7 @@ public class LoaclizationText : MonoBehaviour
                     _text.text = LocalizationManager.Instance.GetTextForTag(_tag);
                 break;
             case TextType.TMP:
-                if (_textMeshPro != null)
+                if(TryGetComponent<TMP_Text>(out _textMeshPro))
                     _textMeshPro.text = LocalizationManager.Instance.GetTextForTag(_tag);
                 break;
             case TextType.TextMesh:

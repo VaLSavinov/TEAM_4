@@ -96,8 +96,11 @@ public class LibraryMenu : MonoBehaviour
     public void ButtonClic(string tag) 
     {
         _audioSource.Stop();
-        _localizateText.SetTag(tag);
-        _outText.gameObject.SetActive(true);
+        if (tag != "")
+        {
+            _outText.gameObject.SetActive(true);
+            _localizateText.SetTag(tag);
+        }
         if (tag.Contains("Image"))
         {
             _imageMax.sprite = _repotsSO.GetImageForTag(tag);

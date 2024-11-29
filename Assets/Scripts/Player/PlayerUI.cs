@@ -19,6 +19,8 @@ public class PlayerUI : MonoBehaviour
 
     private AudioSource _audioSource;
     private PlayerControl _playerControl;
+    private AudioSource[] _audios;
+    private List<AudioSource> _pauseAudios = new List<AudioSource>();
 
     private void Awake()
     {
@@ -26,6 +28,28 @@ public class PlayerUI : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _playerControl = new PlayerControl();
         _playerControl.UI.PauseMenu.started += context => Resume();
+    }
+
+    public void StopAllSound()
+    {
+        if (_audios == null)
+        {
+            _audios = FindObjectsOfType<AudioSource>();
+        }
+        foreach (var audio in _audios)
+        {
+            if (audio.isPlaying)
+            {
+                audio.Pause();
+                _pauseAudios.Add(audio);
+            }
+        }
+    }
+
+    private void PlayPausedAudios()
+    { 
+        foreach (var audio in _pauseAudios)
+            { audio.Play(); }
     }
 
     /// <summary>
@@ -59,6 +83,7 @@ public class PlayerUI : MonoBehaviour
         _playerControl.Disable();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Time.timeScale = 1;
+        PlayPausedAudios();
        
     }
 
@@ -70,11 +95,13 @@ public class PlayerUI : MonoBehaviour
 
     public void Pause()
     {
+        StopAllSound();
         Time.timeScale = 0;
         pauseScreen.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         _playerControl.Enable();
+
     }
 
     public void Resume()
@@ -84,7 +111,8 @@ public class PlayerUI : MonoBehaviour
         pauseScreen.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        
+        PlayPausedAudios();
+
 
     }
 
@@ -95,6 +123,7 @@ public class PlayerUI : MonoBehaviour
         Time.timeScale = 0;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        StopAllSound();
     }
 
     public void GameOver()
@@ -105,6 +134,7 @@ public class PlayerUI : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         GameMode.FirstPersonLook.BlockPlayerController();
+        StopAllSound();
     }
 
     public void OpenSetting()
@@ -136,4 +166,5 @@ public class PlayerUI : MonoBehaviour
     {
         _visibleImage.SetActive(!isVisible);
     }
+    
 }
