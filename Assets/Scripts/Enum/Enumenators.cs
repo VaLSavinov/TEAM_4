@@ -22,7 +22,8 @@ public enum ItemType
     PortableBattery,
     Collectible,
     StunGun,
-    Securcard
+    Securcard,
+    Throwable
 }
 
 public enum CollectibleType
