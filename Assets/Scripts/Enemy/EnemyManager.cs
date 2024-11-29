@@ -186,7 +186,6 @@ public class EnemyManager : MonoBehaviour
         // Если это запрос от бота
         if (!isSpawn)
         {
-            Debug.Log("Запрос на смену пути " + room);
             if (room != null)
             {
                 if (_roomData[room].z==1) canChange = true;
