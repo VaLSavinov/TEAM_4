@@ -12,15 +12,19 @@ public class DoorControl : MonoBehaviour, IInteractable
     [SerializeField] private GameObject _door2;
     [SerializeField] private LoaclizationText _roomName1;
     [SerializeField] private LoaclizationText _roomName2;
+    [SerializeField] private AudioClip _doorOpen;
+    [SerializeField] private AudioClip _doorClose;
 
     // Список всех, кто взаимодействует с дверью
     private List<GameObject> _interactors = new List<GameObject>();
     private bool _isOpen = false;
     private bool _isLock = true;
     private bool _isAlwaysOpen = false;
+    private AudioSource _doorAudioSource;
 
     private void Awake()
     {
+        _doorAudioSource = GetComponent<AudioSource>();
         _roomAccessControl.NoPower += BlockDoors;
         GameMode.Events.OnInteractGenerator += AnBlockDoors;
         GameMode.Events.OnOpenDoor += GloabalOpenDoor;
@@ -49,7 +53,7 @@ public class DoorControl : MonoBehaviour, IInteractable
         _isAlwaysOpen = false;
         if (_isOpen && _interactors.Count == 0)
         {
-            PlayClip("CloseDoor");
+            PlayClip("CloseDoor");            
             _isOpen = false;
         }
     }
@@ -119,6 +123,9 @@ public class DoorControl : MonoBehaviour, IInteractable
         if (_interactors.Count > 0 && !_isAlwaysOpen) return;
         _animate.clip = _animate.GetClip(name);
         _animate.Play();
+        if (name == "OpenDoor") _doorAudioSource.clip = _doorOpen;
+        else _doorAudioSource.clip = _doorClose;
+        _doorAudioSource.Play();
     }
 
   

@@ -38,7 +38,8 @@ public class EnemyAI : MonoBehaviour
     private MeshRenderer _meshRenderer;
     private float _countdownTimeSearch; // Время отсчета для поиска игрока
     private bool _isLightAlways = false;
-    private float _timeToNextRandomSound = 5f; 
+    private float _maxTimeToNextRandomSound = 6f;
+    private float _timeToNextRandomSound;
     private float _curentTimeSound;
 
     private void Start()
@@ -63,6 +64,7 @@ public class EnemyAI : MonoBehaviour
         {
             PlayRandomSound(6, _soundOther.Count);
             _curentTimeSound = Time.time;
+            _timeToNextRandomSound = UnityEngine.Random.Range(2, _maxTimeToNextRandomSound);
         }
     }
     
