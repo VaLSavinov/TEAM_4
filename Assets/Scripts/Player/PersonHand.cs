@@ -117,8 +117,8 @@ public class PersonHand : MonoBehaviour
                     GrabObject();
                     break;
                 case "Take":
-                    _hitObject.transform.GetComponent<IInteractable>().Interact(ref _grabObject);
-                    Destroy(_grabObject);
+                    _hitObject.transform.GetComponent<IInteractable>().Interact(ref _hitObject);
+                    Destroy(_hitObject);
                     GameMode.PlayerUI.DeactivatePanel();
                     break;
                 case "Interact":
