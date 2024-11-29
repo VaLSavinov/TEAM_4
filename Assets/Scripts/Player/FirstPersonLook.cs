@@ -35,8 +35,6 @@ public class FirstPersonLook : MonoBehaviour
     private void ShowMainMenu()
     {
         GameMode.PlayerUI.Pause();
-        // Сохранение подобранных предметов
-        // LocalizationManager.SafeCSV();
     }
 
     public void BlockPlayerController()
@@ -74,9 +72,8 @@ public class FirstPersonLook : MonoBehaviour
 
     public void ChangeSettings() 
     {
-        AudioListener.volume = float.Parse(Settings.GetParam("volume"));
-        _mouseSensitivity = _mouseMaxSensitivity * float.Parse(Settings.GetParam("sensitivity"));
-        Debug.Log(_mouseSensitivity);
+        AudioListener.volume = float.Parse(Settings.Instance.GetParam("volume"));
+        _mouseSensitivity = _mouseMaxSensitivity * float.Parse(Settings.Instance.GetParam("sensitivity"));
     }
 
     public void AddLight(Light newLight) 

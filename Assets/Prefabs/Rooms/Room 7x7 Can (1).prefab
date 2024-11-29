@@ -266,7 +266,7 @@ Transform:
   m_GameObject: {fileID: 239650451931000035}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.803, y: 0, z: 0}
+  m_LocalPosition: {x: 2.659, y: 0, z: 0.835}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2848,7 +2848,7 @@ Transform:
   m_GameObject: {fileID: 3976736860314914543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -3.134}
+  m_LocalPosition: {x: 0.326, y: 0, z: -2.889}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3732,7 +3732,7 @@ Transform:
   m_GameObject: {fileID: 4746852280458330723}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.531, y: 0, z: -2.794}
+  m_LocalPosition: {x: 1.625, y: 0, z: -2.904}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3936,7 +3936,8 @@ MonoBehaviour:
   - {fileID: 32941698315411889}
   - {fileID: 8960627529391870864}
   - {fileID: 5887154691221981237}
-  _countMaxEnemyInRoom: 0
+  _countMaxEnemyInRoom: 2
+  _hasExit: 1
 --- !u!114 &7042731404213363665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6313,7 +6314,7 @@ Transform:
   m_GameObject: {fileID: 8156723296294517736}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2.128}
+  m_LocalPosition: {x: 0.337, y: 0, z: 2.814}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14710,6 +14711,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8692416912021248545}
     m_Modifications:
+    - target: {fileID: -1325473422965867027, guid: 58fe913d8da4121428b21d65ff9a760c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 66f2c5978ee28aa40a70674d35262526,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14766,11 +14772,6 @@ PrefabInstance:
       value: gaz 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 66f2c5978ee28aa40a70674d35262526,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: -1325473422965867027, guid: 58fe913d8da4121428b21d65ff9a760c,
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4

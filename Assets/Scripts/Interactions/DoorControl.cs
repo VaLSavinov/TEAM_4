@@ -22,8 +22,8 @@ public class DoorControl : MonoBehaviour, IInteractable
     private void Awake()
     {
         _roomAccessControl.NoPower += BlockDoors;
-        GameMode.OnInteractGenerator += AnBlockDoors;
-        GameMode.OnOpenDoor += GloabalOpenDoor;
+        GameMode.Events.OnInteractGenerator += AnBlockDoors;
+        GameMode.Events.OnOpenDoor += GloabalOpenDoor;
         if (_roomAccessControl.GetTagNameRoom() != "")
         {
             _roomName1.SetTag(_roomAccessControl.GetTagNameRoom());
@@ -59,12 +59,20 @@ public class DoorControl : MonoBehaviour, IInteractable
         // Устанавливаем слой, учитываемый навмеш
         _door1.layer = 0;
         _door2.layer = 0;
+        _roomName1.SetTag("UI.NoPower");
+        _roomName2.SetTag("UI.NoPower");
+        _roomName1.GetComponent<TextMeshPro>().color = Color.red;
+        _roomName2.GetComponent<TextMeshPro>().color = Color.red;
     }
 
     private void AnBlockDoors()
     {
         _door1.layer = 3;
         _door2.layer = 3;
+        _roomName1.SetTag(_roomAccessControl.GetTagNameRoom());
+        _roomName2.SetTag(_roomAccessControl.GetTagNameRoom());
+        _roomName1.GetComponent<TextMeshPro>().color = Color.white;
+        _roomName2.GetComponent<TextMeshPro>().color = Color.white;
     }
 
     /// <summary>

@@ -18,7 +18,7 @@ public class ButtonOpenCollect : MonoBehaviour
         { 
             _button.image.sprite = _spriteOld;
             _isNew = false;
-            LocalizationManager.WriteAvailForTag(_tag, "t");
+           LocalizationManager.Instance.WriteAvailForTag(_tag, "t");
         }
         _library.ButtonClic(_tag);
     }

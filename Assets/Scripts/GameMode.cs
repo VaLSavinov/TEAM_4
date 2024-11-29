@@ -5,12 +5,9 @@ public static class GameMode
     private static FirstPersonLook _playerCamera;
     private static PersonHand _personHand;
     private static PlayerUI _playerUI;
-    private static EnemyManager _EnemyManager;
-
-
-    public static event Action OnInteractGenerator;
-    public static event Action<bool> OnBalckOut;
-    public static event Action<bool> OnOpenDoor;
+    private static FirstPersonMovement _personMovement;
+    private static EnemyManager _enemyManager;
+    private static Events _events;    
 
     public static PersonHand PersonHand
     {
@@ -24,6 +21,12 @@ public static class GameMode
         set { _playerCamera = value; }
     }
 
+    public static FirstPersonMovement FirstPersonMovement
+    {
+        get { return _personMovement; }
+        set { _personMovement = value; }
+    }
+
     public static PlayerUI PlayerUI
     {
         get { return _playerUI; }
@@ -32,34 +35,16 @@ public static class GameMode
 
     public static EnemyManager EnemyManager
     {
-        get { return _EnemyManager; }
-        set { _EnemyManager = value; }
+        get { return _enemyManager; }
+        set { _enemyManager = value; }
+    }   
+
+    public static Events Events
+    {
+        get { return _events; }
+        set { _events = value; }
     }
 
-    /// <summary>
-    /// Активация генератора
-    /// </summary>
-    public static void InteractGenerator() 
-    {
-        OnInteractGenerator?.Invoke();
-    }
 
-    /// <summary>
-    /// Запуск/остановка блекаута
-    /// </summary>
-    /// <param name="state"></param>
-    public static void ChangeStateBlackOut(bool state) 
-    {
-        OnBalckOut?.Invoke(state);
-    }
-
-    /// <summary>
-    /// Открытие/закрытие всех доступных дверей
-    /// </summary>
-    /// <param name="state"></param>
-    public static void ChangeOpenDoor(bool state)
-    {
-        OnOpenDoor?.Invoke(state);
-    }
 
 }

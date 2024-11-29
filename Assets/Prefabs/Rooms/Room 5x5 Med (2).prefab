@@ -1391,7 +1391,7 @@ Transform:
   m_GameObject: {fileID: 2815715092189660124}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.682}
+  m_LocalPosition: {x: 0, y: 0, z: -1.146}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2973,7 +2973,7 @@ Transform:
   m_GameObject: {fileID: 6685376943190095759}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2.221}
+  m_LocalPosition: {x: -0.83, y: 0, z: 1.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3760,6 +3760,7 @@ MonoBehaviour:
   - {fileID: 853024326107828600}
   - {fileID: 6074135178868819299}
   _countMaxEnemyInRoom: 2
+  _hasExit: 1
 --- !u!114 &5390808193984574588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7093,6 +7094,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1858401257127638892}
     m_Modifications:
+    - target: {fileID: -1325473422965867027, guid: 58fe913d8da4121428b21d65ff9a760c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 66f2c5978ee28aa40a70674d35262526,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -7164,11 +7170,6 @@ PrefabInstance:
       value: gaz 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 66f2c5978ee28aa40a70674d35262526,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: -1325473422965867027, guid: 58fe913d8da4121428b21d65ff9a760c,
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4

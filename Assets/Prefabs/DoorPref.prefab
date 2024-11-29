@@ -318,7 +318,7 @@ GameObject:
   - component: {fileID: 832599429236277209}
   - component: {fileID: 7811483991665781868}
   - component: {fileID: 6681855789397328672}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: DoorPref
   m_TagString: Untagged
   m_Icon: {fileID: 0}

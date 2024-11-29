@@ -1,30 +1,37 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public static class LocalizationManager
-{  
-    private static char _fieldSeperator = ';';
-    private static char _lineSeperater = '|';
-    private static TextAsset _csvAsset;
-    private static string[,] _localization;
-    private static string[] _languages = {"rus","eng"}; 
-    private static int _currentLenguage = 1;
+public class LocalizationManager: MonoBehaviour
+{
+    [SerializeField] private TextAsset _csvAsset;
+    private char _fieldSeperator = ';';
+    private char _lineSeperater = '|';    
+    private string[,] _localization;
+    private string[] _languages = {"rus","eng"}; 
+    private int _currentLenguage = 1;
 
-    public static event Action OnChangeLanguage;
+    public  event Action OnChangeLanguage;
 
-    
-    public static void SetCSV(TextAsset csvAsset) 
+    public static LocalizationManager Instance;
+
+    private void Awake()
     {
-        _csvAsset = csvAsset;
-        ResetCSV();
-        SetLanguageSetting();
-        OnChangeLanguage?.Invoke();
-    }
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        // end of new code
 
-    public static void ResetCSV() 
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        ResetCSV();        
+        OnChangeLanguage?.Invoke();
+    }  
+
+    public void ResetCSV() 
     {
         string[] records = _csvAsset.text.Split(_lineSeperater);
         _localization = new string[records.Length, records[0].Split(_fieldSeperator).Length];
@@ -40,14 +47,13 @@ public static class LocalizationManager
         }
     }
 
-    private static void SetLanguageSetting() 
+    public void SetLanguageSetting() 
     {
-        _currentLenguage =int.Parse(Settings.GetParam("language"));
+        _currentLenguage =int.Parse(Settings.Instance.GetParam("language"));
     }
 
-    public static string GetTextForTag(string tag) 
+    public string GetTextForTag(string tag) 
     {
-        Debug.Log("И снова проверяем тег" + tag);
         if (_localization != null)
         {
             //Определяем язык
@@ -76,11 +82,11 @@ public static class LocalizationManager
         return tag;
     }
 
-    public static void Change() 
+    public void Change() 
     {
         _currentLenguage++;
         if (_currentLenguage== _languages.Length) {_currentLenguage = 0;}
-        Settings.SetParam("language", _currentLenguage.ToString());
+        Settings.Instance.SetParam("language", _currentLenguage.ToString());
         OnChangeLanguage?.Invoke();
     }
 
@@ -90,7 +96,7 @@ public static class LocalizationManager
     /// <param name="avail"> вид досутпности - f - не доступен, t - доступен, n - новый</param>
     /// <param name="equal"> проверяется равнество парматру avail или не равенство</param>
     /// <returns></returns>
-    public static List<string> GetTagList(string avail, bool equal)
+    public List<string> GetTagList(string avail, bool equal)
     {
         List<string> list = new List<string>();
        // if(_localization !=null)
@@ -109,7 +115,7 @@ public static class LocalizationManager
     /// <param name="avail"> вид досутпности - f - не доступен, t - доступен, n - новый</param>
     /// <param name="equal"> проверяется равнество парматру avail или не равенство</param>
     /// <returns></returns>
-    public static bool CheackAvail(string tag,string avail, bool equal) 
+    public bool CheackAvail(string tag,string avail, bool equal) 
     {
         for (int i = 1; i < _localization.GetLength(0); i++)
             {
@@ -118,7 +124,7 @@ public static class LocalizationManager
         return false;
     }
 
-    public static void WriteAvailForTag(string tag, string avail) 
+    public void WriteAvailForTag(string tag, string avail) 
     {
         for (int i = 1; i < _localization.GetLength(0); i++)
         {
@@ -126,7 +132,7 @@ public static class LocalizationManager
         }
     }
 
-    public static void SafeCSV() 
+    public void SafeCSV() 
     {
         string line = "";
         for (int i = 0; i < _localization.GetLength(0); i++)

@@ -11,6 +11,7 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private GameObject _panel;
     [SerializeField] private LoaclizationText _centerText;
     [SerializeField] private GameObject wintext;
+    [SerializeField] private GameObject _overText;
     [SerializeField] private GameObject _settingMenu;
     [SerializeField] private Slider _sliderVolume;
     [SerializeField] private Slider _sliderSensitiviti;
@@ -54,8 +55,11 @@ public class PlayerUI : MonoBehaviour
     }
     public void Restart()
     {
+        _playerControl.UI.PauseMenu.started -= context => Resume();
+        _playerControl.Disable();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Time.timeScale = 1;
+       
     }
 
     public void LoadMainMenu()
@@ -76,10 +80,12 @@ public class PlayerUI : MonoBehaviour
     public void Resume()
     {
         Time.timeScale = 1;
+        _playerControl.Disable();
         pauseScreen.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        _playerControl.Disable();
+        
+
     }
 
     public void Finish()
@@ -91,32 +97,43 @@ public class PlayerUI : MonoBehaviour
         Cursor.visible = true;
     }
 
+    public void GameOver()
+    {
+        finishScreen.SetActive(true);
+        _overText.SetActive(true);
+        Time.timeScale = 0;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        GameMode.FirstPersonLook.BlockPlayerController();
+    }
+
     public void OpenSetting()
     {
         _settingMenu.SetActive(true);
-        _sliderVolume.value = float.Parse(Settings.GetParam("volume"));
-        _sliderSensitiviti.value = float.Parse(Settings.GetParam("sensitivity"));
+        _sliderVolume.value = float.Parse(Settings.Instance.GetParam("volume"));
+        _sliderSensitiviti.value = float.Parse(Settings.Instance.GetParam("sensitivity"));
     }
 
     public void SaveSetting()
     {
-        Settings.SafeCSV();
+        Settings.Instance.SafeCSV();
         GameMode.FirstPersonLook.ChangeSettings();
         _settingMenu.SetActive(false);
     }
 
     public void ChangeValueSound()
     {
-        Settings.SetParam("volume", _sliderVolume.value.ToString());
+        Settings.Instance.SetParam("volume", _sliderVolume.value.ToString());
+        AudioListener.volume = _sliderSensitiviti.value;
     }
 
     public void ChangeValueSensetiviti()
     {
-        Settings.SetParam("sensitivity", _sliderSensitiviti.value.ToString());
+        Settings.Instance.SetParam("sensitivity", _sliderSensitiviti.value.ToString());
     }
 
     public void ChangeVisiblePayer(bool isVisible) 
     {
-        _visibleImage.SetActive(isVisible);
+        _visibleImage.SetActive(!isVisible);
     }
 }

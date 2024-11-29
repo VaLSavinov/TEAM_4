@@ -480,6 +480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45ff2283e3cc85c47b39ccac9b23d0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 0
 --- !u!1 &1082980489415972250
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,7 +619,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 375, y: -678.06647}
+  m_AnchoredPosition: {x: 375, y: -590.6342}
   m_SizeDelta: {x: 450, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5253399727426636118
@@ -911,6 +912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45ff2283e3cc85c47b39ccac9b23d0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 0
 --- !u!1 &1959924083729780342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1003,6 +1005,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45ff2283e3cc85c47b39ccac9b23d0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 0
 --- !u!1 &1994390883949988972
 GameObject:
   m_ObjectHideFlags: 0
@@ -1014,6 +1017,7 @@ GameObject:
   - component: {fileID: 2534697773759843694}
   - component: {fileID: 5895049551901537452}
   - component: {fileID: 4719041567358469297}
+  - component: {fileID: 26132643439448109}
   m_Layer: 5
   m_Name: DeathText
   m_TagString: Untagged
@@ -1082,7 +1086,20 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "You're \u0421aught"
+  m_Text: UI.NoEscape
+--- !u!114 &26132643439448109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994390883949988972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45ff2283e3cc85c47b39ccac9b23d0b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 0
 --- !u!1 &2155628892829086678
 GameObject:
   m_ObjectHideFlags: 0
@@ -1218,7 +1235,7 @@ MonoBehaviour:
   groundDistance: 0.1
   groundMask:
     serializedVersion: 2
-    m_Bits: 383
+    m_Bits: 127
 --- !u!114 &8425346946202611286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1405,6 +1422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45ff2283e3cc85c47b39ccac9b23d0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 0
 --- !u!1 &3210548864572233891
 GameObject:
   m_ObjectHideFlags: 0
@@ -1572,6 +1590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45ff2283e3cc85c47b39ccac9b23d0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 0
 --- !u!1 &3375131698800032084
 GameObject:
   m_ObjectHideFlags: 0
@@ -1664,6 +1683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45ff2283e3cc85c47b39ccac9b23d0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 0
 --- !u!1 &3788843992046239475
 GameObject:
   m_ObjectHideFlags: 0
@@ -1700,7 +1720,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 375, y: -866.59973}
+  m_AnchoredPosition: {x: 375, y: -735.4513}
   m_SizeDelta: {x: 450, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2924878394581163232
@@ -1815,7 +1835,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4305003787496309278
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1842,7 +1862,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3870773405437011204}
-  m_CullTransparentMesh: 1
+  m_CullTransparentMesh: 0
 --- !u!114 &4198613119524741127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1856,7 +1876,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.745283, g: 0.745283, b: 0.745283, a: 0.015686275}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.74509805}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1952,7 +1972,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Main menu
+  m_Text: Menu.MainMenu
 --- !u!114 &4813179833586726671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1965,6 +1985,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45ff2283e3cc85c47b39ccac9b23d0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 0
 --- !u!1 &4707695524163004546
 GameObject:
   m_ObjectHideFlags: 0
@@ -2354,7 +2375,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Restart
+  m_Text: Menu.Restart
 --- !u!114 &5143906960723816123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2367,6 +2388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45ff2283e3cc85c47b39ccac9b23d0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 0
 --- !u!1 &5463252917424610806
 GameObject:
   m_ObjectHideFlags: 0
@@ -2591,6 +2613,7 @@ MonoBehaviour:
   _panel: {fileID: 943048879244180396}
   _centerText: {fileID: 4846568832679781462}
   wintext: {fileID: 8212477047099414471}
+  _overText: {fileID: 1994390883949988972}
   _settingMenu: {fileID: 4855378851091495168}
   _sliderVolume: {fileID: 4206092741530215574}
   _sliderSensitiviti: {fileID: 4050597125646617235}
@@ -3209,6 +3232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45ff2283e3cc85c47b39ccac9b23d0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 0
 --- !u!1 &7325055737517906717
 GameObject:
   m_ObjectHideFlags: 0
@@ -3301,6 +3325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45ff2283e3cc85c47b39ccac9b23d0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 0
 --- !u!1 &7528005379347348836
 GameObject:
   m_ObjectHideFlags: 0
@@ -3337,7 +3362,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 375, y: -489.03323}
+  m_AnchoredPosition: {x: 375, y: -445.3171}
   m_SizeDelta: {x: 450, y: 101}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6276264251379958735
@@ -3434,6 +3459,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 5838498627080102125}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &7642976782468503622
 GameObject:
@@ -3702,6 +3739,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5838498627080102125}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!1 &7677734159339068210
 GameObject:
@@ -4145,6 +4194,7 @@ GameObject:
   - component: {fileID: 6330490396229683496}
   - component: {fileID: 3217245968792275093}
   - component: {fileID: 3490004742273392766}
+  - component: {fileID: 552636741091352098}
   m_Layer: 5
   m_Name: WinText
   m_TagString: Untagged
@@ -4213,7 +4263,20 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You Escape!
+  m_Text: UI.Escape
+--- !u!114 &552636741091352098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8212477047099414471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45ff2283e3cc85c47b39ccac9b23d0b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 0
 --- !u!1 &8313801093194777666
 GameObject:
   m_ObjectHideFlags: 0
@@ -4381,6 +4444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45ff2283e3cc85c47b39ccac9b23d0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 0
 --- !u!1 &9151506931797961142
 GameObject:
   m_ObjectHideFlags: 0

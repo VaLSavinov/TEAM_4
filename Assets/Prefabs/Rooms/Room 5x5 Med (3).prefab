@@ -963,7 +963,7 @@ Transform:
   m_GameObject: {fileID: 1913591126794778904}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.542, y: 0, z: 0.742}
+  m_LocalPosition: {x: 0.758, y: 0, z: 0.555}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1827,7 +1827,7 @@ Transform:
   m_GameObject: {fileID: 3674707984602636678}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.488, y: 0, z: -1.972}
+  m_LocalPosition: {x: -1.099, y: 0, z: -1.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2396,7 +2396,7 @@ Transform:
   m_GameObject: {fileID: 4461820322961939445}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.934, y: 0, z: 1.317}
+  m_LocalPosition: {x: -1.859, y: 0, z: 1.429}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2922,7 +2922,7 @@ Transform:
   m_GameObject: {fileID: 6275397348400414629}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.922, y: 0, z: 1.384}
+  m_LocalPosition: {x: 1.773, y: 0, z: 1.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3163,7 +3163,7 @@ Transform:
   m_GameObject: {fileID: 7153315722063825534}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.375, y: 0, z: -1.707}
+  m_LocalPosition: {x: 1.387, y: 0, z: -1.822}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3341,7 +3341,8 @@ MonoBehaviour:
   - {fileID: 3278983935742074395}
   - {fileID: 6282999698946980564}
   - {fileID: 7683246061449163208}
-  _countMaxEnemyInRoom: 3
+  _countMaxEnemyInRoom: 2
+  _hasExit: 1
 --- !u!114 &-8659794712529598533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6906,11 +6907,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8832432325882290109}
     m_Modifications:
-    - target: {fileID: -730404964915240469, guid: a4c2dd0fbba2c8b439505fe88d8c7aad,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 66f2c5978ee28aa40a70674d35262526,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -6992,6 +6988,11 @@ PrefabInstance:
       value: gaz 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 66f2c5978ee28aa40a70674d35262526,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -730404964915240469, guid: a4c2dd0fbba2c8b439505fe88d8c7aad,
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4
@@ -9866,6 +9867,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8832432325882290109}
     m_Modifications:
+    - target: {fileID: -1325473422965867027, guid: 58fe913d8da4121428b21d65ff9a760c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 66f2c5978ee28aa40a70674d35262526,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -9937,11 +9943,6 @@ PrefabInstance:
       value: gaz 1 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 66f2c5978ee28aa40a70674d35262526,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: -1325473422965867027, guid: 58fe913d8da4121428b21d65ff9a760c,
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4

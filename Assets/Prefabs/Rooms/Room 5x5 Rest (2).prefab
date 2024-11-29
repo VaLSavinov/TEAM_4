@@ -1748,7 +1748,7 @@ Transform:
   m_GameObject: {fileID: 4397864461723961216}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.965, y: 0, z: -0.762}
+  m_LocalPosition: {x: -1.599, y: 0, z: -0.737}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2580,7 +2580,8 @@ MonoBehaviour:
   - {fileID: 8618810491974184174}
   - {fileID: 6927756902925029228}
   - {fileID: 3097247662675919898}
-  _countMaxEnemyInRoom: 3
+  _countMaxEnemyInRoom: 2
+  _hasExit: 1
 --- !u!114 &-8849294885911426668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3637,7 +3638,7 @@ Transform:
   m_GameObject: {fileID: 8528004395198317852}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.301, y: 0, z: -2.221}
+  m_LocalPosition: {x: 1.287, y: 0, z: -1.988}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -1,40 +1,64 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
     [SerializeField, Tooltip(" оличество врагов.")] private int _countEnemy;
+    [SerializeField, Tooltip(" оличество врагов, блуждающих по коридорам")] private int _countEnemyNoRoom;
     [SerializeField] private GameObject _enemyPref;
 
     [Header("Ќастройки дл€ обучающего уровн€")]
     [SerializeField] private List<RoomAccessControl> _rooms;
-    [SerializeField] private TextAsset _setting;
-    [SerializeField] private TextAsset _dictonary;
+    [SerializeField] private List<Transform> _wayPointsNoroom;
 
 
     private List<EnemyAI> _enemys;
+    private bool _isTrainingLevel;
+    private int _currnetCountInCoridors=0;
 
     private Dictionary<RoomAccessControl,List<SEnemyWayPoint>> _waypoints = new Dictionary<RoomAccessControl, List<SEnemyWayPoint>>();
-    // Vector2 - двумерный массив, где x - макс. кол-во, y - текущее кол-во
-    private Dictionary<RoomAccessControl, Vector2> _roomData = new();
+    // Vector2 - двумерный массив, где x - макс. кол-во, y - текущее кол-во мобов, z - принимает значение 0 или 1 - могут ли боты покидать комнату, где 0 - Ќ≈“
+    private Dictionary<RoomAccessControl, Vector3> _roomData = new();
+    private List<SEnemyWayPoint> _corridorPoints = new List<SEnemyWayPoint>();
 
 
     private void Awake()
     {
         _enemys = new List<EnemyAI>();
         GameMode.EnemyManager = this;
+        if (_rooms.Count > 0 || _wayPointsNoroom.Count > 0) _isTrainingLevel = true;
         // ≈сли комнаты заданы вручную, значит спавним вручную
-        if (_rooms.Count > 0) 
+        if (_isTrainingLevel)
         {
-            Settings.SetCSV(_setting);
-            LocalizationManager.SetCSV(_dictonary);
-            EnemyRoute enemyRoute = null;
-            foreach (RoomAccessControl room in _rooms)
+            if (_rooms.Count > 0)
             {
-                if (room.TryGetComponent<EnemyRoute>(out enemyRoute))
-                    AddWaypoints(room, enemyRoute.CountMaxEnemyInRoom,enemyRoute.GetWayPoints());
-                Debug.Log(enemyRoute);
+                EnemyRoute enemyRoute = null;
+                float hasExit = 0;
+                foreach (RoomAccessControl room in _rooms)
+                {
+                    if (room.TryGetComponent<EnemyRoute>(out enemyRoute))
+                    {
+                        if (enemyRoute.HasExit) hasExit=1;
+                        else hasExit=0;
+                        AddWaypoints(room, enemyRoute.CountMaxEnemyInRoom, enemyRoute.GetWayPoints(), hasExit);
+                    }
+                }
+
+            }
+            if (_wayPointsNoroom.Count > 0)
+            {
+                Debug.Log("ƒобовл€ем точки");
+                SEnemyWayPoint enemyFreePoint = new SEnemyWayPoint();
+                foreach (Transform freePoint in _wayPointsNoroom) 
+                {                   
+                    enemyFreePoint.IsAvail = true;
+                    enemyFreePoint.Point = freePoint;
+                    _corridorPoints.Add(enemyFreePoint);
+                }
+                Debug.Log("“очки добавлены!");
             }
             CreateEnemy();
         }
@@ -44,21 +68,21 @@ public class EnemyManager : MonoBehaviour
     /// ѕровекра на возможность спавна нового врага
     /// </summary>
     /// <returns></returns>
-    private bool CheackPossibilityPlacement(RoomAccessControl room)
+    private bool CheackPossibilityPlacement(RoomAccessControl room, bool canChange)
     {
-        if (room.HasPower && _roomData[room].x > _roomData[room].y)  return true;
+        if (room.HasPower && _roomData[room].x > _roomData[room].y && (_roomData[room].z== 1) == canChange)  return true;
         return false;        
     }
 
 
-    private RoomAccessControl GetNewRoom(RoomAccessControl currentRoom) 
+    private RoomAccessControl GetNewRoom(RoomAccessControl currentRoom, bool canChange) 
     {
         foreach (KeyValuePair<RoomAccessControl, List<SEnemyWayPoint>> room in _waypoints)
         {
             // ѕроверка на возможность спавна и на соответсвие выбранной комнаты текущей
-            if (currentRoom==room.Key || !CheackPossibilityPlacement(room.Key)) continue;
+            if (currentRoom==room.Key || !CheackPossibilityPlacement(room.Key, canChange)) continue;
             // ¬еро€тность того, что враг заспавнитьс€ в этой комнате (только дл€ основного уровн€)
-            if (_rooms.Count==0 && UnityEngine.Random.Range(0, 100) < 50)  continue;
+            if (!_isTrainingLevel && UnityEngine.Random.Range(0, 100) < 50)  continue;
             return room.Key;
         }
         return currentRoom;
@@ -69,18 +93,58 @@ public class EnemyManager : MonoBehaviour
     /// </summary>
     public void CreateEnemy() 
     {
-        int indexPatch;
-        RoomAccessControl room;
+        // ƒобавить, что сначала спавним в об€зательных комнатах, потом в коридорах, а затем в остальных
+        int indexPatch =-1;
+        RoomAccessControl room = null;
         Transform spawnPoint;
         for (int i = 0; i < _countEnemy; i++) 
         {
-            spawnPoint = GetNewPoint(null, -1, out room, out indexPatch);
-            if (spawnPoint == null) continue;
+            indexPatch = -1;
+            room = null;
+            // ѕеребираем комнаты, в которых можем заспавинть бота
+            // —начала об€зательные кoмнтаы
+            spawnPoint = GetNewPoint(ref room, ref indexPatch,true,false);
+            // ѕотом коридоры
+            if (spawnPoint == null)
+            {
+                if (_currnetCountInCoridors >= _countEnemyNoRoom) spawnPoint = null;
+                else
+                {
+                    _currnetCountInCoridors++;
+                    spawnPoint = GetFreePoint(ref indexPatch);
+                }
+            }            
+            // «атем обычные комнтаы
+            if (spawnPoint == null)
+                spawnPoint = GetNewPoint(ref room, ref indexPatch, true, true);
+            if (spawnPoint == null)  continue;
             GameObject newEnmy = Instantiate(_enemyPref, spawnPoint);
             EnemyAI enemyAi = newEnmy.GetComponent<EnemyAI>();
             enemyAi.SetStartParameters(room, indexPatch, this);
-            _enemys.Add(enemyAi);            
+            _enemys.Add(enemyAi);        
         }
+    }
+
+    private Transform GetFreePoint(ref int indexPatch)
+    {        
+        SEnemyWayPoint newPoint;
+        int newIndex;       
+        while (true)
+        {
+            newIndex = UnityEngine.Random.Range(0, _corridorPoints.Count);
+            if (_corridorPoints[newIndex].IsAvail) break;
+        }
+        newPoint = _corridorPoints[newIndex];
+        newPoint.IsAvail = false;
+        _corridorPoints[newIndex] = newPoint;
+        if (indexPatch > -1)
+        {
+            newPoint = _corridorPoints[indexPatch];
+            newPoint.IsAvail = true;
+            _corridorPoints[indexPatch] = newPoint;
+        }
+        indexPatch = newIndex;
+        return _corridorPoints[newIndex].Point;
     }
 
     /// <summary>
@@ -89,14 +153,14 @@ public class EnemyManager : MonoBehaviour
     /// <param name="room"></param>
     /// <param name="maxCount"></param>
     /// <param name="patch"></param>
-    public void AddWaypoints(RoomAccessControl room, int maxCount, List<Transform> patch) 
+    public void AddWaypoints(RoomAccessControl room, int maxCount, List<Transform> patch, float HasChange) 
     {
         if (patch==null || patch.Count == 0) return; 
         List<SEnemyWayPoint> sEnemyWayPoints = new List<SEnemyWayPoint>();
         SEnemyWayPoint sEnemyWayPoint = new SEnemyWayPoint();
         // ≈сли максимальное кол-во врагов не задано или больше, чем точек - берем от кол-ва точек (-1 чтобы оствалась вариативность)
         if (maxCount == 0 || maxCount>= patch.Count)  maxCount = patch.Count - 1;
-        _roomData.Add(room, new Vector2(maxCount, 0));
+        _roomData.Add(room, new Vector3(maxCount, 0,HasChange));
         foreach (Transform transform in patch) 
         {
             sEnemyWayPoint.Point = transform;
@@ -106,19 +170,37 @@ public class EnemyManager : MonoBehaviour
         _waypoints.Add(room, sEnemyWayPoints);        
     }
 
-    public Transform GetNewPoint(RoomAccessControl room, int indexRout, out RoomAccessControl newRoom, out int newIndex) 
+    public void AddFreePoint(Transform point) 
     {
+        SEnemyWayPoint newPoint;
+        newPoint.Point = point;
+        newPoint.IsAvail = true;
+        _corridorPoints.Add(newPoint);
+    }
+
+
+    public Transform GetNewPoint(ref RoomAccessControl room, ref int indexRout, bool isSpawn, bool canChange)
+    {
+        RoomAccessControl newRoom;
+        int newIndex;
         // ≈сли это запрос от бота
-        if (room != null)
+        if (!isSpawn)
         {
-            // Ўанс того, что бот захочет помен€ть комнату
-            if (UnityEngine.Random.Range(0, 100) < 25) newRoom = GetNewRoom(room);
-            else newRoom = room;
+            Debug.Log("«апрос на смену пути " + room);
+            if (room != null)
+            {
+                if (_roomData[room].z==1) canChange = true;
+                else canChange = false;
+                // Ўанс того, что бот захочет помен€ть комнату и он может ее помен€ть
+                if (canChange && UnityEngine.Random.Range(0, 100) < 50 && canChange) newRoom = GetNewRoom(room, true);
+                else newRoom = room;
+            }
+            else return GetFreePoint(ref indexRout);
         }
         // ≈сли метод вызываетс€ при спавне ботов
         else
         {
-            newRoom = GetNewRoom(room);
+            newRoom = GetNewRoom(room, canChange);
             if (newRoom == null)
             {
                 newIndex = -1;
@@ -141,12 +223,14 @@ public class EnemyManager : MonoBehaviour
         // ≈сли бот помен€л комнату
         if (room != newRoom)
         {
-            if (room!=null) _roomData[room] = new Vector2(_roomData[room].x, _roomData[room].y-1);
-            _roomData[newRoom] = new Vector2(_roomData[newRoom].x, _roomData[newRoom].y + 1);
+            if (room!=null) _roomData[room] = new Vector3(_roomData[room].x, _roomData[room].y-1, _roomData[room].z);
+            _roomData[newRoom] = new Vector3(_roomData[newRoom].x, _roomData[newRoom].y + 1, _roomData[newRoom].z);
         }
         editWaypoint = _waypoints[newRoom][newIndex];
         editWaypoint.IsAvail = false;
         _waypoints[newRoom][newIndex] = editWaypoint;
+        room = newRoom;
+        indexRout = newIndex;
         return _waypoints[newRoom][newIndex].Point;
     }
 
