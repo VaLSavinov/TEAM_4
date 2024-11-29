@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.GraphicsBuffer;
@@ -16,6 +17,10 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField] private Animator _animator;
     [SerializeField] private GameObject _flashlight;
+    [SerializeField] private AudioSource _audioOther;
+    [SerializeField] private AudioSource _audioSteps;
+    [SerializeField] private List<AudioClip> _soundSteps;
+    [SerializeField] private List<AudioClip> _soundOther;
 
     private NavMeshAgent _agent;
     private RoomAccessControl _room;
@@ -33,6 +38,9 @@ public class EnemyAI : MonoBehaviour
     private MeshRenderer _meshRenderer;
     private float _countdownTimeSearch; // Время отсчета для поиска игрока
     private bool _isLightAlways = false;
+    private float _maxTimeToNextRandomSound = 6f;
+    private float _timeToNextRandomSound;
+    private float _curentTimeSound;
 
     private void Start()
     {
@@ -51,6 +59,13 @@ public class EnemyAI : MonoBehaviour
     {
         if (_isRotation) Rotate();
         CheckingState();
+        if (_state == EEnemyState.Patrolling &&
+            Time.time - _curentTimeSound >= _timeToNextRandomSound)  
+        {
+            PlayRandomSound(6, _soundOther.Count);
+            _curentTimeSound = Time.time;
+            _timeToNextRandomSound = UnityEngine.Random.Range(2, _maxTimeToNextRandomSound);
+        }
     }
     
     private IEnumerator WaitAtWaypoint()
@@ -65,13 +80,11 @@ public class EnemyAI : MonoBehaviour
         if (_state == EEnemyState.Alerted) StartPatrol(); // Возвращаемся к патрулированию
     }
 
-    private IEnumerator WaitFromAlert()
+    private void PlayRandomSound(int min, int max) 
     {
-        yield return new WaitForSeconds(4f);
-        _animator.SetInteger("State", 1);
-        GoToPoint();
+        if (UnityEngine.Random.Range(0,100)<40)
+            PlaySound(_audioOther, UnityEngine.Random.Range(min, max), false, false);
     }
-
 
     /// <summary>
     ///  Поворот к цели и передача целевой точки
@@ -93,6 +106,8 @@ public class EnemyAI : MonoBehaviour
                 _animator.SetInteger("State", 1);
                 _isRotation = false;
                 _isWalk = true;
+                /// Управление аудио
+                PlaySound(_audioSteps,0,true,true);
             }
         }
         else _isRotation = false;
@@ -109,6 +124,7 @@ public class EnemyAI : MonoBehaviour
         {
             _animator.SetInteger("State", 0);
             _isWalk = false;
+            _audioSteps.Stop();
             StartCoroutine(WaitAtWaypoint());
         }        
     }
@@ -118,11 +134,14 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     private void Alerted()
     {
-        if (_agent.remainingDistance < 0.5f && _isWalk)
+        if (_agent.remainingDistance < 0.5f && _agent.remainingDistance > 0 && _isWalk)
         {
             _isWalk = false;
             _animator.SetInteger("State", 3);
             StartCoroutine(WaitAlert());
+            // Аудио
+            _audioSteps.Stop();
+            PlaySound(_audioOther,5,true,false);
         }       
     }
 
@@ -180,26 +199,50 @@ public class EnemyAI : MonoBehaviour
         else ActivateFlashlight(false);
         _animator.SetInteger("State", 1);
         GoToNextWaypoint();
+        // Управление Аудио
+        _audioOther.Stop();
+        PlaySound(_audioSteps, 0, true, true);
     }
 
     private void ActivateFlashlight(bool activate)
     {
+        if (_flashlight.activeSelf!= activate)
+            _audioOther.PlayOneShot(_soundOther[4]);
         _flashlight.SetActive(activate);
     }
+
+    private void PlaySound(AudioSource source, int indexSound, bool replay, bool loop)
+    {
+        if (source.isPlaying && !replay) return;
+        if (source == _audioSteps && indexSound < _soundSteps.Count)
+            source.clip = _soundSteps[indexSound];
+        else
+        if (source == _audioOther && indexSound < _soundOther.Count)
+            source.clip = _soundOther[indexSound];
+        else return;
+        source.loop = loop;
+        source.Play();
+    }
+
+
 
     /// <summary>
     /// Начало преследования игрока
     /// </summary>
     public void ChasePlayer() 
-    {        
-        if (_state != EEnemyState.Chasing && _state!=EEnemyState.WaitChasing)
+    {
+        if (_state != EEnemyState.Chasing && _state != EEnemyState.WaitChasing)
         {
             _agent.speed = _speedChase;
             _animator.SetInteger("State", 2);
             _state = EEnemyState.WaitChasing;
+
             ActivateFlashlight(true);
             _targetPoint = _agent.destination;
             _agent.SetDestination(transform.position);
+            // Управление аудио
+            _audioSteps.Stop();
+            PlaySound(_audioOther, 2, true, false);
         }
         if (_state == EEnemyState.Chasing && Vector3.Distance(transform.position, GameMode.FirstPersonMovement.transform.position) < 0.6)
         {            
@@ -207,8 +250,11 @@ public class EnemyAI : MonoBehaviour
             transform.LookAt(new Vector3(GameMode.FirstPersonMovement.transform.position.x,transform.position.y, GameMode.FirstPersonMovement.transform.position.z));
             if (GameMode.FirstPersonMovement.IsAlive())
             {
+                
                 _animator.SetBool("Found", true);
                  GameMode.FirstPersonMovement.Die();
+                // Управление аудио
+                _audioSteps.Stop();                
             }
             else
                 _animator.SetInteger("State", 0);
@@ -231,21 +277,26 @@ public class EnemyAI : MonoBehaviour
         ActivateFlashlight(true);
         _agent.SetDestination(transform.position);
         _animator.SetInteger("State", 3);
+        // Управление аудио
+        _audioSteps.Stop();
 
     }
 
     public void StartAlerted(Vector3 noiseSours) 
     {
         // Если бот преследует, то не отвлекается
-        if (_state == EEnemyState.Chasing) return;
-        _state = EEnemyState.WaitAlert;
+        if (_state == EEnemyState.Chasing || _state == EEnemyState.Alerted) return;
+        _isWalk = false;
+        _state = EEnemyState.Alerted;  
         _agent.speed = _speedAlertOrSearching;
         _agent.SetDestination(transform.position);
         _animator.SetInteger("State", 4);
         _targetPoint = noiseSours;
         transform.LookAt(noiseSours);
         ActivateFlashlight(true);
-        StartCoroutine(WaitFromAlert());
+        // Управление аудио
+        _audioSteps.Stop();
+        PlaySound(_audioOther, 2, true, false);
     }  
 
     public void SetStartParameters(RoomAccessControl room, int waypointIndex, EnemyManager enemyManager) 
@@ -257,14 +308,6 @@ public class EnemyAI : MonoBehaviour
         _animator.SetInteger("State", 0);
         ActivateFlashlight(false);
         StartCoroutine(WaitAtWaypoint());
-        Debug.Log("Стартовые параметы");
-    }
-
-    public void GoToPoint()
-    {
-        _state = EEnemyState.Alerted;
-        _agent.SetDestination(_targetPoint);
-        _isWalk = true;
     }
 
     public void LightAlways(bool state) 
@@ -277,7 +320,8 @@ public class EnemyAI : MonoBehaviour
     public void StartChasing() 
     {
         _agent.speed = _speedChase;
-        _animator.SetInteger("State", 2);       
+        _animator.SetInteger("State", 2);
+        PlaySound(_audioOther, 2, true, false);
         ActivateFlashlight(true);
         _targetPoint = _agent.destination;
     }
@@ -285,6 +329,27 @@ public class EnemyAI : MonoBehaviour
     public void GoChasing()
     {
         if (_state == EEnemyState.WaitChasing)
+        {
+            _audioOther.PlayOneShot(_soundOther[3]);
+            PlaySound(_audioSteps, 1, true, true);
+            PlaySound(_audioOther, 1, true, true);
             _state = EEnemyState.Chasing;
+        }
+        else
+        if (_state == EEnemyState.Alerted) 
+        {
+            _agent.SetDestination(_targetPoint);
+            _isWalk = true;
+            //Управление аудио
+            PlaySound(_audioSteps, 2, true, true);
+        }
     }
+
+
+    public void PlaySoundAtack() 
+    {
+        PlaySound(_audioOther, 0, true, false);
+    }
+
+
 }

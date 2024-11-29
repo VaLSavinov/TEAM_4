@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FirstPersonMovement : MonoBehaviour
@@ -10,6 +11,10 @@ public class FirstPersonMovement : MonoBehaviour
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
+    [Header("Настройки звука")]
+    [SerializeField] private float _radiusStandartShere;
+    [SerializeField] private List<AudioClip> _sounds;
+    [SerializeField] private AudioTrigger _audioCollision;
 
     private const float GRAVITY = -10f;
     private const float GROUNDED_VELOCITY = -1f;
@@ -20,6 +25,8 @@ public class FirstPersonMovement : MonoBehaviour
 
     private float originalHeight;
     private bool _isAlive = true;
+    private AudioSource _audioSource;
+    private bool _isChangeSpeed = false;
 
     void Awake()
     {
@@ -33,7 +40,9 @@ public class FirstPersonMovement : MonoBehaviour
         _control.Player.Run.canceled += context => Walk();
         _control.Player.Sneak.canceled += context => Walk();
         GameMode.FirstPersonMovement = this;
+        _audioSource = GetComponent<AudioSource>();
     }
+
     private void OnEnable()
     {
         _control.Enable();
@@ -48,17 +57,29 @@ public class FirstPersonMovement : MonoBehaviour
     {
         _currentSpeed = speed / 1.5f; // Приседание
         controller.height = originalHeight / 2;
+        _audioCollision.gameObject.SetActive(true);
+        _audioCollision.SetColliderRadius(_radiusStandartShere / 1.5f);
+        _audioCollision.gameObject.SetActive(false);
+        _isChangeSpeed = true;
     }
 
     private void Walk()
     {
         _currentSpeed = speed;
         controller.height = originalHeight;
+        _audioCollision.gameObject.SetActive(true);
+        _audioCollision.SetColliderRadius(_radiusStandartShere);
+        _audioCollision.gameObject.SetActive(false);
+        _isChangeSpeed = true;
     }
 
     private void Run()
     {
         _currentSpeed =  speed * 1.5f; // Спринт
+        _audioCollision.gameObject.SetActive(true);
+        _audioCollision.SetColliderRadius(_radiusStandartShere * 3f);
+        _audioCollision.gameObject.SetActive(false);
+        _isChangeSpeed = true;
     }
 
     private IEnumerator GameOver()
@@ -87,8 +108,41 @@ public class FirstPersonMovement : MonoBehaviour
 
     void HandleNormalMovement(Vector3 moveDirection)
     {
-        if (!_isAlive) return;
+        if (!_isAlive)
+        {
+            _audioSource.Stop();
+            return;
+        }
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        if (_currentSpeed == speed)
+            _audioSource.clip = _sounds[1];
+        else 
+        if (_currentSpeed > speed)
+            _audioSource.clip = _sounds[2];
+        else
+            _audioSource.clip = _sounds[0];
+
+        if (moveDirection.x == 0 && moveDirection.z == 0 || !isGrounded)
+        {
+            _audioSource.Stop();
+            _isChangeSpeed = true;
+            if (_audioCollision.gameObject.activeSelf)
+                _audioCollision.gameObject.SetActive(false);
+        }
+        else 
+        {
+            if (!_audioCollision.gameObject.activeSelf)
+                _audioCollision.gameObject.SetActive(true);
+            if (_isChangeSpeed)
+            {
+                _audioSource.Play();
+                _isChangeSpeed = false;
+            }
+            
+        }
+ 
+        
 
         if (isGrounded && velocity.y < 0)
         {

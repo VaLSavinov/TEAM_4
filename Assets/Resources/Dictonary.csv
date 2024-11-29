@@ -55,7 +55,7 @@ To: Dr. Martin Hendricks, Director of S.C.A.L.P. Lab.
 <line-indent=8%> After the sixth specimen died, we performed an autopsy that allowed us to develop new gene therapy techniques to create hybrid cells. The primary focus right now is on trying to create hybrid tissue capable of regeneration.
 The experiment involved using <cspace=-0.09em> ███████████████</cspace> and<cspace=-0.09em> ████████</cspace>. The test subject <cspace=-0.09em> ██████</cspace> showed growth of new tissues similar to those in <cspace=-0.1em>██████ ,</cspace>  but their functionality was unpredictable, with the cells exhibiting abnormal activity. 
 This is exactly what happened with the fourth specimen, so we have preemptively administered the inhibitor serum.";|
-Reports.Page2;f;"<b>ЭКСПЕРИМЕНТ №42-D 
+Reports.Page2;t;"<b>ЭКСПЕРИМЕНТ №42-D 
 Отчёт №2 Доктора Тревора Оуэнса</b>
 Кому: Доктору Мартину Хендриксу, директору S.C.A.L.P. Lab.
 <line-height=50%> 
@@ -76,7 +76,7 @@ To: Dr. Martin Hendricks, Director of S.C.A.L.P. Lab.
 <line-indent=8%> Over the past few weeks, the seventh specimen has shown impressive growth rates. Its body length is currently 2 inches long.
 We are currently maintaining its development in a sealed chamber filled with <cspace=-0.1em> ██████.</cspace> solution. The specimen requires constant monitoring with strictly scheduled nutrient injections and maintenance of the proper temperature in the chamber.
 To facilitate this, I would like to request an expansion of the staff: we need at least two additional senior-level employees.";|
-Reports.Page3;f;"<b>ЭКСПЕРИМЕНТ №42-D 
+Reports.Page3;t;"<b>ЭКСПЕРИМЕНТ №42-D 
 Отчёт №3 Доктора Тревора Оуэнса</b>
 Кому: Доктору Мартину Хендриксу, директору S.C.A.L.P. Lab.
 <line-height=50%> 
@@ -118,7 +118,7 @@ To: Dr. Martin Hendricks, Director of S.C.A.L.P. Lab.
 <line-indent=8%> The specimen has reached a length of 6 inches and has developed hind limbs. Behavioral changes are noticeable: the specimen is showing interest in what is happening in the lab.
 We have received your order to expedite the testing for transferring the specimen from the nutrient medium to open air. However, I insist that this is premature and may lead to the death of the specimen.
 The junior staff member you provided is not enough for us. Does the Board of Directors not understand that the success of our experiment depends, among other things, on a sufficient budget? Or do they have higher priorities?";|
-Reports.Page5;f;"<b>ЭКСПЕРИМЕНТ №42-D 
+Reports.Page5;t;"<b>ЭКСПЕРИМЕНТ №42-D 
 Отчёт №5 Доктора Тревора Оуэнса</b>
 Кому: Доктору Мартину Хендриксу, директору S.C.A.L.P. Lab.
 <line-height=50%> 
@@ -243,4 +243,5 @@ Subject H-17 shows signs of neural activity. Vital signs are stabilizing within 
 Audio.Technical Report:Unusual Energy Fluctuations;t;"<b>Технический журнал 302, говорит Алекс Мерфи.</b>
  
 Обнаружил нерегулярные энергетические колебания в секторе 4B. Оборудование вроде бы в порядке, но показания зашкаливают. Возможно, это сбой датчика, но я проведу полную диагностику для уверенности. Записываю для протокола.";"Technical Log 302, Alex Murphy reporting. 
+
 Detected irregular energy fluctuations in Sector 4B. Equipment seems fine, but the readings are off the charts. It could be a sensor glitch, but I'll run a full diagnostic to be sure. Logging for the record.";|;;;;

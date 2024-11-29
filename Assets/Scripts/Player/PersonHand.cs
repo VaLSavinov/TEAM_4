@@ -22,8 +22,9 @@ public class PersonHand : MonoBehaviour
     private void Awake()
     {
         _control = new PlayerControl();
-        _control.Player.Take.started += context => Interaction();
+        _control.Player.Interact.started += context => Interaction();
         _control.Player.Throw.started += context => ThrowObject();
+        _control.Player.Drop.started += context => DropObject();
         _inventaryCard.Add(AccessCardColor.None,true);
         GameMode.PersonHand = this;
     }
@@ -51,6 +52,7 @@ public class PersonHand : MonoBehaviour
         if (_grabObject != null)
         {
             _grabObjectRigidbody.isKinematic = true;
+            _grabObject.layer = 0;
             StartCoroutine(MoveToHand()); // Плавно перемещаем объект к руке
         }
     }
@@ -130,7 +132,6 @@ public class PersonHand : MonoBehaviour
             }            
             return;
         }
-        if (_grabObject != null) DropObject();
     }
 
     private void SetInteractObject(GameObject newInteractObject)
@@ -144,14 +145,16 @@ public class PersonHand : MonoBehaviour
     private void DropObject() 
     {        
         if (_grabObject == null) return;
+        _grabObject.layer = 8;
         _grabObject.transform.SetParent(null);
-        _grabObjectRigidbody.isKinematic = false; // Делаем объект динамическим
+        _grabObjectRigidbody.isKinematic = false; // Делаем объект динамическим        
         _grabObject = null;
     }
 
     private void ThrowObject() 
     { 
         if (_grabObject == null) return;
+        _grabObject.layer = 8;
         _grabObject.transform.SetParent(null);
         _grabObjectRigidbody.isKinematic = false;
         _grabObjectRigidbody.AddForce((_cameraTransform.forward + Vector3.up * _throwVerticalForce) * _throwForce);
