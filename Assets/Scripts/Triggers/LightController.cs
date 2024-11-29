@@ -38,7 +38,7 @@ public class LightController : MonoBehaviour, IInteractable
                 h = light.transform.position.y;
                 h1 = h - other.transform.position.y;
                 r = (h1 / h) * (light.range * _coffMinim);
-                conusPos = new Vector3(light.transform.position.x, other.transform.position.y, light.transform.position.z);
+                conusPos = new Vector3(light.transform.position.x, GameMode.FirstPersonMovement.transform.position.y, light.transform.position.z);
                 if (Vector3.Distance(other.transform.position, conusPos) < r)
                 {
                     ReleaseRayCast(light);
@@ -70,7 +70,7 @@ public class LightController : MonoBehaviour, IInteractable
 
     private void ReleaseRayCast(Light light) 
     {
-        Ray ray = new Ray(light.transform.position, NormolizateVector(light.transform.position, GameMode.FirstPersonLook.transform.position));
+        Ray ray = new Ray(light.transform.position, NormolizateVector(light.transform.position, GameMode.FirstPersonMovement.transform.position));
         //Проверка        
         Debug.DrawRay(ray.origin, ray.direction * 200, Color.red);
         RaycastHit hit;

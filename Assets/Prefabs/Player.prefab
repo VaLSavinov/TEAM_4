@@ -3180,7 +3180,7 @@ GameObject:
   - component: {fileID: 4076663662766157674}
   - component: {fileID: 728024591941586059}
   - component: {fileID: 669143182749547138}
-  m_Layer: 7
+  m_Layer: 2
   m_Name: AudioCollision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
