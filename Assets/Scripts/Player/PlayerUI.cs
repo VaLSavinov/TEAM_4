@@ -59,7 +59,7 @@ public class PlayerUI : MonoBehaviour
         }
     }
 
-    private void PlayPausedAudios()
+    public void PlayPausedAudios()
     { 
         foreach (var audio in _pauseAudios)
             { audio.Play(); }
