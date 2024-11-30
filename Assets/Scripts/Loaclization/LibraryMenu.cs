@@ -78,8 +78,8 @@ public class LibraryMenu : MonoBehaviour
             newButton = newButtonObject.GetComponent<ButtonOpenCollect>();
             newButton.SetLibrary(this);
             if (tag.Contains("Reports."))
-                newButton.SetSprits(_buttonOldReports, _buttonNew, false);
-            else newButton.SetSprits(_buttonOldAudios, _buttonNew, false);
+                newButton.SetSprits(_buttonOldReports, _buttonNew, true);
+            else newButton.SetSprits(_buttonOldAudios, _buttonNew, true);
             newButton.SetTag(tag);
             _buttons.Add(newButtonObject);
 
