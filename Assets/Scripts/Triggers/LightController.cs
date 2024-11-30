@@ -14,15 +14,15 @@ public class LightController : MonoBehaviour, IInteractable
     private bool _isEnabled = true;
     private bool _isBlackout = false;
 
-    private void Awake()
+    private void Start()
     {
-        GameMode.Events.OnBalckOut += ChangeBlackOut;
+        Events.Instance.OnBalckOut += ChangeBlackOut;
         _isEnabled = _startEnabled;
     }
 
     private void OnDisable()
     {
-        GameMode.Events.OnBalckOut -= ChangeBlackOut;
+        Events.Instance.OnBalckOut -= ChangeBlackOut;
     }
 
     private void OnTriggerStay(Collider other)

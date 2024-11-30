@@ -47,7 +47,6 @@ public class EnemyManager : MonoBehaviour
             }
             if (_wayPointsNoroom.Count > 0)
             {
-                Debug.Log("Добовляем точки");
                 SEnemyWayPoint enemyFreePoint = new SEnemyWayPoint();
                 foreach (Transform freePoint in _wayPointsNoroom) 
                 {                   
@@ -55,7 +54,6 @@ public class EnemyManager : MonoBehaviour
                     enemyFreePoint.Point = freePoint;
                     _corridorPoints.Add(enemyFreePoint);
                 }
-                Debug.Log("Точки добавлены!");
             }
             CreateEnemy();
         }

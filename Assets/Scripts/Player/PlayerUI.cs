@@ -118,23 +118,24 @@ public class PlayerUI : MonoBehaviour
 
     public void Finish()
     {
+        StopAllSound();
         finishScreen.SetActive(true);
         wintext.SetActive(true);
         Time.timeScale = 0;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        StopAllSound();
+   
     }
 
     public void GameOver()
     {
+        StopAllSound();
         finishScreen.SetActive(true);
         _overText.SetActive(true);
         Time.timeScale = 0;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        GameMode.FirstPersonLook.BlockPlayerController();
-        StopAllSound();
+        GameMode.FirstPersonLook.BlockPlayerController();     
     }
 
     public void OpenSetting()

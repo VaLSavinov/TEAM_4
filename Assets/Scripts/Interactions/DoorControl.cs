@@ -14,25 +14,30 @@ public class DoorControl : MonoBehaviour, IInteractable
     [SerializeField] private LoaclizationText _roomName2;
     [SerializeField] private AudioClip _doorOpen;
     [SerializeField] private AudioClip _doorClose;
+    [SerializeField] private AudioSource _doorAudioSource;
 
     // Список всех, кто взаимодействует с дверью
     private List<GameObject> _interactors = new List<GameObject>();
     private bool _isOpen = false;
     private bool _isLock = true;
     private bool _isAlwaysOpen = false;
-    private AudioSource _doorAudioSource;
 
-    private void Awake()
+    private void Start()
     {
-        _doorAudioSource = GetComponent<AudioSource>();
         _roomAccessControl.NoPower += BlockDoors;
-        GameMode.Events.OnInteractGenerator += AnBlockDoors;
-        GameMode.Events.OnOpenDoor += GloabalOpenDoor;
+        Events.Instance.OnInteractGenerator += AnBlockDoors;
+        Events.Instance.OnOpenDoor += GloabalOpenDoor;
         if (_roomAccessControl.GetTagNameRoom() != "")
         {
             _roomName1.SetTag(_roomAccessControl.GetTagNameRoom());
             _roomName2.SetTag(_roomAccessControl.GetTagNameRoom());
         }
+    }
+
+    private void OnDisable()
+    {
+        Events.Instance.OnInteractGenerator -= AnBlockDoors;
+        Events.Instance.OnOpenDoor -= GloabalOpenDoor;
     }
 
     private void GloabalOpenDoor(bool obj)
@@ -167,4 +172,9 @@ public class DoorControl : MonoBehaviour, IInteractable
     }
 
     public AccessCardColor GetCardColor() => _roomAccessControl.GetCardColor();
+
+    public GridManager GetGrid() 
+    {
+        return _roomAccessControl.GetGrid;
+    }
 }

@@ -1234,7 +1234,7 @@ MonoBehaviour:
   speed: 1.5
   jumpHeight: 0.3
   groundCheck: {fileID: 2182924495247441668}
-  groundDistance: 0.1
+  groundDistance: 0.05
   groundMask:
     serializedVersion: 2
     m_Bits: 127
@@ -3163,7 +3163,7 @@ Transform:
   m_GameObject: {fileID: 6668512858909866787}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.146, z: 0}
+  m_LocalPosition: {x: 0, y: -1.415, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3180,7 +3180,7 @@ GameObject:
   - component: {fileID: 4076663662766157674}
   - component: {fileID: 728024591941586059}
   - component: {fileID: 669143182749547138}
-  m_Layer: 2
+  m_Layer: 12
   m_Name: AudioCollision
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -436,6 +436,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PassageThrough (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 8496197815827179135, guid: 2f4e62a69c107c84786a2683588ef15b,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 15.915493
+      objectReference: {fileID: 0}
     - target: {fileID: 8518308773445204625, guid: 2f4e62a69c107c84786a2683588ef15b,
         type: 3}
       propertyPath: m_IsActive
@@ -749,6 +754,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PassageThrough
+      objectReference: {fileID: 0}
+    - target: {fileID: 8496197815827179135, guid: 2f4e62a69c107c84786a2683588ef15b,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 15.915493
       objectReference: {fileID: 0}
     - target: {fileID: 8518308773445204625, guid: 2f4e62a69c107c84786a2683588ef15b,
         type: 3}
@@ -1335,6 +1345,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PassageThrough (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8496197815827179135, guid: 2f4e62a69c107c84786a2683588ef15b,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 15.915493
+      objectReference: {fileID: 0}
     - target: {fileID: 8518308773445204625, guid: 2f4e62a69c107c84786a2683588ef15b,
         type: 3}
       propertyPath: m_IsActive
@@ -1438,6 +1453,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PassageThrough (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8496197815827179135, guid: 2f4e62a69c107c84786a2683588ef15b,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 15.915493
       objectReference: {fileID: 0}
     - target: {fileID: 8518308773445204625, guid: 2f4e62a69c107c84786a2683588ef15b,
         type: 3}
@@ -1858,6 +1878,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PassageThrough (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8496197815827179135, guid: 2f4e62a69c107c84786a2683588ef15b,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 15.915493
+      objectReference: {fileID: 0}
     - target: {fileID: 8518308773445204625, guid: 2f4e62a69c107c84786a2683588ef15b,
         type: 3}
       propertyPath: m_IsActive
@@ -2093,6 +2118,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1638699714040861879, guid: 617da41dad9c38f4cbc87a87c32d899c,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 15.915493
+      objectReference: {fileID: 0}
     - target: {fileID: 1639335406134864407, guid: 617da41dad9c38f4cbc87a87c32d899c,
         type: 3}
       propertyPath: m_IsActive
@@ -2220,6 +2250,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PassageThrough (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8496197815827179135, guid: 2f4e62a69c107c84786a2683588ef15b,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 15.915493
       objectReference: {fileID: 0}
     - target: {fileID: 8518308773445204625, guid: 2f4e62a69c107c84786a2683588ef15b,
         type: 3}
@@ -2441,11 +2476,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1111871197}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3742783401670192994, guid: 1ace43c14c011584c840168f9719e854,
+    - targetCorrespondingSourceObject: {fileID: 8407303716831374612, guid: 1ace43c14c011584c840168f9719e854,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 7260598675212247193, guid: 1ace43c14c011584c840168f9719e854,
+    - targetCorrespondingSourceObject: {fileID: 2566879737183675119, guid: 1ace43c14c011584c840168f9719e854,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
@@ -2470,6 +2505,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1638699714040861879, guid: 617da41dad9c38f4cbc87a87c32d899c,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 15.915493
+      objectReference: {fileID: 0}
     - target: {fileID: 1639335406134864407, guid: 617da41dad9c38f4cbc87a87c32d899c,
         type: 3}
       propertyPath: m_IsActive
@@ -2734,7 +2774,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _countEnemy: 3
-  _countEnemyNoRoom: 0
+  _countEnemyNoRoom: 1
   _enemyPref: {fileID: 3951362065859572769, guid: bff2dccfc6a537143b95034aa1982540,
     type: 3}
   _rooms:

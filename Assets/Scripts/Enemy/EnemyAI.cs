@@ -47,12 +47,12 @@ public class EnemyAI : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _meshRenderer = GetComponent<MeshRenderer>();
         StartPatrol();
-         GameMode.Events.OnBalckOut += LightAlways;
+        Events.Instance.OnBalckOut += LightAlways;
     }
 
     private void OnDisable()
     {
-        GameMode.Events.OnBalckOut -= LightAlways;
+        Events.Instance.OnBalckOut -= LightAlways;
     }
 
     private void Update()
@@ -208,7 +208,8 @@ public class EnemyAI : MonoBehaviour
     {
         if (_flashlight.activeSelf!= activate)
             _audioOther.PlayOneShot(_soundOther[4]);
-        _flashlight.SetActive(activate);
+        if(_flashlight!=null)
+            _flashlight.SetActive(activate);
     }
 
     private void PlaySound(AudioSource source, int indexSound, bool replay, bool loop)
@@ -245,24 +246,33 @@ public class EnemyAI : MonoBehaviour
             PlaySound(_audioOther, 2, true, false);
         }
         if (_state == EEnemyState.Chasing && Vector3.Distance(transform.position, GameMode.FirstPersonMovement.transform.position) < 0.6)
-        {            
+        {
             _agent.SetDestination(_agent.destination);
-            transform.LookAt(new Vector3(GameMode.FirstPersonMovement.transform.position.x,transform.position.y, GameMode.FirstPersonMovement.transform.position.z));
+            transform.LookAt(new Vector3(GameMode.FirstPersonMovement.transform.position.x, transform.position.y, GameMode.FirstPersonMovement.transform.position.z));
             if (GameMode.FirstPersonMovement.IsAlive())
             {
-                
+
                 _animator.SetBool("Found", true);
-                 GameMode.FirstPersonMovement.Die();
+                GameMode.FirstPersonMovement.Die();
                 // Управление аудио
-                _audioSteps.Stop();                
+                _audioSteps.Stop();
             }
             else
+            {
                 _animator.SetInteger("State", 0);
-           
+                _audioSteps.Stop();
+            }
+
         }
         else
             if (_state == EEnemyState.Chasing)
-            _agent.SetDestination(GameMode.FirstPersonMovement.transform.position);
+            if (GameMode.FirstPersonMovement.IsAlive())
+                _agent.SetDestination(GameMode.FirstPersonMovement.transform.position);
+            else 
+            { 
+                _animator.SetInteger("State", 0);
+                _audioSteps.Stop();
+            }
 
     }
 
@@ -285,7 +295,7 @@ public class EnemyAI : MonoBehaviour
     public void StartAlerted(Vector3 noiseSours) 
     {
         // Если бот преследует, то не отвлекается
-        if (_state == EEnemyState.Chasing || _state == EEnemyState.Alerted) return;
+        if (_state == EEnemyState.Chasing || _state == EEnemyState.Alerted || _state==EEnemyState.WaitChasing || _state == EEnemyState.WaitAlert) return;
         _isWalk = false;
         _state = EEnemyState.Alerted;  
         _agent.speed = _speedAlertOrSearching;
@@ -323,7 +333,7 @@ public class EnemyAI : MonoBehaviour
         _animator.SetInteger("State", 2);
         PlaySound(_audioOther, 2, true, false);
         ActivateFlashlight(true);
-        _targetPoint = _agent.destination;
+        //_targetPoint = _agent.destination;
     }
 
     public void GoChasing()

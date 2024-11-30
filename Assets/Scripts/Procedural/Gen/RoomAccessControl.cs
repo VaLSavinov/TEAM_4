@@ -10,9 +10,14 @@ public class RoomAccessControl : MonoBehaviour
 
     public event Action NoPower;
 
-    private void Awake()
+    private void Start()
     {
-        GameMode.Events.OnInteractGenerator += ActivatePower;
+        Events.Instance.OnInteractGenerator += ActivatePower;
+    }
+
+    private void OnDisable()
+    {
+        Events.Instance.OnInteractGenerator -= ActivatePower;
     }
 
     private void ActivatePower()
@@ -63,5 +68,10 @@ public class RoomAccessControl : MonoBehaviour
     public void Initialize(GridManager gridManager)
     {
         this.gridManager = gridManager;
+    }
+
+    public GridManager GetGrid
+    {
+        get { return gridManager; }
     }
 }

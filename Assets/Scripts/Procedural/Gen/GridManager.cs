@@ -17,10 +17,7 @@ public class GridManager : MonoBehaviour
 {
     private List<Light> allLights = new List<Light>();
 
-    /// Временно, для тестов локализации <summary>
-    [SerializeField] private TextAsset _setting;
-    /// </summary>
-    [SerializeField] private TextAsset _textAsset;
+    public bool _isTraining = false;
 
     [Header("Door Outline Materials")]
     public Material outlineWhiteMaterial;
@@ -116,28 +113,39 @@ public class GridManager : MonoBehaviour
 
     void Start()
     {
-        _enemyManager = GetComponent<EnemyManager>();
-        GenerateGrid();
-        PlaceRooms();
-        ComputeDistanceToRooms();
-        FindAndMarkPath();
-        BuildSecondaryPaths();
-        BuildTertiaryPaths();
-        PlaceCorridors();
-        List<GameObject> itemRooms = PlaceInteractiveItems();
-        AssignAccessLevelsToRooms(itemRooms);
-        DisablePowerInRooms(itemRooms);
-        GeneratePathReport();  
-        SpawnCollectebelsObject();
+        if (!_isTraining)
+        {
+            _enemyManager = GetComponent<EnemyManager>();
+            GenerateGrid();
+            PlaceRooms();
+            ComputeDistanceToRooms();
+            FindAndMarkPath();
+            BuildSecondaryPaths();
+            BuildTertiaryPaths();
+            PlaceCorridors();
+            List<GameObject> itemRooms = PlaceInteractiveItems();
+            AssignAccessLevelsToRooms(itemRooms);
+            DisablePowerInRooms(itemRooms);
+            GeneratePathReport();
+            SpawnCollectebelsObject();
+            UpdateDoorMaterials();
+            GetComponent<NavMeshSurface>().BuildNavMesh();
+            _enemyManager.CreateEnemy();
+            Events.Instance.OnInteractGenerator += BakeSurfce;
+        }
         FindAllLights();
-        StartCoroutine(FlickerLights());
-        UpdateDoorMaterials();
-        GetComponent<NavMeshSurface>().BuildNavMesh();
+        StartCoroutine(FlickerLights());             
         // Подписываемся на событие отключения света
-        GameMode.Events.OnBalckOut += StartBlackOut;
+        Events.Instance.OnBalckOut += StartBlackOut;
         // Подписываемся на событие включения генератора
-        GameMode.Events.OnInteractGenerator +=BakeSurfce;
-        _enemyManager.CreateEnemy();
+      
+      
+    }
+
+    private void OnDisable()
+    {
+        Events.Instance.OnBalckOut -= StartBlackOut;
+        Events.Instance.OnInteractGenerator -=BakeSurfce;
     }
     private void StartBlackOut(bool state)
     {
@@ -1592,7 +1600,7 @@ public class GridManager : MonoBehaviour
             light.enabled = state.isActive;
         }
         // Вызываем событие включения света
-        GameMode.Events.ChangeStateBlackOut(false);
+        Events.Instance.ChangeStateBlackOut(false);
         Debug.Log("Световые параметры восстановлены.");
     }
     private void FindAllLights()
@@ -1652,11 +1660,30 @@ public class GridManager : MonoBehaviour
             yield return new WaitForSeconds(0.05f); // Быстрое включение
         }
     }
+
+    public Material GetMaterial(AccessCardColor cardColor) 
+    {
+        switch (cardColor)
+        {
+            case AccessCardColor.None:
+                return outlineWhiteMaterial;
+            case AccessCardColor.Red:
+                return outlineRedMaterial;
+            case AccessCardColor.Green:
+                return outlineGreenMaterial;
+            case AccessCardColor.Blue:
+                return outlineBlueMaterial;
+            default:
+                return outlineWhiteMaterial;
+        }
+    }
+
     public void UpdateDoorMaterials()
     {
+        if (_isTraining) return;
         // Iterate over all cells to find rooms
         HashSet<GameObject> roomsProcessed = new HashSet<GameObject>();
-
+        
         foreach (GridCell cell in cells)
         {
             if (cell != null && cell.occupancyType == OccupancyType.Room && cell.occupyingRoom != null)
@@ -1686,24 +1713,7 @@ public class GridManager : MonoBehaviour
                 }
                 else
                 {
-                    switch (roomAccess.RequiredAccessLevel)
-                    {
-                        case AccessCardColor.None:
-                            outlineMaterial = outlineWhiteMaterial;
-                            break;
-                        case AccessCardColor.Red:
-                            outlineMaterial = outlineRedMaterial;
-                            break;
-                        case AccessCardColor.Green:
-                            outlineMaterial = outlineGreenMaterial;
-                            break;
-                        case AccessCardColor.Blue:
-                            outlineMaterial = outlineBlueMaterial;
-                            break;
-                        default:
-                            outlineMaterial = outlineWhiteMaterial;
-                            break;
-                    }
+                    outlineMaterial = GetMaterial(roomAccess.RequiredAccessLevel);                    
                 }
 
                 // Iterate over door objects in the room

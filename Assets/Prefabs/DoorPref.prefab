@@ -485,6 +485,7 @@ MonoBehaviour:
   _roomName2: {fileID: 1961267832422963918}
   _doorOpen: {fileID: 8300000, guid: 017209402e8d1a54fbe7652b32ac3da8, type: 3}
   _doorClose: {fileID: 8300000, guid: 6d39ea633ce2c7b44b85f5921faf87d3, type: 3}
+  _doorAudioSource: {fileID: 4349639977584727605}
 --- !u!23 &6681855789397328672
 MeshRenderer:
   m_ObjectHideFlags: 0

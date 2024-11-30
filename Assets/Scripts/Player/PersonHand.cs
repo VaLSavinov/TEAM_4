@@ -52,7 +52,7 @@ public class PersonHand : MonoBehaviour
         if (_grabObject != null)
         {
             _grabObjectRigidbody.isKinematic = true;
-            _grabObject.layer = 0;
+            _grabObject.layer = 2;
             StartCoroutine(MoveToHand()); // Плавно перемещаем объект к руке
         }
     }
@@ -119,6 +119,7 @@ public class PersonHand : MonoBehaviour
                 case "Take":
                     _hitObject.transform.GetComponent<IInteractable>().Interact(ref _hitObject);
                     Destroy(_hitObject);
+                    _hitObject = null;
                     GameMode.PlayerUI.DeactivatePanel();
                     break;
                 case "Interact":

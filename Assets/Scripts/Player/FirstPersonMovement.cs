@@ -9,7 +9,7 @@ public class FirstPersonMovement : MonoBehaviour
     public float speed = 18f; // Базовая скорость
     public float jumpHeight = 3f;
     public Transform groundCheck;
-    public float groundDistance = 0.4f;
+    public float groundDistance = 0.2f;
     public LayerMask groundMask;
     [Header("Настройки звука")]
     [SerializeField] private float _radiusStandartShere;
@@ -113,7 +113,10 @@ public class FirstPersonMovement : MonoBehaviour
             _audioSource.Stop();
             return;
         }
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        Collider[] colliders = Physics.OverlapSphere(groundCheck.position, groundDistance, groundMask);
+        foreach (Collider collider in colliders) 
+            Debug.Log(collider.gameObject + " " + collider.gameObject.layer);
 
         if (_currentSpeed == speed)
             _audioSource.clip = _sounds[1];
@@ -141,8 +144,6 @@ public class FirstPersonMovement : MonoBehaviour
             }
             
         }
- 
-        
 
         if (isGrounded && velocity.y < 0)
         {
@@ -155,8 +156,10 @@ public class FirstPersonMovement : MonoBehaviour
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * GRAVITY);
         }
+        else if (InputManager.Instance.JumpPressed && !isGrounded)
+                velocity.y = GROUNDED_VELOCITY;
 
-        velocity.y += GRAVITY * Time.deltaTime;
+            velocity.y += GRAVITY * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
 
