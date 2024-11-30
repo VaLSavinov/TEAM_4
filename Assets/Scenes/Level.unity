@@ -154,7 +154,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioClips:
   - {fileID: 8300000, guid: 570e05db1d607ce488d5b0613312732b, type: 3}
-  - {fileID: 8300000, guid: 570e05db1d607ce488d5b0613312732b, type: 3}
   - {fileID: 8300000, guid: 6eb8407c87920104e8525ad0a7722e22, type: 3}
   - {fileID: 8300000, guid: ece6a692d9afc0d4191c6bf06f08b13e, type: 3}
   delayBetweenSounds: 0.5
@@ -170,7 +169,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.8
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0

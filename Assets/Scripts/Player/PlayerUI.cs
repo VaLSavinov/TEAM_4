@@ -62,7 +62,7 @@ public class PlayerUI : MonoBehaviour
     public void PlayPausedAudios()
     { 
         foreach (var audio in _pauseAudios)
-            { audio.Play(); }
+            { audio.UnPause(); }
     }
 
     private void ReplaceAvail(string current, string newAvail) 
