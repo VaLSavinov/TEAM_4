@@ -10,13 +10,15 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private GameObject finishScreen;
     [SerializeField] private GameObject _panel;
     [SerializeField] private LoaclizationText _centerText;
-    [SerializeField] private GameObject wintext;
-    [SerializeField] private GameObject _overText;
+    [SerializeField] private GameObject winScreen;
+    [SerializeField] private GameObject deathScreen;
     [SerializeField] private GameObject _settingMenu;
     [SerializeField] private Slider _sliderVolume;
     [SerializeField] private Slider _sliderSensitiviti;
     [SerializeField] private Animation _animate;
     [SerializeField] private List<AnimationClip> _clips;
+    [SerializeField] private AudioSource deathSound;
+    [SerializeField] private AudioSource winSound;
 
     private AudioSource _audioSource;
     private PlayerControl _playerControl;
@@ -103,7 +105,6 @@ public class PlayerUI : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         _playerControl.Enable();
-
     }
 
     public void Resume()
@@ -114,30 +115,29 @@ public class PlayerUI : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         PlayPausedAudios();
-
-
     }
 
     public void Finish()
     {
         StopAllSound();
         finishScreen.SetActive(true);
-        wintext.SetActive(true);
+        winScreen.SetActive(true);
         Time.timeScale = 0;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-   
+        winSound.Play();
     }
 
     public void GameOver()
     {
         StopAllSound();
         finishScreen.SetActive(true);
-        _overText.SetActive(true);
+        deathScreen.SetActive(true);
         Time.timeScale = 0;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        GameMode.FirstPersonLook.BlockPlayerController();     
+        GameMode.FirstPersonLook.BlockPlayerController();
+        deathSound.Play();
     }
 
     public void OpenSetting()
