@@ -1241,8 +1241,9 @@ MonoBehaviour:
   _radiusStandartShere: 4
   _sounds:
   - {fileID: 8300000, guid: 0366ac50f10f8ac4297806d39cc2f093, type: 3}
-  - {fileID: 8300000, guid: c3432b70d974f0140944cdb66f04d8cf, type: 3}
-  - {fileID: 8300000, guid: 5a31f1216830cb24fa49d7353f4df71c, type: 3}
+  - {fileID: 8300000, guid: 0b098701b3229d84ba38bc6109c84481, type: 3}
+  - {fileID: 8300000, guid: 0bb36c0384e303b4c8859b1bca6d24cc, type: 3}
+  - {fileID: 8300000, guid: 9232309da30f6a14dadebcec5f2fc41d, type: 3}
   _audioCollision: {fileID: 669143182749547138}
 --- !u!114 &8425346946202611286
 MonoBehaviour:
@@ -1980,14 +1981,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.74509805}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 0222f336ddb2cea47bfae78db01e9359, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2507,6 +2508,7 @@ GameObject:
   - component: {fileID: 927189566463502318}
   - component: {fileID: 8357565408661387140}
   - component: {fileID: 6957988276439678574}
+  - component: {fileID: 571401480545318298}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2721,7 +2723,27 @@ MonoBehaviour:
   _settingMenu: {fileID: 4855378851091495168}
   _sliderVolume: {fileID: 4206092741530215574}
   _sliderSensitiviti: {fileID: 4050597125646617235}
-  _visibleImage: {fileID: 3870773405437011204}
+  _animate: {fileID: 571401480545318298}
+  _clips:
+  - {fileID: 7400000, guid: 99053d4c700e90d4c8ecbd56c8049a65, type: 2}
+  - {fileID: 7400000, guid: 67c912a037a336e4eb58cc9e957a4664, type: 2}
+--- !u!111 &571401480545318298
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5463252917424610806}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: 99053d4c700e90d4c8ecbd56c8049a65, type: 2}
+  - {fileID: 7400000, guid: 67c912a037a336e4eb58cc9e957a4664, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &5838498627080102125
 GameObject:
   m_ObjectHideFlags: 0

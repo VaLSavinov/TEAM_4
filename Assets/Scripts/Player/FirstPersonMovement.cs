@@ -27,6 +27,7 @@ public class FirstPersonMovement : MonoBehaviour
     private bool _isAlive = true;
     private AudioSource _audioSource;
     private bool _isChangeSpeed = false;
+    private bool _isJump = false;
 
     void Awake()
     {
@@ -114,9 +115,6 @@ public class FirstPersonMovement : MonoBehaviour
             return;
         }
          isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        Collider[] colliders = Physics.OverlapSphere(groundCheck.position, groundDistance, groundMask);
-        foreach (Collider collider in colliders) 
-            Debug.Log(collider.gameObject + " " + collider.gameObject.layer);
 
         if (_currentSpeed == speed)
             _audioSource.clip = _sounds[1];
@@ -141,8 +139,7 @@ public class FirstPersonMovement : MonoBehaviour
             {
                 _audioSource.Play();
                 _isChangeSpeed = false;
-            }
-            
+            }            
         }
 
         if (isGrounded && velocity.y < 0)
@@ -152,12 +149,18 @@ public class FirstPersonMovement : MonoBehaviour
 
         controller.Move(moveDirection);
 
+        if (_isJump && isGrounded && velocity.y < 0)
+        {
+            _audioSource.PlayOneShot(_sounds[3]);
+            _isJump = false;
+        }
+
         if (InputManager.Instance.JumpPressed && isGrounded)
         {
+            _isJump = true;
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * GRAVITY);
         }
-        else if (InputManager.Instance.JumpPressed && !isGrounded)
-                velocity.y = GROUNDED_VELOCITY;
+       
 
             velocity.y += GRAVITY * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);

@@ -141,7 +141,7 @@ public class EnemyAI : MonoBehaviour
             StartCoroutine(WaitAlert());
             // Аудио
             _audioSteps.Stop();
-            PlaySound(_audioOther,5,true,false);
+            PlaySound(_audioOther,5,true,false);            
         }       
     }
 
@@ -151,7 +151,10 @@ public class EnemyAI : MonoBehaviour
     private void Searching()
     {
         if (Time.time - _countdownTimeSearch >= _searchTime)
-            StartPatrol();        
+        {
+            Debug.Log("Заканчиваем поиск");
+            StartPatrol();
+        }
     }
 
     private void GoToNextWaypoint()

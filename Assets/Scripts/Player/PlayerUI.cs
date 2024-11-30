@@ -15,12 +15,14 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private GameObject _settingMenu;
     [SerializeField] private Slider _sliderVolume;
     [SerializeField] private Slider _sliderSensitiviti;
-    [SerializeField] private GameObject _visibleImage;
+    [SerializeField] private Animation _animate;
+    [SerializeField] private List<AnimationClip> _clips;
 
     private AudioSource _audioSource;
     private PlayerControl _playerControl;
     private AudioSource[] _audios;
     private List<AudioSource> _pauseAudios = new List<AudioSource>();
+    private bool _lastVisible = true;
 
     private void Awake()
     {
@@ -165,7 +167,14 @@ public class PlayerUI : MonoBehaviour
 
     public void ChangeVisiblePayer(bool isVisible) 
     {
-        _visibleImage.SetActive(!isVisible);
-    }
-    
+        if (_lastVisible != isVisible) 
+        {         
+            if (isVisible )
+                _animate.clip = _clips[0];
+            else
+            _animate.clip = _clips[1]; 
+            _lastVisible = isVisible;
+            _animate.Play();
+         }
+    }    
 }
