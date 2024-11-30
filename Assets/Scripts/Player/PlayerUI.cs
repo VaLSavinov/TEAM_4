@@ -25,6 +25,8 @@ public class PlayerUI : MonoBehaviour
     private AudioSource[] _audios;
     private List<AudioSource> _pauseAudios = new List<AudioSource>();
     private bool _lastVisible = true;
+    private bool _isImpact = false;
+    
 
     private void Awake()
     {
@@ -32,6 +34,13 @@ public class PlayerUI : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _playerControl = new PlayerControl();
         _playerControl.UI.PauseMenu.started += context => Resume();
+    }
+
+    public void Start()
+    {
+        _isImpact = true;
+        _animate.clip = _clips[3];
+        _animate.Play();
     }
 
     public void StopAllSound()
@@ -180,7 +189,7 @@ public class PlayerUI : MonoBehaviour
 
     public void ChangeVisiblePayer(bool isVisible) 
     {
-        if (_lastVisible != isVisible) 
+        if (_lastVisible != isVisible && !_isImpact)
         {         
             if (isVisible )
                 _animate.clip = _clips[0];
@@ -189,5 +198,18 @@ public class PlayerUI : MonoBehaviour
             _lastVisible = isVisible;
             _animate.Play();
          }
-    }    
+    }
+
+    public void ImpactAnimate() 
+    {
+        _animate.clip = _clips[2];
+        _isImpact = true;
+        _animate.Play();
+    }
+
+    public void StartGame() 
+    {
+        _isImpact = false;
+        GameMode.FirstPersonMovement.UnBlockControl();
+    }
 }
