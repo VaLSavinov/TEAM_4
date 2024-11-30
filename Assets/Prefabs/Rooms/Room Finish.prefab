@@ -1948,6 +1948,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5960231686656343925, guid: c03989a670ebba4418fcc94819511566,
         type: 3}
+      propertyPath: _coffMinim
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5960231686656343925, guid: c03989a670ebba4418fcc94819511566,
+        type: 3}
       propertyPath: _lamps.Array.data[0]
       value: 
       objectReference: {fileID: 398246118057292480}
@@ -2232,12 +2237,37 @@ PrefabInstance:
     - target: {fileID: 4935860030741635816, guid: 11f7d00db11527845801eb4e1980717c,
         type: 3}
       propertyPath: m_Intensity
-      value: 1.5
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4935860030741635816, guid: 11f7d00db11527845801eb4e1980717c,
+        type: 3}
+      propertyPath: m_ShapeRadius
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4935860030741635816, guid: 11f7d00db11527845801eb4e1980717c,
+        type: 3}
+      propertyPath: m_LuxAtDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6857175564920998772, guid: 11f7d00db11527845801eb4e1980717c,
+        type: 3}
+      propertyPath: m_Range
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 6857175564920998772, guid: 11f7d00db11527845801eb4e1980717c,
         type: 3}
       propertyPath: m_Intensity
-      value: 2.34375
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6857175564920998772, guid: 11f7d00db11527845801eb4e1980717c,
+        type: 3}
+      propertyPath: m_SpotAngle
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 6857175564920998772, guid: 11f7d00db11527845801eb4e1980717c,
+        type: 3}
+      propertyPath: m_ShadowRadius
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 7205884715288311196, guid: 11f7d00db11527845801eb4e1980717c,
         type: 3}

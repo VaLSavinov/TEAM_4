@@ -248,7 +248,7 @@ MonoBehaviour:
   tertiaryPathMaterial: {fileID: 2100000, guid: 5ed6f6319c904974e88a8c31255687ac,
     type: 2}
   corridorPrefabs:
-  - {fileID: 9102450067481015318, guid: 2c73a8e575570cf40aab799b8bfc8240, type: 3}
+  - {fileID: 9102450067481015318, guid: 7c4cc7cb90e2d6045b3729c21baf6894, type: 3}
   - {fileID: 7474019343295018458, guid: 89583b54a0d3833428f86db837119653, type: 3}
   - {fileID: 8282817816809783047, guid: 617da41dad9c38f4cbc87a87c32d899c, type: 3}
   - {fileID: 5817550033248910530, guid: 2f4e62a69c107c84786a2683588ef15b, type: 3}
@@ -409,7 +409,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 0, g: 0.084942624, b: 0.5283019, a: 1}
-  m_Intensity: 0.2
+  m_Intensity: 0
   m_Range: 10
   m_SpotAngle: 44.5
   m_InnerSpotAngle: 21.80208
@@ -486,7 +486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Intensity: 0.2
+  m_Intensity: 0
   m_EnableSpotReflector: 1
   m_LuxAtDistance: 1
   m_InnerSpotPercent: 0
