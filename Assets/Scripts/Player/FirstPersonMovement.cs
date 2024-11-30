@@ -9,7 +9,7 @@ public class FirstPersonMovement : MonoBehaviour
     public float speed = 18f; // Базовая скорость
     public float jumpHeight = 3f;
     public Transform groundCheck;
-    public float groundDistance = 0.4f;
+    public float groundDistance = 0.2f;
     public LayerMask groundMask;
     [Header("Настройки звука")]
     [SerializeField] private float _radiusStandartShere;
@@ -27,6 +27,7 @@ public class FirstPersonMovement : MonoBehaviour
     private bool _isAlive = true;
     private AudioSource _audioSource;
     private bool _isChangeSpeed = false;
+    private bool _isJump = false;
 
     void Awake()
     {
@@ -113,7 +114,7 @@ public class FirstPersonMovement : MonoBehaviour
             _audioSource.Stop();
             return;
         }
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (_currentSpeed == speed)
             _audioSource.clip = _sounds[1];
@@ -138,11 +139,8 @@ public class FirstPersonMovement : MonoBehaviour
             {
                 _audioSource.Play();
                 _isChangeSpeed = false;
-            }
-            
+            }            
         }
- 
-        
 
         if (isGrounded && velocity.y < 0)
         {
@@ -151,12 +149,20 @@ public class FirstPersonMovement : MonoBehaviour
 
         controller.Move(moveDirection);
 
-        if (InputManager.Instance.JumpPressed && isGrounded)
+        if (_isJump && isGrounded && velocity.y < 0)
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * GRAVITY);
+            _audioSource.PlayOneShot(_sounds[3]);
+            _isJump = false;
         }
 
-        velocity.y += GRAVITY * Time.deltaTime;
+        if (InputManager.Instance.JumpPressed && isGrounded)
+        {
+            _isJump = true;
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * GRAVITY);
+        }
+       
+
+            velocity.y += GRAVITY * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
 

@@ -8,7 +8,7 @@ public class Generator : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-         GameMode.Events.InteractGenerator();
+         Events.Instance.InteractGenerator();
         _batareyPreview.SetActive(false);
     }
 

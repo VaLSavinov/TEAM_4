@@ -6,6 +6,7 @@ public class InteractSecSystem : MonoBehaviour, IInteractable
 
     private bool _isActivate = false;
 
+
     private void Impossible() 
     {
         if (_isActivate) GameMode.PlayerUI.ShowText("UI.AlreadyActive", true);
@@ -24,9 +25,9 @@ public class InteractSecSystem : MonoBehaviour, IInteractable
         if (item.GetItemType() == _typeInteractObg && !_isActivate)
         {
             if (_typeInteractObg == ItemType.StunGun)
-                GameMode.Events.ChangeStateBlackOut(true);
+                Events.Instance.ChangeStateBlackOut(true);
             else
-                GameMode.Events.ChangeOpenDoor(true);
+                Events.Instance.ChangeOpenDoor(true);
             _isActivate = true;
         }
         else Impossible();

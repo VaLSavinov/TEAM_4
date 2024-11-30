@@ -9,9 +9,18 @@ public class Events : MonoBehaviour
     public event Action<bool> OnBalckOut;
     public event Action<bool> OnOpenDoor;
 
+    public static Events Instance;
+
     private void Awake()
     {
-        GameMode.Events = this;
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        // end of new code
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
 
