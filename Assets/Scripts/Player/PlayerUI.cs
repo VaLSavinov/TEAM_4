@@ -54,7 +54,16 @@ public class PlayerUI : MonoBehaviour
             { audio.Play(); }
     }
 
-    /// <summary>
+    private void ReplaceAvail(string current, string newAvail) 
+    {
+        List<string> tags = LocalizationManager.Instance.GetTagList(current, true);
+        foreach (var tag in tags)
+        {
+            LocalizationManager.Instance.WriteAvailForTag(tag, newAvail);
+        }
+    }
+    
+        /// <summary>
     /// Ïîêàçàòü òåêñò â öåíòðå ýêðàíà
     /// </summary>
     /// <param name="text"> Ïîêàçûâàåìûé òåêñò</param>
@@ -81,6 +90,7 @@ public class PlayerUI : MonoBehaviour
     }
     public void Restart()
     {
+        ReplaceAvail("grab","f");
         _playerControl.UI.PauseMenu.started -= context => Resume();
         _playerControl.Disable();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -120,6 +130,8 @@ public class PlayerUI : MonoBehaviour
 
     public void Finish()
     {
+        ReplaceAvail("grab", "n");
+        LocalizationManager.Instance.SafeCSV();
         StopAllSound();
         finishScreen.SetActive(true);
         wintext.SetActive(true);
@@ -131,6 +143,7 @@ public class PlayerUI : MonoBehaviour
 
     public void GameOver()
     {
+        ReplaceAvail("grab", "f");
         StopAllSound();
         finishScreen.SetActive(true);
         _overText.SetActive(true);

@@ -41,10 +41,8 @@ public class ReportCollectebel : MonoBehaviour, IInteractable
     }
 
     public bool Interact(ref GameObject interactingOject)
-    {
-        if (_collectibleType == CollectibleType.AudioRecords)
-            GameMode.PlayerUI.PlayAudioClip(_clip);
-       LocalizationManager.Instance.WriteAvailForTag(_tag, "n");
+    {    
+       LocalizationManager.Instance.WriteAvailForTag(_tag, "grab");
        interactingOject = this.gameObject;
        return true;
     }
