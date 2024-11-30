@@ -26,7 +26,8 @@ public class LibraryMenu : MonoBehaviour
     [SerializeField] private GameObject _prefabButton;
     [SerializeField] private Transform _buttonsGroup;
     [SerializeField] private Sprite _buttonNew;
-    [SerializeField] private Sprite _buttonOld;
+    [SerializeField] private Sprite _buttonOldReports;
+    [SerializeField] private Sprite _buttonOldAudios;
 
     [Header("Общие настройки")]
     [SerializeField] private SOCollections _repotsSO;
@@ -76,7 +77,9 @@ public class LibraryMenu : MonoBehaviour
             newButtonObject =  GameObject.Instantiate(_prefabButton,_buttonsGroup);
             newButton = newButtonObject.GetComponent<ButtonOpenCollect>();
             newButton.SetLibrary(this);
-            newButton.SetSprits(_buttonOld,_buttonNew,true);
+            if (tag.Contains("Reports."))
+                newButton.SetSprits(_buttonOldReports, _buttonNew, false);
+            else newButton.SetSprits(_buttonOldAudios, _buttonNew, false);
             newButton.SetTag(tag);
             _buttons.Add(newButtonObject);
 
@@ -87,7 +90,9 @@ public class LibraryMenu : MonoBehaviour
             newButtonObject = GameObject.Instantiate(_prefabButton, _buttonsGroup);
             newButton = newButtonObject.GetComponent<ButtonOpenCollect>();
             newButton.SetLibrary(this);
-            newButton.SetSprits(_buttonOld, _buttonNew, false);
+            if (tag.Contains("Reports."))
+                newButton.SetSprits(_buttonOldReports, _buttonNew, false);
+            else newButton.SetSprits(_buttonOldAudios, _buttonNew, false);
             newButton.SetTag(tag);
             _buttons.Add(newButtonObject);
         }
@@ -121,9 +126,12 @@ public class LibraryMenu : MonoBehaviour
         if (tag.Contains("Audio."))
         {
             _audioSource.clip = _audioSO.GetAudioForTag(tag);
+            _imageMin.sprite  = _audioSO.GetImageForTag(tag);
+            _imageMin.preserveAspect = true;
             _imageMax.gameObject.SetActive(false);
-            _imageMin.gameObject.SetActive(false);
+            _imageMin.gameObject.SetActive(true);
             _buttonPlay.gameObject.SetActive(true);
+            SetPlayButtonImage(false);
             return;
         }
 

@@ -10,7 +10,7 @@ public class RoomAccessControl : MonoBehaviour
 
     public event Action NoPower;
 
-    private void Start()
+    private void Awake()
     {
         Events.Instance.OnInteractGenerator += ActivatePower;
     }

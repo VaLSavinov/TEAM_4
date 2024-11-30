@@ -25,9 +25,15 @@ public class InteractSecSystem : MonoBehaviour, IInteractable
         if (item.GetItemType() == _typeInteractObg && !_isActivate)
         {
             if (_typeInteractObg == ItemType.StunGun)
+            {
+                GameMode.PlayerUI.ShowText("UI.LightClose",true);
                 Events.Instance.ChangeStateBlackOut(true);
+            }
             else
+            {
+                GameMode.PlayerUI.ShowText("UI.OpenDoors", true);
                 Events.Instance.ChangeOpenDoor(true);
+            }
             _isActivate = true;
         }
         else Impossible();

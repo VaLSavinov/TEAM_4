@@ -118,8 +118,10 @@ public class PersonHand : MonoBehaviour
                     break;
                 case "Take":
                     _hitObject.transform.GetComponent<IInteractable>().Interact(ref _hitObject);
+                    _hitObject.layer = 0;
                     Destroy(_hitObject);
                     _hitObject = null;
+                    GameMode.PlayerUI.ShowText("UI.GrabNew",true);
                     GameMode.PlayerUI.DeactivatePanel();
                     break;
                 case "Interact":
@@ -138,7 +140,6 @@ public class PersonHand : MonoBehaviour
     private void SetInteractObject(GameObject newInteractObject)
     {
         // Это для того, чтобы "не видеть" объекты у нас в руках
-        if (_grabObject!=null && _grabObject.gameObject == newInteractObject) return;
         _hitObject = newInteractObject;
         GameMode.PlayerUI.ShowText("UI.Interact",false);
     }
