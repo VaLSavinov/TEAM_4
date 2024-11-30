@@ -3,7 +3,22 @@ guid: 26a498341bc96ce469fb3d2cbffe6353
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Room_6_6_Gen_Ceiling_Mat_b2
+    second: {fileID: 2100000, guid: 06067f400a2c63c44872ac1866c6b9ac, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Room_6_6_Gen_Floor_Walls_Mat_b1
+    second: {fileID: 2100000, guid: 961038cdb2379904f9732cc962708376, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Room_6_6_Gen_PL_Mat_b3
+    second: {fileID: 2100000, guid: 5b4b67fb048164041a61cf810a2ffb14, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -90,7 +105,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.005
+    globalScale: 0.5
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

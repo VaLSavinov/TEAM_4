@@ -759,12 +759,22 @@ PrefabInstance:
     - target: {fileID: 2455884122217657667, guid: 08b867fe6fa0f6144b605614144c1176,
         type: 3}
       propertyPath: m_Intensity
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2455884122217657667, guid: 08b867fe6fa0f6144b605614144c1176,
+        type: 3}
+      propertyPath: m_ShapeRadius
       value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2455884122217657667, guid: 08b867fe6fa0f6144b605614144c1176,
         type: 3}
+      propertyPath: m_LuxAtDistance
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2455884122217657667, guid: 08b867fe6fa0f6144b605614144c1176,
+        type: 3}
       propertyPath: m_InnerSpotPercent
-      value: 40
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 2800847479148201402, guid: 08b867fe6fa0f6144b605614144c1176,
         type: 3}
@@ -779,12 +789,22 @@ PrefabInstance:
     - target: {fileID: 5755444733198691367, guid: 08b867fe6fa0f6144b605614144c1176,
         type: 3}
       propertyPath: m_Range
-      value: 1.6
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 5755444733198691367, guid: 08b867fe6fa0f6144b605614144c1176,
         type: 3}
       propertyPath: m_Intensity
-      value: 0.45000002
+      value: 0.93750006
+      objectReference: {fileID: 0}
+    - target: {fileID: 5755444733198691367, guid: 08b867fe6fa0f6144b605614144c1176,
+        type: 3}
+      propertyPath: m_SpotAngle
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 5755444733198691367, guid: 08b867fe6fa0f6144b605614144c1176,
+        type: 3}
+      propertyPath: m_ShadowRadius
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7503031582180949010, guid: 08b867fe6fa0f6144b605614144c1176,
         type: 3}
@@ -1088,7 +1108,12 @@ PrefabInstance:
     - target: {fileID: 5960231686656343925, guid: c03989a670ebba4418fcc94819511566,
         type: 3}
       propertyPath: _coffMinim
-      value: 0.5
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5960231686656343925, guid: c03989a670ebba4418fcc94819511566,
+        type: 3}
+      propertyPath: _startEnabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5960231686656343925, guid: c03989a670ebba4418fcc94819511566,
         type: 3}
