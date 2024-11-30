@@ -54,6 +54,7 @@ public class LocalizationManager: MonoBehaviour
 
     public string GetTextForTag(string tag) 
     {
+        Debug.Log(_localization.GetLength(0) + " " + _localization.GetLength(1));
         if (_localization != null)
         {
             //Определяем язык

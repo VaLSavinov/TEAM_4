@@ -1339,7 +1339,8 @@ MonoBehaviour:
     type: 3}
   _buttonsGroup: {fileID: 453565357}
   _buttonNew: {fileID: 21300000, guid: 7a816de8323e7594d883a2ce92e46228, type: 3}
-  _buttonOld: {fileID: 21300000, guid: 9e74185765da09b47b9962f92782fb35, type: 3}
+  _buttonOldReports: {fileID: 21300000, guid: 9e74185765da09b47b9962f92782fb35, type: 3}
+  _buttonOldAudios: {fileID: 21300000, guid: bc4ba0ede45f2aa469474481e464d267, type: 3}
   _repotsSO: {fileID: 11400000, guid: ec9bfacfe9540db438ca80df809d0421, type: 2}
   _audioSO: {fileID: 11400000, guid: c5cebe3c1133dac4cbdd36b9f37e752a, type: 2}
   _tags: []
@@ -1924,8 +1925,8 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 125, y: 100}
-  m_Spacing: {x: 10, y: 5}
+  m_CellSize: {x: 140, y: 110}
+  m_Spacing: {x: 50, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!114 &453565359
@@ -2036,10 +2037,10 @@ RectTransform:
   - {fileID: 2142912999}
   m_Father: {fileID: 318472522}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 390, y: -157}
-  m_SizeDelta: {x: 60, y: 60}
+  m_AnchorMin: {x: 0.62145096, y: 0.48532557}
+  m_AnchorMax: {x: 0.8255491, y: 0.5808783}
+  m_AnchoredPosition: {x: 2.2960815, y: -19.698975}
+  m_SizeDelta: {x: -306.8926, y: -48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &482632018
 MonoBehaviour:
@@ -5110,9 +5111,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 49b99160cd101d54b84917b037b6bc8d, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

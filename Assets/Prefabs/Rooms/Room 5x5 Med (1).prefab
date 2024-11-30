@@ -2799,7 +2799,7 @@ GameObject:
   - component: {fileID: 1222683687508717725}
   - component: {fileID: 7533224238314442203}
   - component: {fileID: 2054502062465736296}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: roof (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6573,6 +6573,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8539102752448777164}
     m_Modifications:
+    - target: {fileID: -1325473422965867027, guid: 58fe913d8da4121428b21d65ff9a760c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 66f2c5978ee28aa40a70674d35262526,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -6644,11 +6649,6 @@ PrefabInstance:
       value: gaz 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 66f2c5978ee28aa40a70674d35262526,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: -1325473422965867027, guid: 58fe913d8da4121428b21d65ff9a760c,
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4

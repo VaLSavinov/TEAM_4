@@ -22,16 +22,20 @@ public class DoorControl : MonoBehaviour, IInteractable
     private bool _isLock = true;
     private bool _isAlwaysOpen = false;
 
-    private void Start()
+    private void Awake()
     {
         _roomAccessControl.NoPower += BlockDoors;
-        Events.Instance.OnInteractGenerator += AnBlockDoors;
-        Events.Instance.OnOpenDoor += GloabalOpenDoor;
         if (_roomAccessControl.GetTagNameRoom() != "")
         {
             _roomName1.SetTag(_roomAccessControl.GetTagNameRoom());
             _roomName2.SetTag(_roomAccessControl.GetTagNameRoom());
         }
+    }
+
+    private void Start()
+    {
+        Events.Instance.OnInteractGenerator += AnBlockDoors;
+        Events.Instance.OnOpenDoor += GloabalOpenDoor;        
     }
 
     private void OnDisable()
@@ -66,6 +70,7 @@ public class DoorControl : MonoBehaviour, IInteractable
     private void BlockDoors()
     {
         // Устанавливаем слой, учитываемый навмеш
+        Debug.Log("Меняем наименования на дверях");
         _door1.layer = 0;
         _door2.layer = 0;
         _roomName1.SetTag("UI.NoPower");
