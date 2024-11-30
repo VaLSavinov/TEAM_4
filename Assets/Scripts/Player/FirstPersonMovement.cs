@@ -28,6 +28,7 @@ public class FirstPersonMovement : MonoBehaviour
     private AudioSource _audioSource;
     private bool _isChangeSpeed = false;
     private bool _isJump = false;
+    public bool _isBlockControl = true;
 
     void Awake()
     {
@@ -107,9 +108,14 @@ public class FirstPersonMovement : MonoBehaviour
         return move * _currentSpeed * Time.deltaTime;
     }
 
+    public void UnBlockControl() 
+    {
+        _isBlockControl = false;
+    }
+
     void HandleNormalMovement(Vector3 moveDirection)
     {
-        if (!_isAlive)
+        if (!_isAlive || _isBlockControl)
         {
             _audioSource.Stop();
             return;
@@ -170,6 +176,7 @@ public class FirstPersonMovement : MonoBehaviour
     {
         _isAlive = false;
         _control.Disable();
+        GameMode.PlayerUI.ImpactAnimate();
         StartCoroutine(GameOver());
     }
 

@@ -54,7 +54,6 @@ public class LocalizationManager: MonoBehaviour
 
     public string GetTextForTag(string tag) 
     {
-        Debug.Log(_localization.GetLength(0) + " " + _localization.GetLength(1));
         if (_localization != null)
         {
             //Определяем язык
@@ -75,7 +74,7 @@ public class LocalizationManager: MonoBehaviour
                 {
                     if (_localization[i, 0].Contains(tag))
                     {
-                        return _localization[i, numLeng].TrimStart('"').TrimEnd('"');
+                        return _localization[i, numLeng].TrimStart('"').TrimEnd('"').Replace("\n", string.Empty);
                     }
                 }
             }           
