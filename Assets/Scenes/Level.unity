@@ -459,7 +459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e311efcc3a45cbd458f0865b6fbd4e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _countEnemy: 6
+  _countEnemy: 4
   _countEnemyNoRoom: 2
   _enemyPref: {fileID: 3951362065859572769, guid: bff2dccfc6a537143b95034aa1982540,
     type: 3}

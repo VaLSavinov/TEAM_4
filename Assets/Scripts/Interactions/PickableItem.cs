@@ -6,6 +6,7 @@ public class PickableItem : MonoBehaviour, IInteractable
     [SerializeField] private AccessCardColor _cardColor;
     [SerializeField] private ItemType _itemType;
 
+
     public ItemType GetItemType() { return _itemType; }
 
     public AccessCardColor GetCardColor() { return _cardColor; }

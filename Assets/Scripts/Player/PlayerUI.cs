@@ -158,7 +158,13 @@ public class PlayerUI : MonoBehaviour
     {
         ReplaceAvail("grab", "f");
         if (_isTraining)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            Time.timeScale = 1;
             SceneManager.LoadScene(2);
+            return;
+        }
         _playerControl.UI.PauseMenu.started -= context => Resume();
         _playerControl.Disable();
 
@@ -302,6 +308,8 @@ public class PlayerUI : MonoBehaviour
 
     public void ShowFleshText(string tag)
     {
+        if (_animateShowText.isPlaying)
+            _animateShowText.Stop();
         if (_isTraining)
         {
             _animateShowText.clip = _anumateClips[0];
@@ -319,8 +327,15 @@ public class PlayerUI : MonoBehaviour
     public void ShowFleshTextOnlyTraing(string tag)
     {
         if (!_isTraining) { return; }
+        if (_animateShowText.isPlaying)
+            _animateShowText.Stop();
         _animateShowText.clip = _anumateClips[0];
         _showTextMax.SetTag(tag);
         _animateShowText.Play();
+    }
+
+    public bool IsPlayingAnimator() 
+    {
+        return _animateShowText.isPlaying;
     }
 }

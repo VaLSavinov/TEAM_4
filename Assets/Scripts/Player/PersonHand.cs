@@ -16,6 +16,7 @@ public class PersonHand : MonoBehaviour
     private GameObject _grabObject;
     private Rigidbody _grabObjectRigidbody;
     private float _throwVerticalForce = 0.2f;
+    private Vector3 _startScaleGrabObj = Vector3.zero;
     private Dictionary<AccessCardColor, bool> _inventaryCard = new Dictionary<AccessCardColor, bool>();
     //private List<AccessCardColor> _r;
 
@@ -70,6 +71,7 @@ public class PersonHand : MonoBehaviour
     private IEnumerator MoveToHand()
     {
         // Делаем объект зависимым
+        _startScaleGrabObj = _grabObject.transform.localScale;
         _grabObject.transform.SetParent(_handPoint);
         // А затем, пересещаем в центер координат
         Vector3 targetPosition = Vector3.zero;
@@ -155,6 +157,7 @@ public class PersonHand : MonoBehaviour
         if (_grabObject == null) return;
         _grabObject.layer = 8;
         _grabObject.transform.SetParent(null);
+        _grabObject.transform.localScale = _startScaleGrabObj;
         _grabObjectRigidbody.isKinematic = false; // Делаем объект динамическим        
         _grabObject = null;
     }
@@ -164,6 +167,7 @@ public class PersonHand : MonoBehaviour
         if (_grabObject == null) return;
         _grabObject.layer = 8;
         _grabObject.transform.SetParent(null);
+        _grabObject.transform.localScale = _startScaleGrabObj;
         _grabObjectRigidbody.isKinematic = false;
         _grabObjectRigidbody.AddForce((_cameraTransform.forward + Vector3.up * _throwVerticalForce) * _throwForce);
         _grabObject = null;
@@ -182,7 +186,8 @@ public class PersonHand : MonoBehaviour
         // Если у нас в руках есть предмет, который может взаимодействовть - пробуем им взаимодействовать
         if (_grabObject != null && interactObj.Interact(ref _grabObject))
         {
-            if (_grabObject == null) _grabObjectRigidbody = null;
+            if (_grabObject == null) 
+                _grabObjectRigidbody = null;
         }
         // Если нет - обычное взаимодействие
         else 

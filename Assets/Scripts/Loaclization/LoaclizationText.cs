@@ -58,6 +58,7 @@ public class LoaclizationText : MonoBehaviour
 
     public void SetTag(string newTag)
     {
+        if (newTag == "") return;
         _tag = newTag;
         switch (_type)
         {

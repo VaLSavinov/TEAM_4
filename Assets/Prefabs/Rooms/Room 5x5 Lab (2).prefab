@@ -4827,6 +4827,11 @@ PrefabInstance:
       propertyPath: _roomAccessControl
       value: 
       objectReference: {fileID: 1803496552423113124}
+    - target: {fileID: 2767437322219953808, guid: ade794e95f379f648ad7d96cc78ddcd5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.588
+      objectReference: {fileID: 0}
     - target: {fileID: 4169481596668304193, guid: ade794e95f379f648ad7d96cc78ddcd5,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -4892,6 +4897,11 @@ PrefabInstance:
       propertyPath: _roomAccessControl
       value: 
       objectReference: {fileID: 1803496552423113124}
+    - target: {fileID: 9098067977163288951, guid: ade794e95f379f648ad7d96cc78ddcd5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.588
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10079,6 +10089,11 @@ PrefabInstance:
       propertyPath: _roomAccessControl
       value: 
       objectReference: {fileID: 1803496552423113124}
+    - target: {fileID: 2767437322219953808, guid: ade794e95f379f648ad7d96cc78ddcd5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.606
+      objectReference: {fileID: 0}
     - target: {fileID: 4169481596668304193, guid: ade794e95f379f648ad7d96cc78ddcd5,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -10144,6 +10159,11 @@ PrefabInstance:
       propertyPath: _roomAccessControl
       value: 
       objectReference: {fileID: 1803496552423113124}
+    - target: {fileID: 9098067977163288951, guid: ade794e95f379f648ad7d96cc78ddcd5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.606
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

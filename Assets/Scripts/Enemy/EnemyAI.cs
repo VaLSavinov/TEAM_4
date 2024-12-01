@@ -252,16 +252,13 @@ public class EnemyAI : MonoBehaviour
     /// Начало преследования игрока
     /// </summary>
     public void ChasePlayer() 
-    {
-        Debug.Log("Преследование игрока. Состояние " + _state);
-        
+    {        
         if (_state != EEnemyState.Chasing)
         {            
             StartChasing();
         }
         if (_state == EEnemyState.Chasing && Vector3.Distance(transform.position, GameMode.FirstPersonMovement.transform.position) < 0.6)
         {
-            Debug.Log("Выполняется");
             SetPathcForAgent(gameObject.transform.position);
             transform.LookAt(new Vector3(GameMode.FirstPersonMovement.transform.position.x, transform.position.y, GameMode.FirstPersonMovement.transform.position.z));
             if (GameMode.FirstPersonMovement.IsAlive())
@@ -281,17 +278,15 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            Debug.Log("Выполняется1");
             if (_state == EEnemyState.Chasing)
                 if (GameMode.FirstPersonMovement.IsAlive())
                 {
-                    Debug.Log("Выполняется2");
                     if (_agent.pathStatus == NavMeshPathStatus.PathComplete)
                     SetPathcForAgent(GameMode.FirstPersonMovement.transform.position);
                 }
                 else
                 {
-                    Debug.Log("Выполняется3");
+     
                     _animator.SetInteger("State", 0);
                     _audioSteps.Stop();
                 }
@@ -311,7 +306,6 @@ public class EnemyAI : MonoBehaviour
         _animator.SetInteger("State", 3);
         // Управление аудио
         _audioSteps.Stop();
-        Debug.Log("Начало поиска");
 
     }
 
@@ -330,7 +324,6 @@ public class EnemyAI : MonoBehaviour
         // Управление аудио
         _audioSteps.Stop();
         PlaySound(_audioOther, 2, true, false);
-        Debug.Log("Начало теевоги");
     }  
 
     public void SetStartParameters(RoomAccessControl room, int waypointIndex, EnemyManager enemyManager) 
@@ -362,7 +355,6 @@ public class EnemyAI : MonoBehaviour
         _audioSteps.Stop();
         PlaySound(_audioOther, 2, true, false);
         //_targetPoint = _agent.destination;
-        Debug.Log("Начало преследования");
     }
 
 

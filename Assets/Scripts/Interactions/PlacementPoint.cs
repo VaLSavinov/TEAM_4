@@ -36,7 +36,7 @@ public class PlacmentPoint : MonoBehaviour, IInteractable
     }
 
     public bool Interact(ref GameObject interactingOject)
-    {
+    {      
         PickableItem pickable;
         if (interactingOject.TryGetComponent<PickableItem>(out pickable) && _itemType == pickable.GetItemType())
         {
@@ -91,6 +91,11 @@ public class PlacmentPoint : MonoBehaviour, IInteractable
             elapsedTime += Time.deltaTime; // Увеличиваем время
             yield return null; // Ждем следующего кадра
         }
+        // Костыль (некгода искать более оптимальный способ)
+        Vector3 costScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+        item.transform.SetParent(null);
+        item.transform.localScale = costScale;
 
         // Убедитесь, что объект точно на целевой позиции и ротации
         item.transform.position = targetPosition;
