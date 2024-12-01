@@ -55,6 +55,13 @@ public class PersonHand : MonoBehaviour
             _grabObject.layer = 2;
             StartCoroutine(MoveToHand()); // Плавно перемещаем объект к руке
         }
+        if (GameMode.PlayerUI._isTraining)
+        {
+            PickableItem pickableItem;
+            if (_grabObject.TryGetComponent<PickableItem>(out pickableItem) &&
+                pickableItem.GetCardColor()==AccessCardColor.Green)
+                GameMode.PlayerUI.ShowFleshTextOnlyTraing("Training.4");
+        }
     }
 
     /// <summary>
@@ -121,7 +128,6 @@ public class PersonHand : MonoBehaviour
                     _hitObject.layer = 0;
                     Destroy(_hitObject);
                     _hitObject = null;
-                    GameMode.PlayerUI.ShowText("UI.GrabNew",true);
                     GameMode.PlayerUI.DeactivatePanel();
                     break;
                 case "Interact":
@@ -189,5 +195,14 @@ public class PersonHand : MonoBehaviour
     public bool HasCard(AccessCardColor card) 
     {
         return _inventaryCard.ContainsKey(card);
+    }
+
+    public PickableItem GetGrabObject() 
+    {
+        if (_grabObject == null) return null;
+        PickableItem pickableItem;
+        if (_grabObject.TryGetComponent<PickableItem>(out pickableItem))
+            return pickableItem;
+        return null;
     }
 }

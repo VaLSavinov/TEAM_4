@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 88f2e6e6a4bfdf041b072074dc3a22f3
+guid: a00ff9c1e35d48b41bad7451929d8bb5
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Anim_npc_Surprise_React
+      name: Anim_npc_Surprise_React(short)
       takeName: Take 001
       internalID: 1827226128182048838
       firstFrame: 0
-      lastFrame: 94
+      lastFrame: 54
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -56,14 +56,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.9786856
-        functionName: GoAlertTarget
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class DoorControl : MonoBehaviour, IInteractable
 {
+    [SerializeField] private bool _hasOpenBots = true;
     [SerializeField] private Animation _animate;
     [SerializeField] private RoomAccessControl _roomAccessControl;
     [SerializeField] private GameObject _door1;
@@ -98,7 +99,7 @@ public class DoorControl : MonoBehaviour, IInteractable
         if(_isLock)
             if(_roomAccessControl != null && _roomAccessControl.GetCardColor() == AccessCardColor.None || _roomAccessControl == null)
                 _isLock = false;
-        if (((_roomAccessControl == null || _roomAccessControl.HasPower)) && other.gameObject.tag == "Enemy" && !_isAlwaysOpen)
+        if (((_roomAccessControl == null || _roomAccessControl.HasPower)) && other.gameObject.tag == "Enemy" && !_isAlwaysOpen && _hasOpenBots)
         { 
             PlayClip("OpenDoor");
             _interactors.Add(other.gameObject);

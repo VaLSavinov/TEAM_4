@@ -42,8 +42,11 @@ public class ReportCollectebel : MonoBehaviour, IInteractable
 
     public bool Interact(ref GameObject interactingOject)
     {    
-       LocalizationManager.Instance.WriteAvailForTag(_tag, "grab");
-       interactingOject = this.gameObject;
-       return true;
+        LocalizationManager.Instance.WriteAvailForTag(_tag, "grab");
+        if (GameMode.PlayerUI._isTraining)
+            GameMode.PlayerUI.ShowFleshText("Training.12");
+        else GameMode.PlayerUI.ShowFleshText("UI.GrabNew");
+        interactingOject = this.gameObject;
+        return true;
     }
 }

@@ -1105,7 +1105,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Anim_npc_Surprise_React 0
-  m_Speed: 2
+  m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 7906898826465512778}
@@ -1118,7 +1118,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1827226128182048838, guid: 88f2e6e6a4bfdf041b072074dc3a22f3,
+  m_Motion: {fileID: 1827226128182048838, guid: a00ff9c1e35d48b41bad7451929d8bb5,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 

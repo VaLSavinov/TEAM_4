@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -98,6 +97,7 @@ public class GridManager : MonoBehaviour
 
     private List<GameObject> itemsPlacedRooms = new List<GameObject>();
     private List<string> itemsPlaced = new List<string>();
+    private NavMeshSurface _navMeshSurface;
 
     private struct LightState
     {
@@ -119,6 +119,8 @@ public class GridManager : MonoBehaviour
 
     void Start()
     {
+        _navMeshSurface = GetComponent<NavMeshSurface>();
+
         if (!_isTraining)
         {
             InitializeLevel();
@@ -131,7 +133,7 @@ public class GridManager : MonoBehaviour
     void InitializeLevel()
     {
         _enemyManager = GetComponent<EnemyManager>();
-
+        
         GenerateGrid();
         PlaceRooms();
         ComputeDistanceToRooms();
@@ -145,10 +147,16 @@ public class GridManager : MonoBehaviour
         GeneratePathReport();
         SpawnCollectebelsObject();
         UpdateDoorMaterials();
-        GetComponent<NavMeshSurface>().BuildNavMesh();
-        _enemyManager.CreateEnemy();
+        StartCoroutine(WaitToBake());
         Events.Instance.OnInteractGenerator += BakeSurfce;
         Events.Instance.OnBalckOut += StartBlackOut;
+    }
+
+    private IEnumerator WaitToBake()
+    {
+        yield return new WaitForSeconds(2);
+        BakeSurfce();
+        _enemyManager.CreateEnemy();
     }
 
     public void ResetLevel()
@@ -232,7 +240,8 @@ public class GridManager : MonoBehaviour
     // Перезапекаем карту для агентов
     private void BakeSurfce() 
     {
-        GetComponent<NavMeshSurface>().BuildNavMesh();
+        Debug.Log("Запуск перезапечки");
+        _navMeshSurface.BuildNavMesh();
     }
 
     private void SpawnCollectebelsObject()

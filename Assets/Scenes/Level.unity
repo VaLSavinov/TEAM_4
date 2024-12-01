@@ -156,7 +156,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 570e05db1d607ce488d5b0613312732b, type: 3}
   - {fileID: 8300000, guid: 6eb8407c87920104e8525ad0a7722e22, type: 3}
   - {fileID: 8300000, guid: ece6a692d9afc0d4191c6bf06f08b13e, type: 3}
-  delayBetweenSounds: 0.5
+  delayBetweenSounds: 0.1
 --- !u!82 &121193576
 AudioSource:
   m_ObjectHideFlags: 0
@@ -611,7 +611,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &585579965
 MonoBehaviour:
   m_ObjectHideFlags: 0
