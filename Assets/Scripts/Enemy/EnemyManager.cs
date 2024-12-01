@@ -11,16 +11,14 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private List<RoomAccessControl> _rooms;
     [SerializeField] private List<Transform> _wayPointsNoroom;
 
-
     private List<EnemyAI> _enemys;
     private bool _isTrainingLevel;
-    private int _currnetCountInCoridors=0;
+    private int _currnetCountInCoridors = 0;
 
-    private Dictionary<RoomAccessControl,List<SEnemyWayPoint>> _waypoints = new Dictionary<RoomAccessControl, List<SEnemyWayPoint>>();
+    private Dictionary<RoomAccessControl, List<SEnemyWayPoint>> _waypoints = new Dictionary<RoomAccessControl, List<SEnemyWayPoint>>();
     // Vector2 - двумерный массив, где x - макс. кол-во, y - текущее кол-во мобов, z - принимает значение 0 или 1 - могут ли боты покидать комнату, где 0 - НЕТ
     private Dictionary<RoomAccessControl, Vector3> _roomData = new();
     private List<SEnemyWayPoint> _corridorPoints = new List<SEnemyWayPoint>();
-
 
     private void Awake()
     {
@@ -38,8 +36,8 @@ public class EnemyManager : MonoBehaviour
                 {
                     if (room.TryGetComponent<EnemyRoute>(out enemyRoute))
                     {
-                        if (enemyRoute.HasExit) hasExit=1;
-                        else hasExit=0;
+                        if (enemyRoute.HasExit) hasExit = 1;
+                        else hasExit = 0;
                         AddWaypoints(room, enemyRoute.CountMaxEnemyInRoom, enemyRoute.GetWayPoints(), hasExit);
                     }
                 }
@@ -48,8 +46,8 @@ public class EnemyManager : MonoBehaviour
             if (_wayPointsNoroom.Count > 0)
             {
                 SEnemyWayPoint enemyFreePoint = new SEnemyWayPoint();
-                foreach (Transform freePoint in _wayPointsNoroom) 
-                {                   
+                foreach (Transform freePoint in _wayPointsNoroom)
+                {
                     enemyFreePoint.IsAvail = true;
                     enemyFreePoint.Point = freePoint;
                     _corridorPoints.Add(enemyFreePoint);
@@ -57,6 +55,26 @@ public class EnemyManager : MonoBehaviour
             }
             CreateEnemy();
         }
+    }
+    // Добавьте метод Reset для очистки врагов и связанных данных
+    public void Reset()
+    {
+        DestroyAllEnemies();
+        _waypoints.Clear();
+        _roomData.Clear();
+        _corridorPoints.Clear();
+        _currnetCountInCoridors = 0;
+    }
+    public void DestroyAllEnemies()
+    {
+        foreach (EnemyAI enemy in _enemys)
+        {
+            if (enemy != null && enemy.gameObject != null)
+            {
+                Destroy(enemy.gameObject);
+            }
+        }
+        _enemys.Clear();
     }
 
     /// <summary>
