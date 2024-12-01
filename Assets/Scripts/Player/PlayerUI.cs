@@ -28,12 +28,18 @@ public class PlayerUI : MonoBehaviour
     private bool _isImpact = false;
     
 
+    // Добавляем ссылку на GridManager
+    private GridManager _gridManager;
+
     private void Awake()
     {
         GameMode.PlayerUI = this;
         _audioSource = GetComponent<AudioSource>();
         _playerControl = new PlayerControl();
         _playerControl.UI.PauseMenu.started += context => Resume();
+
+        // Получаем ссылку на GridManager
+        _gridManager = FindObjectOfType<GridManager>();
     }
 
     public void Start()
@@ -63,9 +69,10 @@ public class PlayerUI : MonoBehaviour
     { 
         foreach (var audio in _pauseAudios)
             { audio.UnPause(); }
+        _pauseAudios.Clear(); // Очищаем список после воспроизведения
     }
 
-    private void ReplaceAvail(string current, string newAvail) 
+    private void ReplaceAvail(string current, string newAvail)
     {
         List<string> tags = LocalizationManager.Instance.GetTagList(current, true);
         foreach (var tag in tags)
@@ -73,41 +80,70 @@ public class PlayerUI : MonoBehaviour
             LocalizationManager.Instance.WriteAvailForTag(tag, newAvail);
         }
     }
-    
-        /// <summary>
-    /// Ïîêàçàòü òåêñò â öåíòðå ýêðàíà
+
+    /// <summary>
+    /// Показать текст в центре экрана
     /// </summary>
-    /// <param name="text"> Ïîêàçûâàåìûé òåêñò</param>
-    /// <param name="isRewrite"> Ïåðåçàïèñòü òåêñò, åñëè â äàííûé ìîìåíò âûâîäèòüñÿ äðóãîé</param>
-    public void ShowText(string text, bool isRewrite) 
+    /// <param name="text"> Показываемый текст</param>
+    /// <param name="isRewrite"> Перезаписать текст, если в данный момент выводится другой</param>
+    public void ShowText(string text, bool isRewrite)
     {
         if (!isRewrite && _panel.activeSelf) return;
         _centerText.SetTag(text);
         _panel.SetActive(true);
     }
 
-    public void DeactivatePanel() 
+    public void DeactivatePanel()
     {
         _panel.SetActive(false);
     }
 
-    public void PlayAudioClip(AudioClip clip) 
+    public void PlayAudioClip(AudioClip clip)
     {
-        if (!_audioSource.isPlaying) 
+        if (!_audioSource.isPlaying)
         {
             _audioSource.clip = clip;
             _audioSource.Play();
         }
     }
+
     public void Restart()
     {
-        ReplaceAvail("grab","f");
+        ReplaceAvail("grab", "f");
         _playerControl.UI.PauseMenu.started -= context => Resume();
         _playerControl.Disable();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+        // Удаляем строку загрузки сцены
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+        // Вызываем метод ResetLevel() у GridManager
+        if (_gridManager != null)
+        {
+            _gridManager.ResetLevel();
+        }
+        else
+        {
+            Debug.LogError("GridManager не найден!");
+        }
+
+        // Сбрасываем время игры
         Time.timeScale = 1;
+
+        // Возобновляем звуки
         PlayPausedAudios();
-       
+
+        // Закрываем экраны завершения игры, если они активны
+        finishScreen.SetActive(false);
+        wintext.SetActive(false);
+        _overText.SetActive(false);
+
+        // Скрываем панель паузы, если она активна
+        pauseScreen.SetActive(false);
+
+        // Скрываем курсор и блокируем его
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
     }
 
     public void LoadMainMenu()
@@ -179,7 +215,7 @@ public class PlayerUI : MonoBehaviour
     public void ChangeValueSound()
     {
         Settings.Instance.SetParam("volume", _sliderVolume.value.ToString());
-        AudioListener.volume = _sliderSensitiviti.value;
+        AudioListener.volume = _sliderVolume.value; // Исправлено: используем _sliderVolume.value
     }
 
     public void ChangeValueSensetiviti()
@@ -187,14 +223,14 @@ public class PlayerUI : MonoBehaviour
         Settings.Instance.SetParam("sensitivity", _sliderSensitiviti.value.ToString());
     }
 
-    public void ChangeVisiblePayer(bool isVisible) 
-    {
-        if (_lastVisible != isVisible && !_isImpact)
+    public void ChangeVisiblePayer(bool isVisible)
+    {        
+    if (_lastVisible != isVisible && !_isImpact)
         {         
             if (isVisible )
                 _animate.clip = _clips[0];
             else
-            _animate.clip = _clips[1]; 
+                _animate.clip = _clips[1];
             _lastVisible = isVisible;
             _animate.Play();
          }

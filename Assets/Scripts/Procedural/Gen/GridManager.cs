@@ -110,36 +110,112 @@ public class GridManager : MonoBehaviour
     private Dictionary<Light, LightState> originalLightStates = new Dictionary<Light, LightState>();
     private Dictionary<Light, Coroutine> activePulsations = new Dictionary<Light, Coroutine>();
 
+    // Новые списки для отслеживания созданных объектов
+    private List<GameObject> instantiatedCells = new List<GameObject>();
+    private List<GameObject> instantiatedRooms = new List<GameObject>();
+    private List<GameObject> instantiatedCorridors = new List<GameObject>();
+    private List<GameObject> instantiatedItems = new List<GameObject>();
+
 
     void Start()
     {
         if (!_isTraining)
         {
-            _enemyManager = GetComponent<EnemyManager>();
-            GenerateGrid();
-            PlaceRooms();
-            ComputeDistanceToRooms();
-            FindAndMarkPath();
-            BuildSecondaryPaths();
-            BuildTertiaryPaths();
-            PlaceCorridors();
-            List<GameObject> itemRooms = PlaceInteractiveItems();
-            AssignAccessLevelsToRooms(itemRooms);
-            DisablePowerInRooms(itemRooms);
-            GeneratePathReport();
-            SpawnCollectebelsObject();
-            UpdateDoorMaterials();
-            GetComponent<NavMeshSurface>().BuildNavMesh();
-            _enemyManager.CreateEnemy();
-            Events.Instance.OnInteractGenerator += BakeSurfce;
+            InitializeLevel();
         }
+
         FindAllLights();
-        StartCoroutine(FlickerLights());             
-        // Подписываемся на событие отключения света
+        StartCoroutine(FlickerLights());
+    }
+
+    void InitializeLevel()
+    {
+        _enemyManager = GetComponent<EnemyManager>();
+
+        GenerateGrid();
+        PlaceRooms();
+        ComputeDistanceToRooms();
+        FindAndMarkPath();
+        BuildSecondaryPaths();
+        BuildTertiaryPaths();
+        PlaceCorridors();
+        List<GameObject> itemRooms = PlaceInteractiveItems();
+        AssignAccessLevelsToRooms(itemRooms);
+        DisablePowerInRooms(itemRooms);
+        GeneratePathReport();
+        SpawnCollectebelsObject();
+        UpdateDoorMaterials();
+        GetComponent<NavMeshSurface>().BuildNavMesh();
+        _enemyManager.CreateEnemy();
+        Events.Instance.OnInteractGenerator += BakeSurfce;
         Events.Instance.OnBalckOut += StartBlackOut;
-        // Подписываемся на событие включения генератора
-      
-      
+    }
+
+    public void ResetLevel()
+    {
+        // Отписываемся от событий
+        Events.Instance.OnBalckOut -= StartBlackOut;
+        Events.Instance.OnInteractGenerator -= BakeSurfce;
+
+        // Останавливаем все корутины
+        StopAllCoroutines();
+
+        // Уничтожаем созданные клетки
+        foreach (GameObject cell in instantiatedCells)
+        {
+            if (cell != null)
+                Destroy(cell);
+        }
+        instantiatedCells.Clear();
+
+        // Уничтожаем созданные комнаты
+        foreach (GameObject room in instantiatedRooms)
+        {
+            if (room != null)
+                Destroy(room);
+        }
+        instantiatedRooms.Clear();
+
+        // Уничтожаем созданные коридоры
+        foreach (GameObject corridor in instantiatedCorridors)
+        {
+            if (corridor != null)
+                Destroy(corridor);
+        }
+        instantiatedCorridors.Clear();
+
+        // Уничтожаем созданные предметы
+        foreach (GameObject item in instantiatedItems)
+        {
+            if (item != null)
+                Destroy(item);
+        }
+        instantiatedItems.Clear();
+
+        // Уничтожаем врагов через EnemyManager
+        if (_enemyManager != null)
+        {
+            _enemyManager.Reset();
+        }
+
+        // Очищаем другие структуры данных
+        connectedPathCells.Clear();
+        cellPassages.Clear();
+        itemsPlaced.Clear();
+        itemsPlacedRooms.Clear();
+        allLights.Clear();
+        originalLightStates.Clear();
+        activePulsations.Clear();
+
+        // **Добавляем очистку списка _spawnConteiners**
+        _spawnConteiners.Clear(); // <-- Добавлено здесь
+
+        // Сбрасываем переменные
+        startRoomInstance = null;
+        finishRoomInstance = null;
+
+        // Реинициализируем уровень
+        InitializeLevel();
     }
 
     private void OnDisable()
@@ -149,7 +225,7 @@ public class GridManager : MonoBehaviour
     }
     private void StartBlackOut(bool state)
     {
-        // Запускаем откулбчение света
+        // Запускаем отключение света
         if (state) ModifyLightSources();
     }
 
@@ -281,6 +357,8 @@ public class GridManager : MonoBehaviour
                 GameObject newCell = Instantiate(cellPrefab, new Vector3(x, 0, y), Quaternion.identity);
                 newCell.transform.parent = transform;
 
+                instantiatedCells.Add(newCell); // Добавляем в список
+
                 GridCell cellScript = newCell.GetComponent<GridCell>();
                 cellScript.gridX = x;
                 cellScript.gridY = y;
@@ -347,6 +425,9 @@ public class GridManager : MonoBehaviour
                 roomAccess.Initialize(this);
             }
 
+            // После создания комнаты добавляем её в список
+            instantiatedRooms.Add(newRoom); // <-- Вставлено сюда
+
             MarkCellsAsOccupied(chosenPosition.x, chosenPosition.y, roomSize, newRoom);
         }
         else
@@ -378,6 +459,9 @@ public class GridManager : MonoBehaviour
                 {
                     roomAccess.Initialize(this);
                 }
+
+                // После создания комнаты добавляем её в список
+                instantiatedRooms.Add(newRoom); // <-- Вставлено сюда
 
                 MarkCellsAsOccupied(chosenPosition.x, chosenPosition.y, roomSize, newRoom);
             }
@@ -446,6 +530,9 @@ public class GridManager : MonoBehaviour
                 {
                     roomAccess.Initialize(this);
                 }
+
+                // После создания комнаты добавляем её в список
+                instantiatedRooms.Add(newRoom); // <-- Вставлено сюда
 
                 MarkCellsAsOccupied(x, y, roomSize, newRoom);
 
@@ -932,6 +1019,7 @@ public class GridManager : MonoBehaviour
     {
         // Создаем объект "Corridors" и добавляем компонент RoomAccessControl
         GameObject corridorsParent = new GameObject("Corridors");
+        instantiatedCorridors.Add(corridorsParent); // Добавляем родительский объект в список
         RoomAccessControl accessControl = corridorsParent.AddComponent<RoomAccessControl>();
 
         // Устанавливаем параметры доступа и питания для коридора
@@ -993,11 +1081,12 @@ public class GridManager : MonoBehaviour
             }
 
             if (prefabToInstantiate != null)
-            {                
+            {
                 Vector3 position = new Vector3(cell.gridX, 0, cell.gridY);
                 Quaternion rot = Quaternion.Euler(0, rotation, 0);
                 GameObject passage = Instantiate(prefabToInstantiate, position, rot);
                 passage.transform.parent = corridorsParent.transform;
+                instantiatedCorridors.Add(passage); // Добавляем коридор в список
 
                 CorridorPiece corridor = passage.GetComponent<CorridorPiece>();
                 if (corridor.EnemyPoint != null)
@@ -1425,7 +1514,9 @@ public class GridManager : MonoBehaviour
                 Transform spawnPoint = objectSpawnPoints[Random.Range(0, objectSpawnPoints.Count)];
 
                 // Размещаем предмет в выбранной точке спауна
-                Instantiate(item, spawnPoint.position, Quaternion.identity);
+                GameObject instantiatedItem = Instantiate(item, spawnPoint.position, Quaternion.identity);
+
+                instantiatedItems.Add(instantiatedItem); // <-- Добавляем предмет в список
 
                 placedItemRooms.Add(room);
                 itemsPlacedRooms.Add(room);
@@ -1440,8 +1531,6 @@ public class GridManager : MonoBehaviour
 
         return placedItemRooms;
     }
-
-
 
     void GeneratePathReport()
     {
