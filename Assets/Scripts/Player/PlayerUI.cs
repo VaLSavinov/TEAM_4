@@ -10,19 +10,23 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private GameObject finishScreen;
     [SerializeField] private GameObject _panel;
     [SerializeField] private LoaclizationText _centerText;
-    [SerializeField] private GameObject wintext;
-    [SerializeField] private GameObject _overText;
+    [SerializeField] private GameObject winScreen;
+    [SerializeField] private GameObject deathScreen;
     [SerializeField] private GameObject _settingMenu;
     [SerializeField] private Slider _sliderVolume;
     [SerializeField] private Slider _sliderSensitiviti;
     [SerializeField] private Animation _animate;
     [SerializeField] private List<AnimationClip> _clips;
+    [SerializeField] private AudioSource deathSound;
+    [SerializeField] private AudioSource winSound;
 
     private AudioSource _audioSource;
     private PlayerControl _playerControl;
     private AudioSource[] _audios;
     private List<AudioSource> _pauseAudios = new List<AudioSource>();
     private bool _lastVisible = true;
+    private bool _isImpact = false;
+    
 
     // Добавляем ссылку на GridManager
     private GridManager _gridManager;
@@ -36,6 +40,13 @@ public class PlayerUI : MonoBehaviour
 
         // Получаем ссылку на GridManager
         _gridManager = FindObjectOfType<GridManager>();
+    }
+
+    public void Start()
+    {
+        _isImpact = true;
+        _animate.clip = _clips[3];
+        _animate.Play();
     }
 
     public void StopAllSound()
@@ -54,12 +65,10 @@ public class PlayerUI : MonoBehaviour
         }
     }
 
-    private void PlayPausedAudios()
-    {
+    public void PlayPausedAudios()
+    { 
         foreach (var audio in _pauseAudios)
-        {
-            audio.Play();
-        }
+            { audio.UnPause(); }
         _pauseAudios.Clear(); // Очищаем список после воспроизведения
     }
 
@@ -169,10 +178,11 @@ public class PlayerUI : MonoBehaviour
         LocalizationManager.Instance.SafeCSV();
         StopAllSound();
         finishScreen.SetActive(true);
-        wintext.SetActive(true);
+        winScreen.SetActive(true);
         Time.timeScale = 0;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        winSound.Play();
     }
 
     public void GameOver()
@@ -180,11 +190,12 @@ public class PlayerUI : MonoBehaviour
         ReplaceAvail("grab", "f");
         StopAllSound();
         finishScreen.SetActive(true);
-        _overText.SetActive(true);
+        deathScreen.SetActive(true);
         Time.timeScale = 0;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         GameMode.FirstPersonLook.BlockPlayerController();
+        deathSound.Play();
     }
 
     public void OpenSetting()
@@ -213,15 +224,28 @@ public class PlayerUI : MonoBehaviour
     }
 
     public void ChangeVisiblePayer(bool isVisible)
-    {
-        if (_lastVisible != isVisible)
-        {
-            if (isVisible)
+    {        
+    if (_lastVisible != isVisible && !_isImpact)
+        {         
+            if (isVisible )
                 _animate.clip = _clips[0];
             else
                 _animate.clip = _clips[1];
             _lastVisible = isVisible;
             _animate.Play();
-        }
+         }
+    }
+
+    public void ImpactAnimate() 
+    {
+        _animate.clip = _clips[2];
+        _isImpact = true;
+        _animate.Play();
+    }
+
+    public void StartGame() 
+    {
+        _isImpact = false;
+        GameMode.FirstPersonMovement.UnBlockControl();
     }
 }
