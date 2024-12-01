@@ -74,7 +74,7 @@ public class LocalizationManager: MonoBehaviour
                 {
                     if (_localization[i, 0].Contains(tag))
                     {
-                        return _localization[i, numLeng].TrimStart('"').TrimEnd('"').Replace("\n", string.Empty);
+                        return _localization[i, numLeng].TrimStart('"').TrimEnd('"');
                     }
                 }
             }           

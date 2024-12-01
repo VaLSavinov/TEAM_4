@@ -63,7 +63,7 @@ public class EnemyDetected : MonoBehaviour
     /// </summary>
     private void WaitToSearch()
     {
-        if (Time.time - _timeLoss >= _waitToSearch)
+        if (Time.time - _timeLoss >= _waitToSearch && !_isDetected)
         {
             _enemyAI.StartSearchingPlayer();
             _timeLoss = 0;

@@ -42,6 +42,16 @@ public class EnemyAI : MonoBehaviour
     private float _timeToNextRandomSound;
     private float _curentTimeSound;
 
+    private void SetPathcForAgent(Vector3 patch) 
+    {
+        NavMeshPath navMeshPath = new NavMeshPath();
+        _agent.CalculatePath(patch, navMeshPath);
+        if (navMeshPath.status == NavMeshPathStatus.PathComplete) 
+        {
+            _agent.SetDestination(patch);
+        }
+    }
+
     private void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -53,6 +63,7 @@ public class EnemyAI : MonoBehaviour
     private void OnDisable()
     {
         Events.Instance.OnBalckOut -= LightAlways;
+        SetPathcForAgent(transform.position);
     }
 
     private void Update()
@@ -70,12 +81,14 @@ public class EnemyAI : MonoBehaviour
     
     private IEnumerator WaitAtWaypoint()
     {
+        if (_state == EEnemyState.Chasing) StopCoroutine(WaitAtWaypoint());
         yield return new WaitForSeconds(_waitTime);
         if(_state == EEnemyState.Patrolling) GoToNextWaypoint();
     }
 
     private IEnumerator WaitAlert()
     {
+        if (_state == EEnemyState.Chasing) StopCoroutine(WaitAlert());
         yield return new WaitForSeconds(_alertTime);
         if (_state == EEnemyState.Alerted) StartPatrol(); // Возвращаемся к патрулированию
     }
@@ -102,7 +115,7 @@ public class EnemyAI : MonoBehaviour
             }
             else
             {
-                _agent.SetDestination(_targetPoint);
+                SetPathcForAgent(_targetPoint);
                 _animator.SetInteger("State", 1);
                 _isRotation = false;
                 _isWalk = true;
@@ -134,15 +147,16 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     private void Alerted()
     {
-        if (_agent.remainingDistance < 0.5f && _agent.remainingDistance > 0 && _isWalk)
+        if (_agent.remainingDistance < 0.5f && _agent.remainingDistance > 0)
         {
             _isWalk = false;
             _animator.SetInteger("State", 3);
             StartCoroutine(WaitAlert());
             // Аудио
             _audioSteps.Stop();
-            PlaySound(_audioOther,5,true,false);            
-        }       
+            PlaySound(_audioOther, 5, true, false);
+        }
+        else Debug.Log("Находится в состянии тервоги");
     }
 
     /// <summary>
@@ -155,6 +169,7 @@ public class EnemyAI : MonoBehaviour
             Debug.Log("Заканчиваем поиск");
             StartPatrol();
         }
+        else Debug.Log("Находится в состянии поиска");
     }
 
     private void GoToNextWaypoint()
@@ -162,7 +177,7 @@ public class EnemyAI : MonoBehaviour
         Vector3 target = _enemyManager.GetNewPoint(ref _room, ref _currentWaypointIndex,false,true).position;
         _isWalk = false;
         _animator.SetInteger("State", 0);
-        _agent.SetDestination(transform.position);
+        SetPathcForAgent(transform.position);
         _isRotation = true;
         _targetPoint = target;
         _currentTime = Time.time;
@@ -195,6 +210,9 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     private void StartPatrol()
     {
+        if (_state == EEnemyState.Alerted) 
+            Debug.Log("Переход в патрулирование после тревоги");
+        Debug.Log("Переходим в патрулирование");
         _state = EEnemyState.Patrolling;
         _agent.speed = _speedPatrol;
         if (_isLightAlways)
@@ -235,22 +253,16 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     public void ChasePlayer() 
     {
-        if (_state != EEnemyState.Chasing && _state != EEnemyState.WaitChasing)
-        {
-            _agent.speed = _speedChase;
-            _animator.SetInteger("State", 2);
-            _state = EEnemyState.WaitChasing;
-
-            ActivateFlashlight(true);
-            _targetPoint = _agent.destination;
-            _agent.SetDestination(transform.position);
-            // Управление аудио
-            _audioSteps.Stop();
-            PlaySound(_audioOther, 2, true, false);
+        Debug.Log("Преследование игрока. Состояние " + _state);
+        
+        if (_state != EEnemyState.Chasing)
+        {            
+            StartChasing();
         }
         if (_state == EEnemyState.Chasing && Vector3.Distance(transform.position, GameMode.FirstPersonMovement.transform.position) < 0.6)
         {
-            _agent.SetDestination(_agent.destination);
+            Debug.Log("Выполняется");
+            SetPathcForAgent(gameObject.transform.position);
             transform.LookAt(new Vector3(GameMode.FirstPersonMovement.transform.position.x, transform.position.y, GameMode.FirstPersonMovement.transform.position.z));
             if (GameMode.FirstPersonMovement.IsAlive())
             {
@@ -268,15 +280,22 @@ public class EnemyAI : MonoBehaviour
 
         }
         else
+        {
+            Debug.Log("Выполняется1");
             if (_state == EEnemyState.Chasing)
-            if (GameMode.FirstPersonMovement.IsAlive())
-                _agent.SetDestination(GameMode.FirstPersonMovement.transform.position);
-            else 
-            { 
-                _animator.SetInteger("State", 0);
-                _audioSteps.Stop();
-            }
-
+                if (GameMode.FirstPersonMovement.IsAlive())
+                {
+                    Debug.Log("Выполняется2");
+                    if (_agent.pathStatus == NavMeshPathStatus.PathComplete)
+                    SetPathcForAgent(GameMode.FirstPersonMovement.transform.position);
+                }
+                else
+                {
+                    Debug.Log("Выполняется3");
+                    _animator.SetInteger("State", 0);
+                    _audioSteps.Stop();
+                }
+        }
     }
 
     /// <summary>
@@ -288,10 +307,11 @@ public class EnemyAI : MonoBehaviour
         _countdownTimeSearch = Time.time;
         _agent.speed = _speedAlertOrSearching;
         ActivateFlashlight(true);
-        _agent.SetDestination(transform.position);
+        SetPathcForAgent(transform.position);
         _animator.SetInteger("State", 3);
         // Управление аудио
         _audioSteps.Stop();
+        Debug.Log("Начало поиска");
 
     }
 
@@ -302,7 +322,7 @@ public class EnemyAI : MonoBehaviour
         _isWalk = false;
         _state = EEnemyState.Alerted;  
         _agent.speed = _speedAlertOrSearching;
-        _agent.SetDestination(transform.position);
+        SetPathcForAgent(transform.position);
         _animator.SetInteger("State", 4);
         _targetPoint = noiseSours;
         transform.LookAt(noiseSours);
@@ -310,6 +330,7 @@ public class EnemyAI : MonoBehaviour
         // Управление аудио
         _audioSteps.Stop();
         PlaySound(_audioOther, 2, true, false);
+        Debug.Log("Начало теевоги");
     }  
 
     public void SetStartParameters(RoomAccessControl room, int waypointIndex, EnemyManager enemyManager) 
@@ -332,29 +353,39 @@ public class EnemyAI : MonoBehaviour
 
     public void StartChasing() 
     {
+        SetPathcForAgent(transform.position);
+        _state = EEnemyState.WaitChasing;
         _agent.speed = _speedChase;
+        _isWalk = true;
         _animator.SetInteger("State", 2);
-        PlaySound(_audioOther, 2, true, false);
         ActivateFlashlight(true);
+        _audioSteps.Stop();
+        PlaySound(_audioOther, 2, true, false);
         //_targetPoint = _agent.destination;
+        Debug.Log("Начало преследования");
+    }
+
+
+    public void GoAlertTarget() 
+    {
+        if (_state == EEnemyState.Alerted)
+        {
+            _agent.SetDestination(_targetPoint);
+            // _animator.SetInteger("State", 1);
+            _isWalk = true;
+            //Управление аудио
+            PlaySound(_audioSteps, 2, true, true);
+        }
     }
 
     public void GoChasing()
-    {
+    {      
         if (_state == EEnemyState.WaitChasing)
         {
             _audioOther.PlayOneShot(_soundOther[3]);
             PlaySound(_audioSteps, 1, true, true);
             PlaySound(_audioOther, 1, true, true);
             _state = EEnemyState.Chasing;
-        }
-        else
-        if (_state == EEnemyState.Alerted) 
-        {
-            _agent.SetDestination(_targetPoint);
-            _isWalk = true;
-            //Управление аудио
-            PlaySound(_audioSteps, 2, true, true);
         }
     }
 

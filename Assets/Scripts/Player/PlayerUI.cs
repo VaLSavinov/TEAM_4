@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
+    public bool _isTraining = false;
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private GameObject finishScreen;
     [SerializeField] private GameObject _panel;
@@ -15,10 +17,16 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private GameObject _settingMenu;
     [SerializeField] private Slider _sliderVolume;
     [SerializeField] private Slider _sliderSensitiviti;
-    [SerializeField] private Animation _animate;
+    [SerializeField] private Animation _animate;    
     [SerializeField] private List<AnimationClip> _clips;
     [SerializeField] private AudioSource deathSound;
     [SerializeField] private AudioSource winSound;
+
+    [Header("Настройки временного текста")]
+    [SerializeField] private Animation _animateShowText;
+    [SerializeField] private LoaclizationText _showTextMax;
+    [SerializeField] private LoaclizationText _showTextMin;
+    [SerializeField] private List<AnimationClip> _anumateClips;
 
     private AudioSource _audioSource;
     private PlayerControl _playerControl;
@@ -42,11 +50,50 @@ public class PlayerUI : MonoBehaviour
         _gridManager = FindObjectOfType<GridManager>();
     }
 
-    public void Start()
+    private void Start()
     {
         _isImpact = true;
         _animate.clip = _clips[3];
         _animate.Play();
+        Events.Instance.OnBalckOut += BlackOut;
+        Events.Instance.OnInteractGenerator += HasPower;
+        Events.Instance.OnOpenDoor += OpenAllDoors;
+    }
+
+    private void OnDisable()
+    {
+        Events.Instance.OnBalckOut -= BlackOut;
+        Events.Instance.OnInteractGenerator -= HasPower;
+        Events.Instance.OnOpenDoor -= OpenAllDoors;
+    }
+    private void OpenAllDoors(bool obj)
+    {
+        if (obj)
+            if (_isTraining)
+            {
+                ShowFleshText("Training.16");
+                StartCoroutine(Wait());
+            }
+            else ShowFleshText("UI.OpenDoors");
+    }
+
+    private IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(3f);
+        ShowFleshText("Training.17");
+    }
+
+    private void HasPower()
+    {
+        if (_isTraining)
+            ShowFleshText("Training.9");
+        else ShowFleshText("UI.PowerEnable");
+    }
+
+    private void BlackOut(bool obj)
+    {
+        if (obj)
+            ShowFleshText("UI.LightClose");
     }
 
     public void StopAllSound()
@@ -110,6 +157,8 @@ public class PlayerUI : MonoBehaviour
     public void Restart()
     {
         ReplaceAvail("grab", "f");
+        if (_isTraining)
+            SceneManager.LoadScene(2);
         _playerControl.UI.PauseMenu.started -= context => Resume();
         _playerControl.Disable();
 
@@ -134,15 +183,13 @@ public class PlayerUI : MonoBehaviour
 
         // Закрываем экраны завершения игры, если они активны
         finishScreen.SetActive(false);
-        wintext.SetActive(false);
-        _overText.SetActive(false);
 
         // Скрываем панель паузы, если она активна
         pauseScreen.SetActive(false);
 
         // Скрываем курсор и блокируем его
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Cursor.visible = false;        
 
     }
 
@@ -247,5 +294,33 @@ public class PlayerUI : MonoBehaviour
     {
         _isImpact = false;
         GameMode.FirstPersonMovement.UnBlockControl();
+        if (_isTraining)
+        {
+            ShowFleshText("Training.1");
+        }
+    }
+
+    public void ShowFleshText(string tag)
+    {
+        if (_isTraining)
+        {
+            _animateShowText.clip = _anumateClips[0];
+            _showTextMax.SetTag(tag);
+
+        }
+        else 
+        {
+            _animateShowText.clip = _anumateClips[1];
+            _showTextMin.SetTag(tag);
+        }
+        _animateShowText.Play();
+    }
+
+    public void ShowFleshTextOnlyTraing(string tag)
+    {
+        if (!_isTraining) { return; }
+        _animateShowText.clip = _anumateClips[0];
+        _showTextMax.SetTag(tag);
+        _animateShowText.Play();
     }
 }

@@ -40,6 +40,10 @@ public class DoorCodLock : MonoBehaviour, IInteractable
     {
         _audioSource.clip = _negativeOpen;
         _audioSource.Play();
+        if (GameMode.PlayerUI._isTraining && _doorControl.GetCardColor()==AccessCardColor.Green)
+            GameMode.PlayerUI.ShowFleshTextOnlyTraing("Training.3");
+        else if (GameMode.PlayerUI._isTraining && _doorControl.GetCardColor() == AccessCardColor.Blue)
+            GameMode.PlayerUI.ShowFleshTextOnlyTraing("Training.13");
         GameMode.PlayerUI.ShowText("UI." + _doorControl.GetCardColor().ToString(),true);
     }
 
@@ -47,6 +51,7 @@ public class DoorCodLock : MonoBehaviour, IInteractable
     {
         if(!_doorControl.IsHasPower()) 
         {
+            GameMode.PlayerUI.ShowFleshTextOnlyTraing("Training.6");
             GameMode.PlayerUI.ShowText("UI.NoPower",true);
             return; 
         }
