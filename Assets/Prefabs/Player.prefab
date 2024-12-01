@@ -1610,7 +1610,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 2348011159899971666}
-  speed: 1.25
+  speed: 1.35
   jumpHeight: 0.3
   groundCheck: {fileID: 2182924495247441668}
   groundDistance: 0.05
@@ -1640,7 +1640,7 @@ MonoBehaviour:
   _handPoint: {fileID: 5725127426712380162}
   _cameraTransform: {fileID: 1742181097318609873}
   _pickUpDistance: 0.5
-  _throwForce: 150
+  _throwForce: 250
   _layerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -1994,7 +1994,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '                               '
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4093,7 +4093,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '                       '
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

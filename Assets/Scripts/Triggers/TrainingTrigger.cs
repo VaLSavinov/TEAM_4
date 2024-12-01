@@ -14,7 +14,7 @@ public class TrainingTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!_isHasCondition || (_isHasCondition && CheackCondition()))
+        if (!_isHasCondition || (_isHasCondition && CheackCondition()) && !GameMode.PlayerUI.IsPlayingAnimator())
         {
             GameMode.PlayerUI.ShowFleshText(_tag);
             Destroy(gameObject);
